@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xx.chinetek.cywms.Receiption.AdvInChoiceActivity">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline84"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.26"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="100dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline85"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="126dp" />
+
+    <EditText
+        android:id="@+id/et_adv_orderInfo"
+        style="@style/EditTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:hint="请录入单号"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView139"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/textView139"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/textView139"
+        style="@style/TextViewComminStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/Bill"
+        app:layout_constraintRight_toLeftOf="@+id/guideline84"
+        android:layout_marginRight="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <TextView
+        android:id="@+id/textView147"
+        style="@style/TextViewComminStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/barcode"
+        app:layout_constraintRight_toLeftOf="@+id/guideline84"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView152"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <TextView
+        android:id="@+id/textView148"
+        style="@style/TextViewComminStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/EDate"
+        app:layout_constraintRight_toLeftOf="@+id/guideline84"
+        app:layout_constraintTop_toBottomOf="@+id/textView147" />
+
+    <TextView
+        android:id="@+id/textView158"
+        style="@style/TextViewComminStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="9dp"
+        android:text="@string/advqty"
+        app:layout_constraintRight_toLeftOf="@+id/guideline84"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_adv_order_qty" />
+
+    <TextView
+        android:id="@+id/textView152"
+        style="@style/TextViewComminStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/QCType"
+        app:layout_constraintRight_toLeftOf="@+id/guideline84"
+        app:layout_constraintTop_toBottomOf="@+id/textView139" />
+
+    <include
+        android:id="@+id/include_adv_material"
+        layout="@layout/material_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="6dp"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView148"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tv_adv_order_qty"
+        style="@style/TextViewComminStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="6dp"
+        android:text="订单数量"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/include_adv_material"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/et_adv_barcode"
+        style="@style/EditTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:hint="请扫描条码"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView147"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@+id/textView139"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/et_adv_Batch"
+        style="@style/EditTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginStart="16dp"
+        android:hint="批次"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_adv_date"
+        android:layout_marginLeft="2dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline85"
+        app:layout_constraintHorizontal_bias="1.0" />
+
+    <EditText
+        android:id="@+id/et_adv_qty"
+        style="@style/EditTextStyle"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:hint="预收数量"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView158"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline84"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/et_adv_remark"
+        style="@style/EditTextStyle"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginStart="16dp"
+        android:hint="备注"
+        app:layout_constraintBaseline_toBaselineOf="@+id/et_adv_qty"
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintLeft_toRightOf="@+id/et_adv_qty"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/btn_adv_date"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/background_login"
+        android:text="选择"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView148"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline84"
+        app:layout_constraintRight_toLeftOf="@+id/guideline85" />
+
+    <Button
+        android:id="@+id/btn_qc_type"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/background_login"
+        android:text="选择"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView152"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline84"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ListView
+        android:id="@+id/lv_adv_order_info"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView158"
+        app:layout_constraintVertical_bias="1.0" />
+
+</android.support.constraint.ConstraintLayout>

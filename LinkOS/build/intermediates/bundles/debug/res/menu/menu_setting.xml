@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.xx.chinetek.Login">
+
+    <item
+        android:orderInCategory="100"
+        android:id="@+id/menu_ip_address"
+        android:title="@string/main_menu_ip_address"
+        />
+    <item
+        android:orderInCategory="200"
+        android:id="@+id/menu_print"
+        android:title="@string/main_menu_zebra_print_connect_address"
+        />
+</menu>
