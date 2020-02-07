@@ -23,7 +23,7 @@ public class SharePreferUtil {
         SharedPreferences sharedPreferences=context.getSharedPreferences("Setting", Context.MODE_PRIVATE);
         if(sharedPreferences!=null) {
             URLModel.IPAdress=sharedPreferences.getString("IPAdress", "");
-            URLModel.Port=sharedPreferences.getInt("Port", 9000);
+            URLModel.Port=sharedPreferences.getInt("Port", 9001);
 //            URLModel.IPAdress=sharedPreferences.getString("IPAdress", "wmstest.beukay.com");
 //            URLModel.Port=sharedPreferences.getInt("Port", 9010);
             URLModel.PrintIP=sharedPreferences.getString("PrintIP", "");
