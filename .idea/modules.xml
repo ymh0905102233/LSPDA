@@ -3,8 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ABHWNS.iml" filepath="$PROJECT_DIR$/ABHWNS.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LinkOS/LinkOS.iml" filepath="$PROJECT_DIR$/LinkOS/LinkOS.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LSPDA.iml" filepath="$PROJECT_DIR$/LSPDA.iml" group="LSPDA" />
+      <module fileurl="file://$PROJECT_DIR$/LinkOS/LSPDA-LinkOS.iml" filepath="$PROJECT_DIR$/LinkOS/LSPDA-LinkOS.iml" group="LSPDA/LinkOS" />
+      <module fileurl="file://$PROJECT_DIR$/app/LSPDA-app.iml" filepath="$PROJECT_DIR$/app/LSPDA-app.iml" group="LSPDA/app" />
+      <module fileurl="file://$PROJECT_DIR$/LinkOS/LinkOS.iml" filepath="$PROJECT_DIR$/LinkOS/LinkOS.iml" group="LSPDA/LinkOS" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="LSPDA/app" />
     </modules>
   </component>
 </project>

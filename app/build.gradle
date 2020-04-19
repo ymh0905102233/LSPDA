@@ -4,11 +4,11 @@ android {
     compileSdkVersion 27
     buildToolsVersion "27"
     defaultConfig {
-        applicationId "com.xx.chinetek.cywms"
+        applicationId "com.xx.chinetek.lspda"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 5
-        versionName "1.0"
+        versionName "1.11"
         multiDexEnabled true
     }
 
@@ -20,7 +20,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+    }
     sourceSets {
         main {
             assets.srcDirs = ['assets']
@@ -45,7 +51,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     testCompile 'junit:junit:4.12'
-    compile project(path: ':LinkOS')
     //    compile 'com.android.support:support-v4:27.1.1'
     compile 'com.android.support:design:27.1.1'
     compile('com.afollestad.material-dialogs:core:0.9.6.0') {
@@ -53,5 +58,6 @@ dependencies {
     }
     compile files('libs/FUJITSU130AndroidSDKv1.4.0.jar')
     compile files('libs/print-util-0.0.1-SNAPSHOT.jar')
+    implementation project(path: ':LinkOS')
 //    implementation files('libs/print-util-0.0.1-SNAPSHOT.jar')
 }

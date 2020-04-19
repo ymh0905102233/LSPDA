@@ -1,6 +1,5 @@
 package com.xx.chinetek.model.WMS.UpShelf;
 
-import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -106,7 +105,7 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
     private String ToErpAreaNo;
     private String ToErpWarehouse;
     private String WareHouseName;
-
+    private float TaskQty1; //质检数量
     public String getWareHouseName() {
         return WareHouseName;
     }

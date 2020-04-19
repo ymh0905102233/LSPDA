@@ -228,19 +228,19 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
      */
     public void checkUpdate() {
 
-        new Thread() {
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                super.run();
-                if (updateVersionService.isUpdate()) {
-                    handler.sendEmptyMessage(0);
-                }// 调用检查更新的方法,如果可以更新.就更新.不能更新就提示已经是最新的版本了
-                else {
-                    handler.sendEmptyMessage(1);
-                }
-            }
-        }.start();
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                // TODO Auto-generated method stub
+//                super.run();
+//                if (updateVersionService.isUpdate()) {
+//                    handler.sendEmptyMessage(0);
+//                }// 调用检查更新的方法,如果可以更新.就更新.不能更新就提示已经是最新的版本了
+//                else {
+//                    handler.sendEmptyMessage(1);
+//                }
+//            }
+//        }.start();
     }
 
     private Handler handler = new Handler() {

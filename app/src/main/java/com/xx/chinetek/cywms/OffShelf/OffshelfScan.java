@@ -20,32 +20,23 @@ import android.widget.ToggleButton;
 import com.android.volley.Request;
 import com.google.gson.reflect.TypeToken;
 import com.xx.chinetek.DeviceListActivity;
-import com.xx.chinetek.PrintConnectActivity;
-import com.xx.chinetek.adapter.wms.Intentory.InventoryScanItemAdapter;
 import com.xx.chinetek.adapter.wms.OffShelf.OffShelfScanDetailAdapter;
 import com.xx.chinetek.base.BaseActivity;
 import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.base.ToolBarTitle;
-import com.xx.chinetek.cywms.Intentory.IntentoryScan;
 import com.xx.chinetek.cywms.Qc.QCBillChoice;
 import com.xx.chinetek.cywms.Query.Query;
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.cywms.Truck.TruckLoad;
 import com.xx.chinetek.model.Base_Model;
 import com.xx.chinetek.model.Box.Boxing;
-import com.xx.chinetek.model.CheckNumRefMaterial;
-import com.xx.chinetek.model.Material.BarCodeInfo;
-import com.xx.chinetek.model.Receiption.ReceiptDetail_Model;
 import com.xx.chinetek.model.ReturnMsgModel;
 import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
-import com.xx.chinetek.model.WMS.Inventory.Barcode_Model;
-import com.xx.chinetek.model.WMS.Inventory.CheckArea_Model;
 import com.xx.chinetek.model.WMS.OffShelf.OutStockTaskDetailsInfo_Model;
 import com.xx.chinetek.model.WMS.OffShelf.OutStockTaskInfo_Model;
 import com.xx.chinetek.model.WMS.Review.OutStockDetailInfo_Model;
 import com.xx.chinetek.model.WMS.Review.OutStock_Model;
-import com.xx.chinetek.model.WMS.Stock.AreaInfo_Model;
 import com.xx.chinetek.model.WMS.Stock.StockInfo_Model;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
@@ -58,8 +49,6 @@ import com.xx.chinetek.util.function.DoubleClickCheck;
 import com.xx.chinetek.util.function.GsonUtil;
 import com.xx.chinetek.util.log.LogUtil;
 
-import org.json.JSONObject;
-import org.w3c.dom.Comment;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -73,7 +62,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.xx.chinetek.base.BaseApplication.context;
 import static com.xx.chinetek.cywms.R.id.tb_UnboxType;
 import static com.xx.chinetek.util.function.GsonUtil.parseModelToJson;
 
@@ -266,9 +254,9 @@ public class OffshelfScan extends BaseActivity {
         txtcustomername.setText(outStockTaskInfoModels.get(0).getSupcusName()==null?"":outStockTaskInfoModels.get(0).getSupcusName());
         edtcar.setText(outStockTaskInfoModels.get(0).getCarNo()==null?"":outStockTaskInfoModels.get(0).getCarNo());
 
-        if(!CheckBluetooth()){
-            MessageBox.Show(context, "蓝牙打印机连接失败");
-        }
+//        if(!CheckBluetooth()){
+//            MessageBox.Show(context, "蓝牙打印机连接失败");
+//        }
 
         tbUnboxType.setChecked(true);
         tbBoxType.setChecked(false);
@@ -282,10 +270,10 @@ public class OffshelfScan extends BaseActivity {
     @Event(value ={R.id.tb_UnboxType,R.id.tb_PalletType,R.id.tb_BoxType} ,type = CompoundButton.OnClickListener.class)
     private void TBonCheckedChanged(View view) {
         if(view.getId()== R.id.tb_UnboxType){
-            if(!CheckBluetooth()){
-                MessageBox.Show(context, "蓝牙打印机连接失败");
-                return;
-            }
+//            if(!CheckBluetooth()){
+//                MessageBox.Show(context, "蓝牙打印机连接失败");
+//                return;
+//            }
         }
 
         tbUnboxType.setChecked(view.getId()== R.id.tb_UnboxType);
@@ -370,10 +358,10 @@ public class OffshelfScan extends BaseActivity {
                     if (currentPickMaterialIndex != -1) {
                         //检查蓝牙打印机是否连上
                         if (edtOffShelfScanbarcode.getText().toString().contains("@")){
-                            if(!CheckBluetooth()){
-                                MessageBox.Show(context, "蓝牙打印机连接失败");
-                                return true;
-                            }
+//                            if(!CheckBluetooth()){
+//                                MessageBox.Show(context, "蓝牙打印机连接失败");
+//                                return true;
+//                            }
                         }
 
 //                    Float remainqty = ArithUtil.sub(outStockTaskDetailsInfoModels.get(currentPickMaterialIndex).getRePickQty(),
@@ -511,10 +499,10 @@ public class OffshelfScan extends BaseActivity {
         if (DoubleClickCheck.isFastDoubleClick(context)) {
             return;
         }
-        if(!CheckBluetooth()){
-            MessageBox.Show(context, "蓝牙打印机连接失败");
-            return;
-        }
+//        if(!CheckBluetooth()){
+//            MessageBox.Show(context, "蓝牙打印机连接失败");
+//            return;
+//        }
 
         if (BoxingModels != null && BoxingModels.size() > 0) {
             final Map<String, String> params = new HashMap<String, String>();
@@ -1129,7 +1117,7 @@ public class OffshelfScan extends BaseActivity {
 
                         if(!checkdetail(outStockTaskDetailsInfoModels)){
                             MessageBox.Show(context,"拆零完成，提交的数据异常，退出重新扫描！");
-                            LPK130DEMO1Scan(stockInfoModels.get(0).getBarcode());
+//                            LPK130DEMO1Scan(stockInfoModels.get(0).getBarcode());
                             return;
                         }
                         isChai=true;

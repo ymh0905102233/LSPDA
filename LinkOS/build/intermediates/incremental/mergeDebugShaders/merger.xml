@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\JAVAworkspace\ABHPDA\ABHWNS\LinkOS\src\main\shaders"/></dataSet><dataSet config="debug"><source path="D:\JAVAworkspace\ABHPDA\ABHWNS\LinkOS\src\debug\shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="F:\DEVELOPMENT\WORKPACE\Project\SCG\project\jiacheng\app\LSPDA\LinkOS\src\main\shaders"/></dataSet><dataSet config="debug"><source path="F:\DEVELOPMENT\WORKPACE\Project\SCG\project\jiacheng\app\LSPDA\LinkOS\src\debug\shaders"/></dataSet></merger>

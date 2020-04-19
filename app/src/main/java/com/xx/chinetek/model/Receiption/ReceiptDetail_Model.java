@@ -62,7 +62,7 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
     private String ToErpWarehouse;
     private Float ADVRECEIVEQTY;
     private String InvoiceNo;
-
+    private int iarrsid;
     public String getInvoiceNo() {
         return InvoiceNo;
     }
@@ -454,7 +454,13 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         SupplierNo = supplierNo;
     }
 
+    public int getIarrsid() {
+        return iarrsid;
+    }
 
+    public void setIarrsid(int iarrsid) {
+        this.iarrsid = iarrsid;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -465,7 +471,8 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
 
         //return MaterialNo.equals(that.MaterialNo) && ToBatchNo.equals(that.ToBatchNo);
 
-        return MaterialNo.equals(that.MaterialNo) && ToBatchNo.equals(that.ToBatchNo)&& InvoiceNo.equals(that.InvoiceNo);
+//        return MaterialNo.equals(that.MaterialNo) && ToBatchNo.equals(that.ToBatchNo)&& InvoiceNo.equals(that.InvoiceNo);
+        return MaterialNo.equals(that.MaterialNo)  && RowNo.equals(that.RowNo);
 
     }
 
@@ -492,7 +499,18 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         this.InvoiceNo=InvoiceNo;
     }
 
+//    public ReceiptDetail_Model(String MaterialNo,String ToBatchNo) {
+////public ReceiptDetail_Model(String MaterialNo,String ToBatchNo) {
+//        this.MaterialNo=MaterialNo;
+//        this.ToBatchNo=ToBatchNo;
+//
+//    }
+    public ReceiptDetail_Model(String MaterialNo,String rowNo) {
+//public ReceiptDetail_Model(String MaterialNo,String ToBatchNo) {
+        this.MaterialNo=MaterialNo;
+        this.RowNo=rowNo;
 
+    }
 
     @Override
     public int describeContents() {
@@ -548,6 +566,7 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         dest.writeString(this.ToErpWarehouse);
         dest.writeValue(this.ADVRECEIVEQTY);
         dest.writeString(this.InvoiceNo);
+        dest.writeInt(this.iarrsid);
     }
 
     protected ReceiptDetail_Model(Parcel in) {
@@ -602,6 +621,7 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         this.ToErpWarehouse = in.readString();
         this.ADVRECEIVEQTY = (Float) in.readValue(Float.class.getClassLoader());
         this.InvoiceNo = in.readString();
+        this.iarrsid=in.readInt();
     }
 
     public static final Creator<ReceiptDetail_Model> CREATOR = new Creator<ReceiptDetail_Model>() {

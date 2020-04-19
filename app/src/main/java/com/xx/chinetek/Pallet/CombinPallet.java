@@ -32,7 +32,6 @@ import com.xx.chinetek.model.Pallet.PalletDetail_Model;
 import com.xx.chinetek.model.ReturnMsgModel;
 import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
-import com.xx.chinetek.model.WMS.Inventory.Barcode_Model;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
 import com.xx.chinetek.util.dialog.MessageBox;
@@ -226,10 +225,10 @@ public class CombinPallet extends BaseActivity {
         if (DoubleClickCheck.isFastDoubleClick(context)) {
             return;
         }
-        if(!CheckBluetooth()){
-            MessageBox.Show(context, "蓝牙打印机连接失败");
-            return;
-        }
+//        if(!CheckBluetooth()){
+//            MessageBox.Show(context, "蓝牙打印机连接失败");
+//            return;
+//        }
 
         if (palletDetailModels != null && palletDetailModels.size() != 0 && palletDetailModels.get(0).getLstBarCode()!=null
                 && palletDetailModels.get(0).getLstBarCode().size()!=0) {
@@ -364,7 +363,8 @@ public class CombinPallet extends BaseActivity {
             if(returnMsgModel.getHeaderStatus().equals("S")) {
                 InitFrm();
                 String palletNo=returnMsgModel.getTaskNo();
-                LPK130DEMO1Pallet(palletNo);
+//                MessageBox.Show(context,"组托成功！组托号:"+palletNo);
+//                LPK130DEMO1Pallet(palletNo);
 
 
 //                Barcode_Model barcodeModel=new Barcode_Model();
