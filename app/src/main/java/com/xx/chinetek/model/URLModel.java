@@ -96,6 +96,7 @@ public class URLModel {
     public String GetT_OutBarCodeInfoForQuanADF=GetWCFAdress()+"GetT_OutBarCodeInfoForQuanADF";//获取质检扫描条码信息
     public String GetStockModelADF=GetWCFAdress()+"GetStockModelADF";//获取下架和仓库内移库条码信息
     public String GetStockmodelForPDAADF=GetWCFAdress()+"GetStockmodelForPDAADF";//获取下架和仓库内移库条码信息
+    public String GetBarcodeModelForJADF =GetWCFAdress()+"GetBarcodeModelForJADF";//获取下架本体的查询信息  2020-4-20
 
     public String SaveT_QuanlitySampADF=GetWCFAdress()+"SaveT_QuanlitySampADF";//提交质检明细
     public String CreateQualityForStock=GetWCFAdress()+"CreateQualityForStock";//提交在库检明细

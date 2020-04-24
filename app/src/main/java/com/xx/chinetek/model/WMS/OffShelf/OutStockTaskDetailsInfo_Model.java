@@ -14,20 +14,26 @@ import java.util.List;
  * Created by GHOST on 2017/1/16.
  */
 
-public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcelable{
-    public OutStockTaskDetailsInfo_Model(){
+public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcelable {
+    public OutStockTaskDetailsInfo_Model() {
 
     }
 
-    public OutStockTaskDetailsInfo_Model(String MaterialNo,String RowNo,String RowNoDel){
-        this.MaterialNo=MaterialNo;
-        this.RowNo=RowNo;
-        this.RowNoDel=RowNoDel;
+//    public OutStockTaskDetailsInfo_Model(String MaterialNo, String RowNo, String RowNoDel) {
+//        this.MaterialNo = MaterialNo;
+//        this.RowNo = RowNo;
+//        this.RowNoDel = RowNoDel;
+//    }
+
+    public OutStockTaskDetailsInfo_Model(String MaterialNo, String BatchNo) {
+        this.MaterialNo = MaterialNo;
+        this.BatchNo = BatchNo;
     }
 
-    public OutStockTaskDetailsInfo_Model(String MaterialNo,String BatchNo){
-        this.MaterialNo=MaterialNo;
-        this.BatchNo=BatchNo;
+    public OutStockTaskDetailsInfo_Model(String materialNo, String projectNo, String tracNo) {
+        this.MaterialNo = materialNo;
+        this.ProjectNo = projectNo;
+        this.TracNo = tracNo;
     }
 
     //    public OutStockTaskDetailsInfo_Model(String MaterialNo,String StrongHoldCode){
@@ -35,73 +41,73 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
 //        this.StrongHoldCode=StrongHoldCode;
 //    }
 
-    private String MaterialNo;
-    private String MaterialDesc;
-    private Float TaskQty;
-    private Float QualityQty;
-    private Float RemainQty; //剩余拣货数量
-   // private Float PickQty; //拣货数量
-    private Float ShelveQty;
-    private String TaskNo;
-    private Float IsQualitycomp;
-    private String KeeperUserNo;
-    private String OperatorUserNo;
-    private int TaskID;
-    private String TMaterialNo;
-    private String TMaterialDesc;
-    private Float ReviewQty;
-    private Float PackCount;
-    private Float ShelvePackCount;
-    private String VoucherNo;
-    private String RowNo;
-    private String RowNoDel;
-    private String TrackNo;
-    private String Unit;
-    private Float UnQualityQty;
-    private Float PostQty;
-    private Float PostStatus;
-    private Date PostDate;
-    private String ReserveNumber;
-    private String ReserveRowNo;
-    private Float UnShelveQty;
-    private String Requstreason;
-    private String Remark;
-    private String ReviewUser;
-    private Date ReviewDate;
-    private Float ReviewStatus;
-    private String PostUser;
-    private String Costcenter;
-    private String Wbselem;
-    private String ToStorageLoc;
-    private String FromStorageLoc;
-    private Float OutStockQty;
-    private Float StockQty; //库存数量
-    private Float LimitStockQtySAP;
-    private Float RemainsSockQtySAP;
-    private Float PackFlag;
-    private Float CurrentRemainStockQtySAP;
-    private String MoveReasonCode;
-    private String MoveReasonDesc;
-    private String PoNo;
-    private String PoRowNo;
-    private Float IsLock;
-    private Float IsSmallBatch;
-    private String UnitName;
-    private Float ScanQty;  //扫描数量
-    private Float RePickQty;  //扫描数量
-    private String AreaNo;
-    private String HouseNo;
-    private String WareHouseNo;
-    private List<StockInfo_Model> lstStockInfo=new ArrayList<StockInfo_Model>();
-    private String SupCusCode;
-    private String SupCusName;
-    private String SaleName;
-    private int TaskType ;
-    private int IsSerial;
-    private String PartNo;
-    private String MoveType;
-    private String BatchNo;
-    private int HouseProp;
+    private String                MaterialNo;
+    private String                MaterialDesc;
+    private Float                 TaskQty;
+    private Float                 QualityQty;
+    private Float                 RemainQty; //剩余拣货数量
+    // private Float PickQty; //拣货数量
+    private Float                 ShelveQty;
+    private String                TaskNo;
+    private Float                 IsQualitycomp;
+    private String                KeeperUserNo;
+    private String                OperatorUserNo;
+    private int                   TaskID;
+    private String                TMaterialNo;
+    private String                TMaterialDesc;
+    private Float                 ReviewQty;
+    private Float                 PackCount;
+    private Float                 ShelvePackCount;
+    private String                VoucherNo;
+    private String                RowNo;
+    private String                RowNoDel;
+    private String                TrackNo;
+    private String                Unit;
+    private Float                 UnQualityQty;
+    private Float                 PostQty;
+    private Float                 PostStatus;
+    private Date                  PostDate;
+    private String                ReserveNumber;
+    private String                ReserveRowNo;
+    private Float                 UnShelveQty;
+    private String                Requstreason;
+    private String                Remark;
+    private String                ReviewUser;
+    private Date                  ReviewDate;
+    private Float                 ReviewStatus;
+    private String                PostUser;
+    private String                Costcenter;
+    private String                Wbselem;
+    private String                ToStorageLoc;
+    private String                FromStorageLoc;
+    private Float                 OutStockQty;
+    private Float                 StockQty; //库存数量
+    private Float                 LimitStockQtySAP;
+    private Float                 RemainsSockQtySAP;
+    private Float                 PackFlag;
+    private Float                 CurrentRemainStockQtySAP;
+    private String                MoveReasonCode;
+    private String                MoveReasonDesc;
+    private String                PoNo;
+    private String                PoRowNo;
+    private Float                 IsLock;
+    private Float                 IsSmallBatch;
+    private String                UnitName;
+    private Float                 ScanQty;  //扫描数量
+    private Float                 RePickQty;  //扫描数量
+    private String                AreaNo;
+    private String                HouseNo;
+    private String                WareHouseNo;
+    private List<StockInfo_Model> lstStockInfo = new ArrayList<StockInfo_Model>();
+    private String                SupCusCode;
+    private String                SupCusName;
+    private String                SaleName;
+    private int                   TaskType;
+    private int                   IsSerial;
+    private String                PartNo;
+    private String                MoveType;
+    private String                BatchNo;
+    private int                   HouseProp;
 
     private String EAN;
     private String PackQty;
@@ -110,6 +116,8 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
 
     private String ToErpWareHouseName;
     private String FromErpWareHouseName;
+    private String ProjectNo;
+    private String TracNo;
 
     public String getToErpWareHouseName() {
         return ToErpWareHouseName;
@@ -190,7 +198,7 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
     /// <summary>
     /// ERP指定发货储位
     /// </summary>
-    public String FromErpAreaNo;
+    public  String FromErpAreaNo;
     /// <summary>
     /// ERP指定发货仓库
     /// </summary>
@@ -210,9 +218,9 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
 
     private int FloorType;
 
-    private Boolean isOutOfstock=false; //是否缺货
+    private Boolean isOutOfstock = false; //是否缺货
 
-    private Boolean isPickFinish=false; //是否拣货完毕
+    private Boolean isPickFinish = false; //是否拣货完毕
 
     @Override
     public boolean equals(Object o) {
@@ -221,8 +229,10 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
 
         OutStockTaskDetailsInfo_Model that = (OutStockTaskDetailsInfo_Model) o;
 
-        return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
-       // return MaterialNo.equals(that.MaterialNo) && RowNo.equals(that.RowNo);
+//        return MaterialNo.equals(that.MaterialNo)  && ProjectNo.equals(ProjectNo) && TracNo.equals(TracNo);
+        return MaterialNo.equals(that.MaterialNo)  ;
+//        return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
+        // return MaterialNo.equals(that.MaterialNo) && RowNo.equals(that.RowNo);
 
     }
 
@@ -826,6 +836,21 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         Wbselem = wbselem;
     }
 
+    public String getProjectNo() {
+        return ProjectNo;
+    }
+
+    public void setProjectNo(String projectNo) {
+        ProjectNo = projectNo;
+    }
+
+    public String getTracNo() {
+        return TracNo;
+    }
+
+    public void setTracNo(String tracNo) {
+        TracNo = tracNo;
+    }
 
     @Override
     public int describeContents() {
@@ -917,6 +942,9 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         dest.writeInt(this.FloorType);
         dest.writeValue(this.isOutOfstock);
         dest.writeValue(this.isPickFinish);
+        dest.writeString(this.ProjectNo);
+        dest.writeString(this.TracNo);
+
     }
 
     protected OutStockTaskDetailsInfo_Model(Parcel in) {
@@ -1005,6 +1033,10 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         this.FloorType = in.readInt();
         this.isOutOfstock = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.isPickFinish = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.ProjectNo = in.readString();
+        this.TracNo = in.readString();
+
+
     }
 
     public static final Creator<OutStockTaskDetailsInfo_Model> CREATOR = new Creator<OutStockTaskDetailsInfo_Model>() {

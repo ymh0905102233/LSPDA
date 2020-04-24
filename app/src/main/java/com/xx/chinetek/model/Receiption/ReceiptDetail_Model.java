@@ -62,7 +62,7 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
     private String ToErpWarehouse;
     private Float ADVRECEIVEQTY;
     private String InvoiceNo;
-    private int iarrsid;
+    private String iarrsid;
     public String getInvoiceNo() {
         return InvoiceNo;
     }
@@ -454,11 +454,11 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         SupplierNo = supplierNo;
     }
 
-    public int getIarrsid() {
+    public String getIarrsid() {
         return iarrsid;
     }
 
-    public void setIarrsid(int iarrsid) {
+    public void setIarrsid(String iarrsid) {
         this.iarrsid = iarrsid;
     }
 
@@ -566,7 +566,7 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         dest.writeString(this.ToErpWarehouse);
         dest.writeValue(this.ADVRECEIVEQTY);
         dest.writeString(this.InvoiceNo);
-        dest.writeInt(this.iarrsid);
+        dest.writeString(this.iarrsid);
     }
 
     protected ReceiptDetail_Model(Parcel in) {
@@ -621,7 +621,7 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         this.ToErpWarehouse = in.readString();
         this.ADVRECEIVEQTY = (Float) in.readValue(Float.class.getClassLoader());
         this.InvoiceNo = in.readString();
-        this.iarrsid=in.readInt();
+        this.iarrsid=in.readString();
     }
 
     public static final Creator<ReceiptDetail_Model> CREATOR = new Creator<ReceiptDetail_Model>() {

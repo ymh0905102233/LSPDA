@@ -13,87 +13,92 @@ import java.util.Date;
  * Created by GHOST on 2017/1/13.
  */
 
-public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable {//
-    public StockInfo_Model(){
+public class StockInfo_Model extends Base_Model implements Parcelable, Cloneable {//
+
+    public StockInfo_Model() {
 
     }
 
-    public StockInfo_Model(String Barcode,String serialNo){
-        this.Barcode=Barcode;
-        this.SerialNo=serialNo;
+    public StockInfo_Model(String Barcode, String serialNo) {
+        this.Barcode = Barcode;
+        this.SerialNo = serialNo;
     }
-    private String Barcode;
-    private String SerialNo;
-    private String MaterialNo;
-    private String MaterialDesc;
-    private String WarehouseNo;
-    private String HouseNo;
-    private String AreaNo;
-    private Float Qty;
-    private String TMaterialNo;
-    private String TMaterialDesc;
-    private String PickAreaNo;
-    private String CelareaNo;
-    private int IsDel;
-    private String BatchNo;
-    private String SN;
-    private String ReturnSupCode;
-    private String ReturnReson;
-    private String ReturnSupName;
-    private int OldStockID;
-    private int TaskDetailesID;
-    private int CheckID;
-    private int TransferDetailsID;
-    private int ReturnType;
-    private String ReturnTypeDesc;
-    private String Unit;
-    private String SaleName;
-    private String UnitName;
-    private String PalletNo;
-    private Float PalletQty;
-    private int ReceiveStatus;
-    private String FromAreaNo;
-    private String FromHouseNo;
-    private String FromWareHouseNo;
-    private int FromAreaID;
-    private int FromHouseID;
-    private int FromWareHouseID;
-    private int WareHouseID;
-    private int HouseID;
-    private int AreaID;
-    private int StockBarCodeStatus=0;//发货复核使用  0：未组托 1：已组托
-    private String PartNo;
-    private int PickModel; //下架方式 1-整托 2-整箱 3-零数
-    private Float AmountQty;//零数
-    private String TaskNo;
-    private int AreaType;
-    private String ToErpAreaNo;
-    private String ToErpWarehouse;
-    private String FromErpAreaNo;
-    private String FromErpWarehouse;
-    private String FromBatchNo;
-    private int OutstockDetailID;
-    private int OutstockHeaderID;
+
+    private String  Barcode;
+    private String  SerialNo;
+    private String  MaterialNo;
+    private String  MaterialDesc;
+    private String  WarehouseNo;
+    private String  HouseNo;
+    private String  AreaNo;
+    private Float   Qty;
+    private String  TMaterialNo;
+    private String  TMaterialDesc;
+    private String  PickAreaNo;
+    private String  CelareaNo;
+    private int     IsDel;
+    private String  BatchNo;
+    private String  SN;
+    private String  ReturnSupCode;
+    private String  ReturnReson;
+    private String  ReturnSupName;
+    private int     OldStockID;
+    private int     TaskDetailesID;
+    private int     CheckID;
+    private int     TransferDetailsID;
+    private int     ReturnType;
+    private String  ReturnTypeDesc;
+    private String  Unit;
+    private String  SaleName;
+    private String  UnitName;
+    private String  PalletNo;
+    private Float   PalletQty;
+    private int     ReceiveStatus;
+    private String  FromAreaNo;
+    private String  FromHouseNo;
+    private String  FromWareHouseNo;
+    private int     FromAreaID;
+    private int     FromHouseID;
+    private int     FromWareHouseID;
+    private int     WareHouseID;
+    private int     HouseID;
+    private int     AreaID;
+    private int     StockBarCodeStatus = 0;//发货复核使用  0：未组托 1：已组托
+    private String  PartNo;
+    private int     PickModel; //下架方式 1-整托 2-整箱 3-零数
+    private Float   AmountQty;//零数
+    private String  TaskNo;
+    private int     AreaType;
+    private String  ToErpAreaNo;
+    private String  ToErpWarehouse;
+    private String  FromErpAreaNo;
+    private String  FromErpWarehouse;
+    private String  FromBatchNo;
+    private int     OutstockDetailID;
+    private int     OutstockHeaderID;
     private Boolean OKSelect;
-    private int IsLimitStock;
+    private int     IsLimitStock;
     private String  UnitTypeCode;
     private String  DecimalLngth;
-    private Date ProductDate;
-    private String SupPrdBatch;
-    private Date SupPrdDate;
-    private int HouseProp;
-    private String EAN;
-    private int ScanType;
-    private String ISJ;//1-是 2-否
-    private String JBarCode;
-    ArrayList<BarCodeInfo> lstBarCode;
+    private Date    ProductDate;
+    private String  SupPrdBatch;
+    private Date    SupPrdDate;
+    private int     HouseProp;
+    private String  EAN;
+    private int     ScanType;
+    private String  ISJ;//1-是 2-否
+    private String  JBarCode;
+    ArrayList<BarCodeInfo>     lstBarCode;
     ArrayList<StockInfo_Model> lstJBarCode;//J箱条码
     ArrayList<StockInfo_Model> lstHBarCode;//H箱条码
 
-    private int BarCodeType;
-    private int IsAmount;
+    private int    BarCodeType;
+    private int    IsAmount;
     private String fserialno;
-    public int IsPalletOrBox;
+    public  int    IsPalletOrBox;
+    private String ProjectNo;
+    private String TracNo;
+    private String RowNo;
 
     public int getIsPalletOrBox() {
         return IsPalletOrBox;
@@ -676,6 +681,30 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
         WarehouseNo = warehouseNo;
     }
 
+    public String getProjectNo() {
+        return ProjectNo;
+    }
+
+    public void setProjectNo(String projectNo) {
+        ProjectNo = projectNo;
+    }
+
+    public String getTracNo() {
+        return TracNo;
+    }
+
+    public void setTracNo(String tracNo) {
+        TracNo = tracNo;
+    }
+
+    public String getRowNo() {
+        return RowNo;
+    }
+
+    public void setRowNo(String rowNo) {
+        RowNo = rowNo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -689,8 +718,8 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
 
     @Override
     public StockInfo_Model clone() throws CloneNotSupportedException {
-        StockInfo_Model stockInfoModel=null;
-        stockInfoModel=(StockInfo_Model)super.clone();
+        StockInfo_Model stockInfoModel = null;
+        stockInfoModel = (StockInfo_Model) super.clone();
         return stockInfoModel;
     }
 
@@ -774,6 +803,9 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
         dest.writeInt(this.IsAmount);
         dest.writeString(this.fserialno);
         dest.writeInt(this.IsPalletOrBox);
+        dest.writeString(this.ProjectNo);
+        dest.writeString(this.TracNo);
+        dest.writeString(this.RowNo);
     }
 
     protected StockInfo_Model(Parcel in) {
@@ -851,6 +883,9 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
         this.IsAmount = in.readInt();
         this.fserialno = in.readString();
         this.IsPalletOrBox = in.readInt();
+        this.ProjectNo=in.readString();
+        this.TracNo =in.readString();
+        this.RowNo = in.readString();
     }
 
     public static final Creator<StockInfo_Model> CREATOR = new Creator<StockInfo_Model>() {

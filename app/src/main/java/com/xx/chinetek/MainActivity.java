@@ -18,18 +18,11 @@ import com.xx.chinetek.adapter.GridViewItemAdapter;
 import com.xx.chinetek.base.BaseActivity;
 import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.base.ToolBarTitle;
-import com.xx.chinetek.cyproduct.Adjust.AdjustCP;
 import com.xx.chinetek.cyproduct.Billinstock.BillsIn;
-import com.xx.chinetek.cyproduct.LineStockIn.LineStockInMaterial;
-import com.xx.chinetek.cyproduct.LineStockIn.LineStockInProduct;
-import com.xx.chinetek.cyproduct.LineStockOut.LineStockOutProduct;
-import com.xx.chinetek.cyproduct.LineStockOut.LineStockOutReturnBillChoice;
 import com.xx.chinetek.cyproduct.LineStockOut.Zcj;
 import com.xx.chinetek.cyproduct.Manage.LineManage;
 import com.xx.chinetek.cyproduct.WoBillChoice;
 import com.xx.chinetek.cywms.Bu.BuBillChoice;
-import com.xx.chinetek.cywms.Car.CarIn;
-import com.xx.chinetek.cywms.Car.CarOut;
 import com.xx.chinetek.cywms.DaiLi.DLInScan;
 import com.xx.chinetek.cywms.DaiLi.DLOutScan;
 import com.xx.chinetek.cywms.InnerMove.InnerMoveScan;
@@ -41,7 +34,6 @@ import com.xx.chinetek.cywms.OffShelf.OffShelfBillChoice;
 import com.xx.chinetek.cywms.Qc.QCBillChoice;
 import com.xx.chinetek.cywms.Query.QueryMain;
 import com.xx.chinetek.cywms.R;
-import com.xx.chinetek.cywms.Receiption.AdvInChoiceActivity;
 import com.xx.chinetek.cywms.Receiption.ReceiptBillChoice;
 import com.xx.chinetek.cywms.Review.ReviewBillChoice;
 import com.xx.chinetek.cywms.Stock.AdjustStock;
@@ -237,7 +229,7 @@ public class MainActivity extends BaseActivity {
                         itemIconList.add(R.drawable.dismantlepallet);
                         itemNamesList.add("拆托");
                         break;
-//                    case 11:
+//                  case 11:
 //                        itemIconList.add(R.drawable.dismounting);
 //                        itemNamesList.add("装箱拆箱");
 //                        break;

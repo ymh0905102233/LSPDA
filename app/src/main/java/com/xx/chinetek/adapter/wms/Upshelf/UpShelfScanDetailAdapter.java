@@ -77,14 +77,17 @@ public class UpShelfScanDetailAdapter extends BaseAdapter {
        final InStockTaskDetailsInfo_Model inStockTaskDetailsInfoModel=inStockTaskDetailsInfoModels.get(selectID);
         listItemView.txtbarcode.setText(inStockTaskDetailsInfoModel.getMaterialNo());
         listItemView.txtScanNum.setText("");//"扫描数："+inStockTaskDetailsInfoModel.getScanQty()
-        listItemView.txtRemainQty.setText("待上架："+inStockTaskDetailsInfoModel.getRemainQty());
+//        listItemView.txtRemainQty.setText("待上架："+inStockTaskDetailsInfoModel.getRemainQty());
+        listItemView.txtRemainQty.setText("待上架："+inStockTaskDetailsInfoModel.getTaskQty1());
         listItemView.txtreferStock.setText("推荐库位："+GetReferStock(inStockTaskDetailsInfoModel.getLstArea()));
         listItemView.txtMaterialDesc.setText(inStockTaskDetailsInfoModel.getMaterialDesc());
         if (inStockTaskDetailsInfoModel.getScanQty()!=0 &&
-                inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getRemainQty())<0) {
+//                inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getRemainQty())<0) {
+                inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getTaskQty1())<0) {
             convertView.setBackgroundResource(R.color.khaki);
         }
-        else if (inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getRemainQty())==0) {
+//        else if (inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getRemainQty())==0) {
+        else if (inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getTaskQty1())==0) {
             convertView.setBackgroundResource(R.color.springgreen);
         }else{
             convertView.setBackgroundResource(R.color.trans);

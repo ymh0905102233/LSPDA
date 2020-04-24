@@ -1,7 +1,6 @@
 package com.xx.chinetek.cywms.UpShelf;
 
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Message;
@@ -47,13 +46,10 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.xx.chinetek.cywms.R.id.bottom;
 import static com.xx.chinetek.cywms.R.id.edt_StockScan;
 import static com.xx.chinetek.util.function.GsonUtil.parseModelToJson;
 
@@ -186,6 +182,7 @@ public class UpShelfScanActivity extends BaseActivity {
             }
             edtStockScan.setText(areaInfoModel.getAreaNo());
             ScanBarcode(code, areaInfoModel.getAreaNo());
+
         }
         return false;
     }
@@ -252,68 +249,69 @@ public class UpShelfScanActivity extends BaseActivity {
                         }
                     }
                 }
-
-//                         InsertStock();
-                        ArrayList<InStockTaskDetailsInfo_Model> listInStock = new ArrayList<InStockTaskDetailsInfo_Model>();
-                        for (InStockTaskDetailsInfo_Model stockTask :inStockTaskDetailsInfoModels) {
-                            if (stockTask.getLstStockInfo() != null && stockTask.getLstStockInfo().size() > 0) {
-                                listInStock.add(stockTask);
-                            }
-                        }
-
-                        ArrayList<StockInfo_Model> models = new ArrayList<>();
-                        for (int i=0;i<listInStock.size();i++){
-                            if(listInStock.get(i).getLstStockInfo()!=null){
-                                for (int j=0;j<listInStock.get(i).getLstStockInfo().size();j++){
-                                    if((listInStock.get(i).getLstStockInfo().get(j).getFserialno()!=null)&&(!listInStock.get(i).getLstStockInfo().get(j).getFserialno().equals(""))){
-
-                                        StockInfo_Model model = new StockInfo_Model();
-                                        String Fserialno=listInStock.get(i).getLstStockInfo().get(j).getFserialno();
-                                        model.setBarcode(Fserialno);
-                                        model.setSerialNo(Fserialno.substring(Fserialno.length()-14,Fserialno.length()));
-                                        model.setStrongHoldCode("ABH");
-                                        model.setStrongHoldName("ABH");
-                                        model.setCompanyCode("10");
-                                        model.setBarCodeType(5);
-                                        model.setQty(1f);
-                                        model.setAmountQty(1f);
-                                        model.setSupPrdBatch("");
-                                        model.setSupPrdDate(new Date());
-
-                                        Date date = new Date();
-                                        Calendar cal = Calendar.getInstance();
-                                        cal.setTime(date);//设置起时间
-                                        cal.add(Calendar.YEAR, 100);//增加100年
-                                        model.setEDate(cal.getTime());
-                                        model.setBatchNo("");
-                                        model.setAreaID(listInStock.get(i).getLstStockInfo().get(j).getAreaID());
-                                        model.setIsPalletOrBox(listInStock.get(i).getLstStockInfo().get(j).getIsPalletOrBox());
-                                        model.setPalletNo(listInStock.get(i).getLstStockInfo().get(j).getPalletNo());
-                                        if(models.indexOf(model)==-1){
-                                            models.add(model);
-                                        }
-                                    }else{
-                                        models.add(listInStock.get(i).getLstStockInfo().get(j));
-                                    }
-                                }
-                            }
-                            listInStock.get(i).setLstStockInfo(new ArrayList<StockInfo_Model>());
-                        }
-
-                        if(models==null||models.size()==0){
-                            return false;
-                        }
-
-                        //混箱提交处理
-                        listInStock.get(0).setLstStockInfo(models);
-
-                        final Map<String, String> params = new HashMap<String, String>();
-                        String ModelJson = GsonUtil.parseModelToJson(listInStock);
-                        params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
-                        params.put("ModelJson", ModelJson);
-                        LogUtil.WriteLog(UpShelfScanActivity.class, TAG_SaveT_InStockTaskDetailADF, ModelJson);
-                        RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_InStockTaskDetailADF, getString(R.string.Msg_SaveT_InStockTaskDetailADF), context, mHandler, RESULT_Msg_SaveT_InStockTaskDetailADF, null, URLModel.GetURL().SaveT_InStockTaskDetailADF, params, null);
-
+//
+//                //帅选已经扫描的行
+////                         InsertStock();
+//                        ArrayList<InStockTaskDetailsInfo_Model> listInStock = new ArrayList<InStockTaskDetailsInfo_Model>();
+//                        for (InStockTaskDetailsInfo_Model stockTask :inStockTaskDetailsInfoModels) {
+//                            if (stockTask.getLstStockInfo() != null && stockTask.getLstStockInfo().size() > 0) {
+//                                listInStock.add(stockTask);
+//                            }
+//                        }
+////
+////                        ArrayList<StockInfo_Model> models = new ArrayList<>();
+////                        for (int i=0;i<listInStock.size();i++){
+////                            if(listInStock.get(i).getLstStockInfo()!=null){
+////                                for (int j=0;j<listInStock.get(i).getLstStockInfo().size();j++){
+////                                    if((listInStock.get(i).getLstStockInfo().get(j).getFserialno()!=null)&&(!listInStock.get(i).getLstStockInfo().get(j).getFserialno().equals(""))){
+////
+////                                        StockInfo_Model model = new StockInfo_Model();
+////                                        String Fserialno=listInStock.get(i).getLstStockInfo().get(j).getFserialno();
+////                                        model.setBarcode(Fserialno);
+////                                        model.setSerialNo(Fserialno.substring(Fserialno.length()-14,Fserialno.length()));
+////                                        model.setStrongHoldCode("ABH");
+////                                        model.setStrongHoldName("ABH");
+////                                        model.setCompanyCode("10");
+////                                        model.setBarCodeType(5);
+////                                        model.setQty(1f);
+////                                        model.setAmountQty(1f);
+////                                        model.setSupPrdBatch("");
+////                                        model.setSupPrdDate(new Date());
+////
+////                                        Date date = new Date();
+////                                        Calendar cal = Calendar.getInstance();
+////                                        cal.setTime(date);//设置起时间
+////                                        cal.add(Calendar.YEAR, 100);//增加100年
+////                                        model.setEDate(cal.getTime());
+////                                        model.setBatchNo("");
+////                                        model.setAreaID(listInStock.get(i).getLstStockInfo().get(j).getAreaID());
+////                                        model.setIsPalletOrBox(listInStock.get(i).getLstStockInfo().get(j).getIsPalletOrBox());
+////                                        model.setPalletNo(listInStock.get(i).getLstStockInfo().get(j).getPalletNo());
+////                                        if(models.indexOf(model)==-1){
+////                                            models.add(model);
+////                                        }
+////                                    }else{
+////                                        models.add(listInStock.get(i).getLstStockInfo().get(j));
+////                                    }
+////                                }
+////                            }
+////                            listInStock.get(i).setLstStockInfo(new ArrayList<StockInfo_Model>());
+////                        }
+////
+////                        if(models==null||models.size()==0){
+////                            return false;
+////                        }
+//
+//                        //混箱提交处理
+////                        listInStock.get(0).setLstStockInfo(models);
+////一个个提交
+//                        final Map<String, String> params = new HashMap<String, String>();
+//                        String ModelJson = GsonUtil.parseModelToJson(listInStock);
+//                        params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
+//                        params.put("ModelJson", ModelJson);
+////                        LogUtil.WriteLog(UpShelfScanActivity.class, TAG_SaveT_InStockTaskDetailADF, ModelJson);
+////                        RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_InStockTaskDetailADF, getString(R.string.Msg_SaveT_InStockTaskDetailADF), context, mHandler, RESULT_Msg_SaveT_InStockTaskDetailADF, null, URLModel.GetURL().SaveT_InStockTaskDetailADF, params, null);
+////
 
                     //  InitFrm(stockInfoModels.get(0));
                     // BindListVIew(inStockTaskDetailsInfoModels);
@@ -331,25 +329,32 @@ public class UpShelfScanActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
-        menu.findItem(R.id.action_filter).setVisible(false);
+        menu.findItem(R.id.action_filter).setVisible(true);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_filter) {
-//            if (DoubleClickCheck.isFastDoubleClick(context)) {
-//                return false;
-//            }
-//            if (areaInfoModel != null && stockInfoModels != null) {
-//                InsertStock();
-//                final Map<String, String> params = new HashMap<String, String>();
-//                String ModelJson = GsonUtil.parseModelToJson(inStockTaskDetailsInfoModels);
-//                params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
-//                params.put("ModelJson", ModelJson);
-//                LogUtil.WriteLog(UpShelfScanActivity.class, TAG_SaveT_InStockTaskDetailADF, ModelJson);
-//                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_InStockTaskDetailADF, getString(R.string.Msg_SaveT_InStockTaskDetailADF), context, mHandler, RESULT_Msg_SaveT_InStockTaskDetailADF, null, URLModel.GetURL().SaveT_InStockTaskDetailADF, params, null);
-//            }
+            if (DoubleClickCheck.isFastDoubleClick(context)) {
+                return false;
+            }
+            if (areaInfoModel != null && stockInfoModels != null) {
+                //筛选已经扫描的行
+                ArrayList<InStockTaskDetailsInfo_Model> listInStock = new ArrayList<InStockTaskDetailsInfo_Model>();
+                for (InStockTaskDetailsInfo_Model stockTask :inStockTaskDetailsInfoModels) {
+                    if (stockTask.getLstStockInfo() != null && stockTask.getLstStockInfo().size() > 0) {
+                        listInStock.add(stockTask);
+                    }
+                }
+                final Map<String, String> params = new HashMap<String, String>();
+                String ModelJson = GsonUtil.parseModelToJson(listInStock);
+                params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
+                params.put("ModelJson", ModelJson);
+                LogUtil.WriteLog(UpShelfScanActivity.class, TAG_SaveT_InStockTaskDetailADF, ModelJson);
+                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_InStockTaskDetailADF, getString(R.string.Msg_SaveT_InStockTaskDetailADF), context, mHandler, RESULT_Msg_SaveT_InStockTaskDetailADF, null, URLModel.GetURL().SaveT_InStockTaskDetailADF, params, null);
+
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -380,7 +385,8 @@ public class UpShelfScanActivity extends BaseActivity {
                 boolean isUpFull = true;
                 for (InStockTaskDetailsInfo_Model model :
                         inStockTaskDetailsInfoModels) {
-                    if (model.getRemainQty() > 0) {
+//                    if (model.getRemainQty() > 0) {
+                    if (model.getTaskQty1() > 0) {
                         isUpFull = false;
                         break;
                     }
@@ -403,9 +409,13 @@ public class UpShelfScanActivity extends BaseActivity {
                     });
                     builder.show();
                 }
+               if (inStockTaskDetailsInfoModels!=null){
+                   Collections.sort(inStockTaskDetailsInfoModels, new InStockTaskDetailsInfo_Model());
+                   BindListVIew(inStockTaskDetailsInfoModels);
+               }else {
 
-                Collections.sort(inStockTaskDetailsInfoModels, new InStockTaskDetailsInfo_Model());
-                BindListVIew(inStockTaskDetailsInfoModels);
+               }
+
 //            //自动确认扫描箱号 删除，上架需要扫描库位
 //            if(stockInfoModels!=null ) {
 //                for (StockInfo_Model stockInfoModel : stockInfoModels) {
@@ -464,26 +474,26 @@ public class UpShelfScanActivity extends BaseActivity {
         }.getType());
         if (returnMsgModel.getHeaderStatus().equals("S")) {
 //            stockInfoModels = returnMsgModel.getModelJson();
-            stockInfoModels = new ArrayList<StockInfo_Model>();
-            ArrayList<StockInfo_Model> stockInfoModelsT=returnMsgModel.getModelJson();
+            stockInfoModels = returnMsgModel.getModelJson();;
+//            ArrayList<StockInfo_Model> stockInfoModelsT=returnMsgModel.getModelJson();
             //ymh混箱处理
-            float SumQty=0f;//计算数量和总数
-            for(int i=0;i<stockInfoModelsT.size();i++){
-                if (stockInfoModelsT.get(i).getLstHBarCode()!=null&&stockInfoModelsT.get(i).getLstHBarCode().size()>0){
-                    for(int j=0;j<stockInfoModelsT.get(i).getLstHBarCode().size();j++){
-                        SumQty=SumQty+stockInfoModelsT.get(i).getLstHBarCode().get(j).getQty();
-                        stockInfoModelsT.get(i).getLstHBarCode().get(j).setAreaID(stockInfoModelsT.get(i).getAreaID());
-                        stockInfoModels.add(stockInfoModelsT.get(i).getLstHBarCode().get(j));
-                    }
-                }else{
-                    SumQty=SumQty+stockInfoModelsT.get(i).getQty();
-                    stockInfoModels.add(stockInfoModelsT.get(i));
-                }
-            }
+            //float SumQty=0f;//计算数量和总数
+//            for(int i=0;i<stockInfoModelsT.size();i++){
+//                if (stockInfoModelsT.get(i).getLstHBarCode()!=null&&stockInfoModelsT.get(i).getLstHBarCode().size()>0){
+//                    for(int j=0;j<stockInfoModelsT.get(i).getLstHBarCode().size();j++){
+//                        SumQty=SumQty+stockInfoModelsT.get(i).getLstHBarCode().get(j).getQty();
+//                        stockInfoModelsT.get(i).getLstHBarCode().get(j).setAreaID(stockInfoModelsT.get(i).getAreaID());
+//                        stockInfoModels.add(stockInfoModelsT.get(i).getLstHBarCode().get(j));
+//                    }
+//                }else{
+//                    SumQty=SumQty+stockInfoModelsT.get(i).getQty();
+//                    stockInfoModels.add(stockInfoModelsT.get(i));
+//                }
+//            }
             //混箱处理
             //计算数量和总数
-            int barcodeCount=stockInfoModelsT.size();
-            txtAll1.setText("个数："+barcodeCount+"数量："+SumQty);
+//            int barcodeCount=stockInfoModelsT.size();
+//            txtAll1.setText("个数："+barcodeCount+"数量："+SumQty);
 
             if (stockInfoModels != null && stockInfoModels.size() != 0) {
                 barcodeQty = stockInfoModels.get(0).getQty();
@@ -502,6 +512,8 @@ public class UpShelfScanActivity extends BaseActivity {
                     edtUpScanQtyClick(null, KeyEvent.KEYCODE_ENTER, key);
                 }
 
+                Collections.sort(inStockTaskDetailsInfoModels, new InStockTaskDetailsInfo_Model());
+                BindListVIew(inStockTaskDetailsInfoModels);
 
             } else {
                 MessageBox.Show(context, "未获取到条码信息");
@@ -555,6 +567,7 @@ public class UpShelfScanActivity extends BaseActivity {
             if(returnMsgModel.getHeaderStatus().equals("S")){
                 ClearFrm();
                 GetInStockTaskDetail(inStockTaskInfoModel);
+
             }else{
                 MessageBox.Show(context, returnMsgModel.getMessage());
             }
@@ -624,11 +637,12 @@ public class UpShelfScanActivity extends BaseActivity {
                         inStockTaskDetailsInfoModels.get(index).setLstStockInfo(new ArrayList<StockInfo_Model>());
                     if (!inStockTaskDetailsInfoModels.get(index).getLstStockInfo().contains(StockInfo_Model)) {
                         Float qty = ArithUtil.add(inStockTaskDetailsInfoModels.get(index).getScanQty(), upQty);
-                        if (qty <= inStockTaskDetailsInfoModels.get(index).getRemainQty()) {
+//                        if (qty <= inStockTaskDetailsInfoModels.get(index).getRemainQty()) {
+                        if (qty <= inStockTaskDetailsInfoModels.get(index).getTaskQty1()) {
                             if (inStockTaskDetailsInfoModels.get(index).getFromErpWarehouse().equals(inStockTaskDetailsInfoModels.get(index).getToErpWarehouse())) {//不同仓库需要触发调拨业务员
-                                inStockTaskDetailsInfoModels.get(index).setVoucherType(999);//不生成调拨
+//                                inStockTaskDetailsInfoModels.get(index).setVoucherType(999);//不生成调拨
                             } else {
-                                inStockTaskDetailsInfoModels.get(index).setVoucherType(9996);//生成调拨单   9996
+//                                inStockTaskDetailsInfoModels.get(index).setVoucherType(9996);//生成调拨单   9996
                                 inStockTaskDetailsInfoModels.get(index).setErpVoucherType("DB6");
                                 inStockTaskDetailsInfoModels.get(index).setFromErpAreaNo("");
                                 inStockTaskDetailsInfoModels.get(index).setToErpAreaNo("");
@@ -636,7 +650,7 @@ public class UpShelfScanActivity extends BaseActivity {
                             }
 
                             inStockTaskDetailsInfoModels.get(index).setScanQty(qty);
-                            txtUpShelfNum.setText(inStockTaskDetailsInfoModels.get(index).getRemainQty() + "");
+                            txtUpShelfNum.setText(inStockTaskDetailsInfoModels.get(index).getTaskQty1() + "");
                             txtUpShelfScanNum.setText(inStockTaskDetailsInfoModels.get(index).getScanQty() + "");
                             // edtUpShelfScanBarcode.setText(StockInfo_Model.getBarcode()+"");
                             //StockInfo_Model.setAreaNo(edtStockScan.getText().toString().trim());

@@ -105,7 +105,7 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
     private String ToErpAreaNo;
     private String ToErpWarehouse;
     private String WareHouseName;
-    private float TaskQty1; //质检数量
+    private float TaskQty1; // 上架数量（质检合格的数量）
     public String getWareHouseName() {
         return WareHouseName;
     }
@@ -677,6 +677,14 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
         return lstStockInfo;
     }
 
+    public float getTaskQty1() {
+        return TaskQty1;
+    }
+
+    public void setTaskQty1(float taskQty1) {
+        TaskQty1 = taskQty1;
+    }
+
     public void setLstStockInfo(ArrayList<StockInfo_Model> lstStockInfo) {
         this.lstStockInfo = lstStockInfo;
     }
@@ -792,6 +800,7 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
         dest.writeString(this.ToErpAreaNo);
         dest.writeString(this.ToErpWarehouse);
         dest.writeString(this.WareHouseName);
+        dest.writeValue(this.TaskQty1);
     }
 
     protected InStockTaskDetailsInfo_Model(Parcel in) {
@@ -869,6 +878,7 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
         this.ToErpAreaNo = in.readString();
         this.ToErpWarehouse = in.readString();
         this.WareHouseName = in.readString();
+        this.TaskQty1=(Float) in.readValue(Float.class.getClassLoader());
     }
 
     public static final Creator<InStockTaskDetailsInfo_Model> CREATOR = new Creator<InStockTaskDetailsInfo_Model>() {

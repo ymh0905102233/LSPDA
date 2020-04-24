@@ -51,21 +51,23 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
     private String TaskIsSueduser;
     private String MaterialNo;
     private String ErpDocNo;
-    private String PickLeaderUserNo;
-    private String PickUserNo;
-    private String PickUserName;
-    private String FloorName;
-    private String HeightAreaName;
-    private String IssueType;
-    private String IsEdate; //1:不检查 2：检查
-    private  int  WareHouseID;
-    private  String  StrHouseProp;
-    private  String  CarNo;
-    private  String  BarCode;
-    private  int  TaskCount;
-    private String TradingConditionsName;
-    private String CustomerName;
-
+    private String  PickLeaderUserNo;
+    private String  PickUserNo;
+    private String  PickUserName;
+    private String  FloorName;
+    private String  HeightAreaName;
+    private String  IssueType;
+    private String  IsEdate; //1:不检查 2：检查
+    private  int    WareHouseID;
+    private  String StrHouseProp;
+    private  String CarNo;
+    private  String BarCode;
+    private  int    TaskCount;
+    private String  TradingConditionsName;
+    private String  CustomerName;
+    private String  ProjectNo;
+    private String  TracNo;
+    private String  RowNo;
     public String getCustomerName() {
         return CustomerName;
     }
@@ -432,6 +434,30 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
         IssueType = issueType;
     }
 
+    public String getProjectNo() {
+        return ProjectNo;
+    }
+
+    public void setProjectNo(String projectNo) {
+        ProjectNo = projectNo;
+    }
+
+    public String getTracNo() {
+        return TracNo;
+    }
+
+    public void setTracNo(String tracNo) {
+        TracNo = tracNo;
+    }
+
+    public String getRowNo() {
+        return RowNo;
+    }
+
+    public void setRowNo(String rowNo) {
+        RowNo = rowNo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -496,6 +522,8 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
         dest.writeInt(this.TaskCount);
         dest.writeString(this.TradingConditionsName);
         dest.writeString(this.CustomerName);
+        dest.writeString(this.ProjectNo);
+        dest.writeString(this.TracNo);
     }
 
     protected OutStockTaskInfo_Model(Parcel in) {
@@ -546,6 +574,9 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
         this.TaskCount = in.readInt();
         this.TradingConditionsName = in.readString();
         this.CustomerName = in.readString();
+        this.ProjectNo=in.readString();
+        this.TracNo =in.readString();
+        this.RowNo = in.readString();
     }
 
     public static final Creator<OutStockTaskInfo_Model> CREATOR = new Creator<OutStockTaskInfo_Model>() {

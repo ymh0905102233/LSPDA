@@ -32,7 +32,6 @@ import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
 import com.xx.chinetek.model.User.UerInfo;
 import com.xx.chinetek.model.WMS.OffShelf.OutStockTaskInfo_Model;
-import com.xx.chinetek.model.WMS.Stock.StockInfo_Model;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
 import com.xx.chinetek.util.dialog.MessageBox;
@@ -469,7 +468,8 @@ public class OffShelfBillChoice extends BaseActivity  implements SwipeRefreshLay
     }
 
     void StartScanIntent(ArrayList<OutStockTaskInfo_Model> outStockTaskInfoModels){
-        Intent intent = new Intent(context, OffshelfScan.class);
+//        Intent intent = new Intent(context, OffshelfScan.class);
+        Intent intent = new Intent(context, OffshelfBatchScan.class);
         Bundle  bundle=new Bundle();
         for(int i=0;i<outStockTaskInfoModels.size();i++){
             outStockTaskInfoModels.get(i).setWareHouseID(BaseApplication.userInfo.getWarehouseID());

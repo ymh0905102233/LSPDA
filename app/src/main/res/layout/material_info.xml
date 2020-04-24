@@ -8,6 +8,7 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:visibility="invisible"
         android:id="@+id/txt_EDate"
         style="@style/TextViewComminStyle"
         android:layout_width="0dp"
