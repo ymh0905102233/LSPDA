@@ -1,14 +1,12 @@
 package com.xx.chinetek.cywms.Stock;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -40,7 +38,6 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -287,7 +284,7 @@ public class AdjustStock extends BaseActivity {
             barcodeModel.setQty(Float.parseFloat(adjustNum));
             barcodeModel.setEDate(CommonUtil.dateStrConvertDate( txtchangeEData.getText().toString()));
             barcodeModel.setSTATUS(3);
-            barcodeModel.setStrongHoldCode("ABH");
+//            barcodeModel.setStrongHoldCode("ABH");
 
             ArrayList<Barcode_Model> barcodeModels=new ArrayList<>();
             barcodeModels.add(barcodeModel);

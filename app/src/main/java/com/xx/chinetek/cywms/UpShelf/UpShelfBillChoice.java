@@ -169,6 +169,7 @@ public class UpShelfBillChoice extends BaseActivity implements SwipeRefreshLayou
 
     void GetT_InStockTaskInfoList(InStockTaskInfo_Model inStockTaskInfoModel) {
         try {
+            inStockTaskInfoModel.setPcOrPda("0");
             String ModelJson = GsonUtil.parseModelToJson(inStockTaskInfoModel);
             Map<String, String> params = new HashMap<>();
             params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));

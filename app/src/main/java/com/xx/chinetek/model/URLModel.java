@@ -107,6 +107,7 @@ public class URLModel {
     public String GetPickUserListByUserADF=GetWCFAdress()+"GetPickUserListByUserADF";//获取拣货人员信息
     public String SavePickUserListADF=GetWCFAdress()+"SavePickUserListADF";//提交拣货分配人员信息
     public String GetStockByMaterialNoADF=GetWCFAdress()+"GetStockByMaterialNoADF";//获取查询信息
+    public String GetOutBarCodeForPrint=GetWCFAdress()+"GetOutBarCodeForPrint";//获取补打条码查询信息
 
     //生产
     public String GetT_LineManageInfoModel=GetWCFAdress()+"GetT_LineManageInfoModel";//获取作业记录

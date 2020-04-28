@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xx.chinetek.cywms.BuildConfig;
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.model.URLModel;
 
@@ -208,9 +208,12 @@ public class UpdateVersionService {
         double versionCode = 0.0;
         try {
             // 获取软件版本号，对应AndroidManifest.xml下android:versionCode
-            versionCode = Double.parseDouble(context.getPackageManager().getPackageInfo("com.xx.chinetek.cywms", 0).versionName);
+//            versionCode = Double.parseDouble(context.getPackageManager().getPackageInfo("com.xx.chinetek.cywms", 0).versionName);
+            versionCode = Double.parseDouble(BuildConfig.VERSION_NAME);
             //Toast.makeText(context, "当前版本是: " + versionCode, Toast.LENGTH_SHORT).show();
-        } catch (NameNotFoundException e) {
+//        } catch (NameNotFoundException e) {
+//            e.printStackTrace();
+       } catch (Exception e) {
             e.printStackTrace();
         }
         return versionCode;

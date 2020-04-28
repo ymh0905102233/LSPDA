@@ -33,7 +33,7 @@ public class Receipt_Model extends Base_Model implements Parcelable {
     private List<ReceiptDetail_Model> lstDetail;
     private String Note;
     private  int  WareHouseID;
-
+    private  String PcOrPda;
     public int getWareHouseID() {
         return WareHouseID;
     }
@@ -130,6 +130,14 @@ public class Receipt_Model extends Base_Model implements Parcelable {
         VoucherNo = voucherNo;
     }
 
+    public String getPcOrPda() {
+        return PcOrPda;
+    }
+
+    public void setPcOrPda(String pcOrPda) {
+        PcOrPda = pcOrPda;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -166,6 +174,7 @@ public class Receipt_Model extends Base_Model implements Parcelable {
         dest.writeTypedList(this.lstDetail);
         dest.writeString(this.Note);
         dest.writeInt(this.WareHouseID);
+        dest.writeString(this.PcOrPda);
     }
 
     protected Receipt_Model(Parcel in) {
@@ -182,6 +191,7 @@ public class Receipt_Model extends Base_Model implements Parcelable {
         this.lstDetail = in.createTypedArrayList(ReceiptDetail_Model.CREATOR);
         this.Note = in.readString();
         this.WareHouseID = in.readInt();
+        this.PcOrPda=in.readString();
     }
 
     public static final Creator<Receipt_Model> CREATOR = new Creator<Receipt_Model>() {

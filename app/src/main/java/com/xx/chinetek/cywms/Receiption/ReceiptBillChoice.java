@@ -332,6 +332,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
 
     void GetT_InStockList(Receipt_Model receiptModel) {
         try {
+            receiptModel.setPcOrPda("0");
             String ModelJson = GsonUtil.parseModelToJson(receiptModel);
             Map<String, String> params = new HashMap<>();
             params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));

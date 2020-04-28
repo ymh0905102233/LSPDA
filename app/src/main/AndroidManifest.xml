@@ -116,7 +116,8 @@
         <activity android:name=".Intentory.IntentoryFinc" />
         <activity android:name=".Query.AddProductActivity"></activity>
         <activity android:name=".Query.AddProductQHActivity"></activity>
-
+        <activity android:name=".OffShelf.OffshelfBatchScan"></activity>
+        <activity android:name=".Query.PatchBarcode.PatchBarcode"></activity>
     </application>
 
 </manifest>

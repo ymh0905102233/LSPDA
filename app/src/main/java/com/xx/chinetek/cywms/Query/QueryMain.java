@@ -10,6 +10,7 @@ import com.xx.chinetek.adapter.GridViewItemAdapter;
 import com.xx.chinetek.base.BaseActivity;
 import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.base.ToolBarTitle;
+import com.xx.chinetek.cywms.Query.PatchBarcode.PatchBarcode;
 import com.xx.chinetek.cywms.R;
 
 import org.xutils.view.annotation.ContentView;
@@ -44,9 +45,9 @@ public class QueryMain extends BaseActivity {
     //,R.drawable.workno
     public List<Map<String, Object>> getData(){
         List<Map<String, Object>> data_list = new ArrayList<Map<String, Object>>();
-        int[] itemIcon = new int[]{ R.drawable.material,R.drawable.stock, R.drawable.batch,R.drawable.query
+        int[] itemIcon = new int[]{ R.drawable.material,R.drawable.stock, R.drawable.batch,R.drawable.query,R.drawable.material,R.drawable.material
         };
-        String[] itemNames = new String[]{"物料","库位","批次","EAN"
+        String[] itemNames = new String[]{"物料","库位","批次","EAN","条码","条码补打"
         };
         //cion和iconName的长度是相同的，这里任选其一都可以
         for(int i=0;i<itemIcon.length;i++){
@@ -80,13 +81,22 @@ public class QueryMain extends BaseActivity {
                 intent.putExtra("Type",5);
                 break;
             case 4:
-                intent = new Intent();
-                intent.setClass(context, AddProductActivity.class);
+                BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.query_barcode), true);
+                intent.putExtra("Type",6);
                 break;
+//                case 4:
+//                intent = new Intent();
+//                intent.setClass(context, AddProductActivity.class);
+//                break;
             case 5:
                 intent = new Intent();
-                intent.setClass(context, AddProductQHActivity.class);
+                BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.query_barcode_patch), true);
+                intent.setClass(context, PatchBarcode.class);
                 break;
+//            case 5:
+//                intent = new Intent();
+//                intent.setClass(context, AddProductQHActivity.class);
+//                break;
 
         }
             startActivityLeft(intent);

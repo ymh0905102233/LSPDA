@@ -58,7 +58,7 @@ public class InStockTaskInfo_Model extends Base_Model implements Parcelable {
     private String StrTaskType;
     private String StrTaskIsSuedUser;
     private int WareHouseID;
-
+    private String PcOrPda;
     public int getWareHouseID() {
         return WareHouseID;
     }
@@ -349,6 +349,14 @@ public class InStockTaskInfo_Model extends Base_Model implements Parcelable {
         TaskType = taskType;
     }
 
+    public String getPcOrPda() {
+        return PcOrPda;
+    }
+
+    public void setPcOrPda(String pcOrPda) {
+        PcOrPda = pcOrPda;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -403,6 +411,7 @@ public class InStockTaskInfo_Model extends Base_Model implements Parcelable {
         dest.writeString(this.StrTaskType);
         dest.writeString(this.StrTaskIsSuedUser);
         dest.writeInt(this.WareHouseID);
+        dest.writeString(this.PcOrPda);
     }
 
     protected InStockTaskInfo_Model(Parcel in) {
@@ -447,6 +456,7 @@ public class InStockTaskInfo_Model extends Base_Model implements Parcelable {
         this.StrTaskType = in.readString();
         this.StrTaskIsSuedUser = in.readString();
         this.WareHouseID = in.readInt();
+        this.PcOrPda=in.readString();
     }
 
     public static final Creator<InStockTaskInfo_Model> CREATOR = new Creator<InStockTaskInfo_Model>() {

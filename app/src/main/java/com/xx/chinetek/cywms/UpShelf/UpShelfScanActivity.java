@@ -426,7 +426,20 @@ public class UpShelfScanActivity extends BaseActivity {
 //                CommonUtil.setEditFocus(edtStockScan);
 //            }
             } else {
-                MessageBox.Show(context, returnMsgModel.getMessage());
+                if (returnMsgModel.getMessage().contains("获取上架任务表体数据列表为空")){
+                    new AlertDialog.Builder(context).setTitle("提示").setCancelable(false).setIcon(android.R.drawable.ic_dialog_info).setMessage("当前任务已全部上架完成,返回重选任务")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // TODO 自动生成的方法
+                                    closeActiviry();
+                                }
+                            }).show();
+                }else {
+                    MessageBox.Show(context, returnMsgModel.getMessage());
+                }
+
+
             }
         } catch (Exception ex) {
             MessageBox.Show(context, ex.getMessage());
@@ -514,7 +527,7 @@ public class UpShelfScanActivity extends BaseActivity {
 
                 Collections.sort(inStockTaskDetailsInfoModels, new InStockTaskDetailsInfo_Model());
                 BindListVIew(inStockTaskDetailsInfoModels);
-
+                CommonUtil.setEditFocus(edtUpShelfScanBarcode);
             } else {
                 MessageBox.Show(context, "未获取到条码信息");
                 CommonUtil.setEditFocus(edtUpShelfScanBarcode);
@@ -565,8 +578,16 @@ public class UpShelfScanActivity extends BaseActivity {
             ReturnMsgModel<Base_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
             }.getType());
             if(returnMsgModel.getHeaderStatus().equals("S")){
-                ClearFrm();
-                GetInStockTaskDetail(inStockTaskInfoModel);
+                new AlertDialog.Builder(context).setTitle("提示").setCancelable(false).setIcon(android.R.drawable.ic_dialog_info).setMessage(returnMsgModel.getMessage())
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO 自动生成的方法
+                                ClearFrm();
+                                GetInStockTaskDetail(inStockTaskInfoModel);
+                            }
+                        }).show();
+
 
             }else{
                 MessageBox.Show(context, returnMsgModel.getMessage());
