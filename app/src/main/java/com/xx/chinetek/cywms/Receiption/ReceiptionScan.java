@@ -31,6 +31,7 @@ import com.xx.chinetek.model.Receiption.Receipt_Model;
 import com.xx.chinetek.model.ReturnMsgModel;
 import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
+import com.xx.chinetek.model.User.UerInfo;
 import com.xx.chinetek.model.WMS.Stock.AreaInfo_Model;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
@@ -65,11 +66,12 @@ public class ReceiptionScan extends BaseActivity {
     String TAG_GetT_InStockDetailListByHeaderIDADF = "ReceiptionScan_GetT_InStockDetailListByHeaderIDADF";
     String TAG_GetT_PalletDetailByBarCodeADF       = "ReceiptionScan_GetT_PalletDetailByBarCodeADF";
     String TAG_SaveT_InStockDetailADF              = "ReceiptionScan_SaveT_InStockDetailADF";
-    String TAG_GetAreaModelADF = "ReceiptionScan_GetAreaModelADF";
+    String TAG_GetAreaModelADF                     = "ReceiptionScan_GetAreaModelADF";
     private final int RESULT_Msg_GetT_InStockDetailListByHeaderIDADF = 101;
     private final int RESULT_Msg_GetT_PalletDetailByBarCode          = 102;
     private final int RESULT_Msg_SaveT_InStockDetailADF              = 103;
-    private final int RESULT_Msg_GetAreaModelADF = 104;
+    private final int RESULT_Msg_GetAreaModelADF                     = 104;
+
     @Override
     public void onHandleMessage(Message msg) {
         switch (msg.what) {
@@ -122,6 +124,8 @@ public class ReceiptionScan extends BaseActivity {
     TextView txtAll1;
     @ViewInject(R.id.edt_area_no)
     EditText mAreaNo;
+    @ViewInject(R.id.textView33)
+    TextView mAreaName;
 
     ReceiptScanDetailAdapter       receiptScanDetailAdapter;
     ArrayList<ReceiptDetail_Model> receiptDetailModels = new ArrayList<>();
@@ -129,7 +133,8 @@ public class ReceiptionScan extends BaseActivity {
     Receipt_Model                  receiptModel        = null;
     UUID                           mUuid               = null;
     //  boolean isDel=false;//删除已扫条码
-    AreaInfo_Model areaInfoModel = null;//扫描库位
+    AreaInfo_Model                 mAreaInfoModel      = null;//扫描库位
+
     @Override
     protected void initViews() {
         super.initViews();
@@ -137,6 +142,12 @@ public class ReceiptionScan extends BaseActivity {
         BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.receiptscan_subtitle) + "-" + BaseApplication.userInfo.getWarehouseName(), true);
         x.view().inject(this);
         BaseApplication.isCloseActivity = false;
+        if (BaseApplication.userInfo.getISVWAREHOUSE() == 0) {
+            setAreaBar(true);
+        } else {
+            setAreaBar(false);
+        }
+
     }
 
     @Override
@@ -147,6 +158,8 @@ public class ReceiptionScan extends BaseActivity {
         GetReceiptDetail(receiptModel);
 
     }
+
+
     @Event(value = R.id.edt_area_no, type = View.OnKeyListener.class)
     private boolean edtStockScanClick(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
@@ -171,6 +184,7 @@ public class ReceiptionScan extends BaseActivity {
         }
         return false;
     }
+
 
     @Event(value = R.id.edt_RecScanBarcode, type = View.OnKeyListener.class)
     private boolean edtRecScanBarcode(View v, int keyCode, KeyEvent event) {
@@ -197,7 +211,7 @@ public class ReceiptionScan extends BaseActivity {
             ReturnMsgModel<AreaInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<AreaInfo_Model>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
-                areaInfoModel = returnMsgModel.getModelJson();
+                mAreaInfoModel = returnMsgModel.getModelJson();
                 mAreaNo.setText("");
 //                stockInfoModels = null;
                 CommonUtil.setEditFocus(edtRecScanBarcode);
@@ -330,7 +344,7 @@ public class ReceiptionScan extends BaseActivity {
                             break;
                         }
                     }
-                    if (mUuid==null){
+                    if (mUuid == null) {
                         mUuid = UUID.randomUUID();
                     }
                     //receiptDetailModels
@@ -340,7 +354,7 @@ public class ReceiptionScan extends BaseActivity {
                     boolean isMaterialRowScanFinish = true;
                     for (ReceiptDetail_Model materialItem : FirstreceiptDetailModels) {
                         if (materialItem != null) {
-                            if ((materialItem.getRemainQty()- materialItem.getScanQty())!=0 || materialItem.getScanQty() == 0) {
+                            if ((materialItem.getRemainQty() - materialItem.getScanQty()) != 0 || materialItem.getScanQty() == 0) {
                                 isMaterialRowScanFinish = false;
                                 break;
                             }
@@ -351,9 +365,30 @@ public class ReceiptionScan extends BaseActivity {
                         MessageBox.Show(context, "物料没有全部扫描完成,不能提交");
                         return false;
                     }
+                    UerInfo userInfo = null;
+                    if (BaseApplication.userInfo.getISVWAREHOUSE() == 0) {
+                        if (mAreaInfoModel == null) {
+                            MessageBox.Show(context, "库位信息不能为空!请扫描库位");
+                            return false;
+                        }
+
+                        userInfo = BaseApplication.userInfo.clone();
+                        userInfo.setWarehouseID(mAreaInfoModel.getWarehouseID());
+                        userInfo.setReceiveHouseID(mAreaInfoModel.getHouseID());
+                        userInfo.setReceiveAreaID(mAreaInfoModel.getID());
+                        userInfo.setReceiveWareHouseNo(mAreaInfoModel.getWarehouseNo());
+                        userInfo.setReceiveHouseNo(mAreaInfoModel.getHouseNo());
+                        userInfo.setReceiveAreaNo(mAreaInfoModel.getAreaNo());
+                        userInfo.setReceiveWareHouseName(mAreaInfoModel.getWarehouseName());
+
+
+                    } else {
+                        userInfo = BaseApplication.userInfo;
+                    }
+
                     final Map<String, String> params = new HashMap<String, String>();
                     String ModelJson = GsonUtil.parseModelToJson(FirstreceiptDetailModels);
-                    String UserJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
+                    String UserJson = GsonUtil.parseModelToJson(userInfo);
                     params.put("UserJson", UserJson);
                     params.put("ModelJson", ModelJson);
                     LogUtil.WriteLog(ReceiptionScan.class, TAG_SaveT_InStockDetailADF, ModelJson);
@@ -496,7 +531,7 @@ public class ReceiptionScan extends BaseActivity {
             final ReturnMsgModel<Base_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
-                mUuid=null;
+                mUuid = null;
                 new AlertDialog.Builder(context).setTitle("提示").setCancelable(false).setIcon(android.R.drawable.ic_dialog_info).setMessage(returnMsgModel.getMessage())
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
@@ -539,8 +574,15 @@ public class ReceiptionScan extends BaseActivity {
                 for (BarCodeInfo barCodeInfo : barCodeInfos) {
                     if (barCodeInfo != null && receiptDetailModels != null) {
 //                        ReceiptDetail_Model receiptDetailModel = new ReceiptDetail_Model(barCodeInfo.getMaterialNo(),barCodeInfo.getBatchNo(),barCodeInfo.getInvoiceNo().trim());
-                        ReceiptDetail_Model receiptDetailModel = new ReceiptDetail_Model(barCodeInfo.getMaterialNo(), barCodeInfo.getRowNo());
+                        ReceiptDetail_Model receiptDetailModel = null;
                         //ReceiptDetail_Model receiptDetailModel = new ReceiptDetail_Model(barCodeInfo.getMaterialNo(),barCodeInfo.getBatchNo());
+                        if (receiptDetailModels.get(0).getVoucherType() == 30) {
+                            receiptDetailModel = new ReceiptDetail_Model(barCodeInfo.getMaterialNo());
+                        } else {
+                            receiptDetailModel = new ReceiptDetail_Model(barCodeInfo.getMaterialNo(), barCodeInfo.getRowNo());
+
+                        }
+                        receiptDetailModel.setVoucherType(30);
                         final int index = receiptDetailModels.indexOf(receiptDetailModel);
                         if (index != -1) {
 
@@ -641,5 +683,26 @@ public class ReceiptionScan extends BaseActivity {
     private void BindListVIew(ArrayList<ReceiptDetail_Model> receiptDetailModels) {
         receiptScanDetailAdapter = new ReceiptScanDetailAdapter(context, "采购收货", receiptDetailModels);
         lsvReceiptScan.setAdapter(receiptScanDetailAdapter);
+    }
+
+    /**
+     * @desc: 是否显示库位栏
+     * @param:
+     * @return:
+     * @author: Nietzsche
+     * @time 2020/5/4 11:00
+     */
+    private void setAreaBar(boolean visiable) {
+        if (visiable) {
+            if (mAreaNo.getVisibility() == View.GONE) {
+                mAreaNo.setVisibility(View.VISIBLE);
+            }
+            if (mAreaName.getVisibility() == View.GONE) {
+                mAreaName.setVisibility(View.VISIBLE);
+            }
+        } else {
+            mAreaNo.setVisibility(View.GONE);
+            mAreaName.setVisibility(View.GONE);
+        }
     }
 }

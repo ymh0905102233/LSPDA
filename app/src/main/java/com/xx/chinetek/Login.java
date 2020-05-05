@@ -5,19 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Message;
-import android.support.v7.widget.PopupMenu;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.google.gson.reflect.TypeToken;
@@ -38,19 +30,16 @@ import com.xx.chinetek.util.function.CommonUtil;
 import com.xx.chinetek.util.function.DESUtil;
 import com.xx.chinetek.util.function.GsonUtil;
 import com.xx.chinetek.util.log.LogUtil;
-import com.zebra.android.devdemo.connectivity.ConnectivityDemo;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.example.mylibrary.LPK130;
 
 
 @ContentView(R.layout.activity_login)
@@ -203,6 +192,7 @@ public class Login extends BaseActivity{
                 if (wareHouse.getWareHouseName().equals(txtWareHousName.getText().toString()))
                 {
                     BaseApplication.userInfo.setWarehouseCode(wareHouse.getWareHouseNo());
+                    BaseApplication.userInfo.setISVWAREHOUSE(wareHouse.getISVWAREHOUSE());
                 }
             }
 
@@ -275,6 +265,7 @@ public class Login extends BaseActivity{
                             String select_item = items[which].toString();
                             SelectWareHouseID = BaseApplication.userInfo.getLstWarehouse().get(which).getID();
                             txtWareHousName.setText(select_item);
+                            BaseApplication.userInfo.setISVWAREHOUSE(BaseApplication.userInfo.getLstWarehouse().get(which).getISVWAREHOUSE());
                             BaseApplication.userInfo.setWarehouseID(SelectWareHouseID);
                             BaseApplication.userInfo.setWarehouseName(select_item);
                             BaseApplication.userInfo.setWarehouseCode( BaseApplication.userInfo.getLstWarehouse().get(which).getWareHouseNo());
@@ -287,6 +278,8 @@ public class Login extends BaseActivity{
             BaseApplication.userInfo.setWarehouseCode( BaseApplication.userInfo.getLstWarehouse().get(0).getWareHouseNo());
             BaseApplication.userInfo.setWarehouseID(SelectWareHouseID);
             BaseApplication.userInfo.setWarehouseName(txtWareHousName.getText().toString());
+            BaseApplication.userInfo.setISVWAREHOUSE(BaseApplication.userInfo.getLstWarehouse().get(0).getISVWAREHOUSE());
+
         }
     }
 

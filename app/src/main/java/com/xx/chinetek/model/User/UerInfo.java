@@ -9,7 +9,7 @@ import java.util.List;
  * Created by GHOST on 2017/2/6.
  */
 
-public class UerInfo extends User implements Parcelable {
+public class UerInfo extends User implements Parcelable ,Cloneable{
     private boolean BIsAdmin;
     private String StrIsAdmin;
     private int IsOnline;
@@ -30,6 +30,7 @@ public class UerInfo extends User implements Parcelable {
 
     private String PickHouseNo;
     private String PickWareHouseName ;
+    private  int ISVWAREHOUSE; //0.不上架  1.上架
 
     public String getReceiveHouseNo() {
         return ReceiveHouseNo;
@@ -251,6 +252,14 @@ public class UerInfo extends User implements Parcelable {
     public UerInfo() {
     }
 
+    public int getISVWAREHOUSE() {
+        return ISVWAREHOUSE;
+    }
+
+    public void setISVWAREHOUSE(int ISVWAREHOUSE) {
+        this.ISVWAREHOUSE = ISVWAREHOUSE;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -284,6 +293,8 @@ public class UerInfo extends User implements Parcelable {
         dest.writeTypedList(this.lstWarehouse);
         dest.writeTypedList(this.lstQuanUser);
         dest.writeString(this.QuanUserNo);
+        dest.writeInt(this.ISVWAREHOUSE);
+
     }
 
     protected UerInfo(Parcel in) {
@@ -313,6 +324,13 @@ public class UerInfo extends User implements Parcelable {
         this.lstWarehouse = in.createTypedArrayList(WareHouseInfo.CREATOR);
         this.lstQuanUser = in.createTypedArrayList(QuanUserModel.CREATOR);
         this.QuanUserNo = in.readString();
+        this.ISVWAREHOUSE= in.readInt();
+    }
+    @Override
+    public UerInfo clone() throws CloneNotSupportedException {
+        UerInfo userInfo = null;
+        userInfo = (UerInfo) super.clone();
+        return userInfo;
     }
 
     public static final Creator<UerInfo> CREATOR = new Creator<UerInfo>() {

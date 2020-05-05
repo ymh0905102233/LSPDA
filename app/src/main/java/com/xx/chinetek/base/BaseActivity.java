@@ -631,4 +631,223 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
         }
     }
 
+
+    public void LPK130Pallet(OutStockTaskInfo_Model model, ArrayList<Boxing> modellist,StockInfo_Model stockmodel,String flag) {
+        LPK130 lpk130 = new LPK130();
+        lpk130.closeDevice();
+        if (lpk130.openDevice(URLModel.MacAdress) >= 0) {
+            try {
+                if (flag=="LList") {
+                    lpk130.NFCP_setLeftMargin((byte) 12);
+                    lpk130.NFCP_setSnapMode((byte) 1);
+                    lpk130.NFCP_setLineSpace(40);
+                    lpk130.NFCP_setFontBold((byte) 1);
+                    lpk130.NFCP_fontSize((byte) 1, (byte) 1);
+                    lpk130.NFCP_printStrLine("装箱清单");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_fontSize((byte) 1, (byte) 1);
+                    lpk130.NFCP_setSnapMode((byte) 0);
+                    lpk130.NFCP_printStr("订单号：");
+                    lpk130.NFCP_printStrLine(model.getErpVoucherNo());
+                    lpk130.NFCP_feed(7);
+
+
+                    lpk130.NFCP_printStr("客户：");
+                    lpk130.NFCP_printStrLine(model.getCarNo());
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("仓库：");
+                    lpk130.NFCP_printStrLine(model.getCustomerName());
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("操作人：");
+                    lpk130.NFCP_printStrLine(BaseApplication.userInfo.getUserName());
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("备注：");
+                    lpk130.NFCP_printStrLine(model.getERPNote());
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("-----------------------------------------------");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr("产品编号              品名             数量");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr("-----------------------------------------------");
+                    lpk130.NFCP_feed(7);
+
+                    Float SumQty=0f;
+                    for (int i=0;i<modellist.size();i++){
+                        SumQty=SumQty+modellist.get(i).getQty();
+                        lpk130.NFCP_printStr("                  "+modellist.get(i).getMaterialNo()+"               "+modellist.get(i).getQty());
+                        lpk130.NFCP_printStrLine("");
+                        lpk130.NFCP_feed(7);
+                        lpk130.NFCP_printStr(modellist.get(i).getMaterialName());
+                        lpk130.NFCP_printStrLine("");
+                        lpk130.NFCP_feed(7);
+                        lpk130.NFCP_printStr("-----------------------------------------------");
+                        lpk130.NFCP_feed(7);
+                    }
+                    lpk130.NFCP_printStr("合计：                                 "+SumQty);
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+                    Date curDate =  new Date(System.currentTimeMillis());
+                    String str = formatter.format(curDate);
+
+                    lpk130.NFCP_printStr("      发货时间："+str);
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("-----------------------------------------------");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr("扫一扫获取装箱清单编号");
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printQRcode(6, 2,modellist.get(0).getSerialNo());
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr(modellist.get(0).getSerialNo());
+                    lpk130.NFCP_feed(150);
+
+                }else if (flag=="ZList"){
+                    lpk130.NFCP_setLeftMargin((byte) 12);
+                    lpk130.NFCP_setSnapMode((byte) 1);
+                    lpk130.NFCP_setLineSpace(40);
+                    lpk130.NFCP_setFontBold((byte) 1);
+                    lpk130.NFCP_fontSize((byte) 1, (byte) 1);
+                    lpk130.NFCP_printStrLine("装箱清单");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_fontSize((byte) 1, (byte) 1);
+                    lpk130.NFCP_setSnapMode((byte) 0);
+                    lpk130.NFCP_printStr("订单号：");
+                    lpk130.NFCP_printStrLine(model.getErpVoucherNo());
+                    lpk130.NFCP_feed(7);
+
+
+                    lpk130.NFCP_printStr("客户：");
+                    lpk130.NFCP_printStrLine(model.getCustomerName());
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("仓库：");
+                    lpk130.NFCP_printStrLine("实品仓");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("操作人：");
+                    lpk130.NFCP_printStrLine(BaseApplication.userInfo.getUserName());
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("备注：备注1111111");
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("-----------------------------------------------");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr("产品编号              品名             数量");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr("-----------------------------------------------");
+                    lpk130.NFCP_feed(7);
+
+
+                    lpk130.NFCP_printStr("                  "+stockmodel.getMaterialNo()+"               "+stockmodel.getQty());
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr(stockmodel.getMaterialDesc());
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr("-----------------------------------------------");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("合计：                                 "+stockmodel.getQty());
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+
+                    SimpleDateFormat   formatter   =   new   SimpleDateFormat   ("yyyy年MM月dd日   HH:mm:ss");
+                    Date curDate =  new Date(System.currentTimeMillis());
+                    String str = formatter.format(curDate);
+
+                    lpk130.NFCP_printStr("       发货时间："+str);
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("-----------------------------------------------");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_feed(150);
+                }else{
+                    lpk130.NFCP_setLeftMargin((byte) 12);
+                    lpk130.NFCP_setSnapMode((byte) 1);
+                    lpk130.NFCP_setLineSpace(40);
+                    lpk130.NFCP_setFontBold((byte) 1);
+                    lpk130.NFCP_fontSize((byte) 1, (byte) 1);
+                    lpk130.NFCP_printStrLine("装箱清单");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_fontSize((byte) 1, (byte) 1);
+                    lpk130.NFCP_setSnapMode((byte) 0);
+                    lpk130.NFCP_printStr("订单号：");
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+
+
+                    lpk130.NFCP_printStr("客户：上海办公室");
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("仓库：");
+                    lpk130.NFCP_printStrLine("实品仓");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("操作人：李敏");
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("备注：备注1111111");
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("-----------------------------------------------");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr("产品编号              品名             数量");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr("-----------------------------------------------");
+                    lpk130.NFCP_feed(7);
+
+                    for (int i=1;i<2;i++){
+                        lpk130.NFCP_printStr("                A215562               33");
+                        lpk130.NFCP_printStrLine("");
+                        lpk130.NFCP_feed(7);
+                        lpk130.NFCP_printStr("高斯化妆品产品）111款式");
+                        lpk130.NFCP_printStrLine("");
+                        lpk130.NFCP_feed(7);
+                        lpk130.NFCP_printStr("-----------------------------------------------");
+                        lpk130.NFCP_feed(7);
+                    }
+                    lpk130.NFCP_printStr("合计：                                 11");
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("       发货时间：2019/11/20 08:09:11");
+                    lpk130.NFCP_feed(7);
+
+                    lpk130.NFCP_printStr("-----------------------------------------------");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr("扫一扫获取装箱清单编号");
+                    lpk130.NFCP_printStrLine("");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printQRcode(6, 2,"0000000000000000000000000");
+                    lpk130.NFCP_feed(7);
+                    lpk130.NFCP_printStr("123456789");
+                    lpk130.NFCP_feed(120);
+
+                }
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "设备连接失败，请重新连接！",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }

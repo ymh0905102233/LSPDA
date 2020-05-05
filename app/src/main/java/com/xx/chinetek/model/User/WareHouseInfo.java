@@ -31,7 +31,7 @@ public class WareHouseInfo implements Parcelable {
     private Float AreaRate;
     private int PickRule;
     private int ID;
-
+    private  int ISVWAREHOUSE; //0.不上架   显示   1.上架 不显示
     public int getID() {
         return ID;
     }
@@ -216,6 +216,14 @@ public class WareHouseInfo implements Parcelable {
         WareHouseType = wareHouseType;
     }
 
+    public int getISVWAREHOUSE() {
+        return ISVWAREHOUSE;
+    }
+
+    public void setISVWAREHOUSE(int ISVWAREHOUSE) {
+        this.ISVWAREHOUSE = ISVWAREHOUSE;
+    }
+
     public WareHouseInfo() {
     }
 
@@ -249,6 +257,7 @@ public class WareHouseInfo implements Parcelable {
         dest.writeValue(this.AreaRate);
         dest.writeInt(this.PickRule);
         dest.writeInt(this.ID);
+        dest.writeInt(this.ISVWAREHOUSE);
     }
 
     protected WareHouseInfo(Parcel in) {
@@ -275,6 +284,7 @@ public class WareHouseInfo implements Parcelable {
         this.AreaRate = (Float) in.readValue(Float.class.getClassLoader());
         this.PickRule = in.readInt();
         this.ID = in.readInt();
+        this.ISVWAREHOUSE=in.readInt();
     }
 
     public static final Creator<WareHouseInfo> CREATOR = new Creator<WareHouseInfo>() {

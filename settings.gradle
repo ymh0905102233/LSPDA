@@ -1,1 +1,1 @@
-include ':app', 'LinkOS'
+include ':app', 'LinkOS', 'FujitsuIap'

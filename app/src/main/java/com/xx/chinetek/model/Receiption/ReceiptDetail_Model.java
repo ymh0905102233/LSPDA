@@ -470,9 +470,13 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         ReceiptDetail_Model that = (ReceiptDetail_Model) o;
 
         //return MaterialNo.equals(that.MaterialNo) && ToBatchNo.equals(that.ToBatchNo);
+       if (getVoucherType()==30){
+           return MaterialNo.equals(that.MaterialNo)  ;
 
+       }else {
+           return MaterialNo.equals(that.MaterialNo)  && RowNo.equals(that.RowNo);
+       }
 //        return MaterialNo.equals(that.MaterialNo) && ToBatchNo.equals(that.ToBatchNo)&& InvoiceNo.equals(that.InvoiceNo);
-        return MaterialNo.equals(that.MaterialNo)  && RowNo.equals(that.RowNo);
 
     }
 
@@ -511,7 +515,12 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         this.RowNo=rowNo;
 
     }
+    public ReceiptDetail_Model(String MaterialNo) {
+//public ReceiptDetail_Model(String MaterialNo,String ToBatchNo) {
+        this.MaterialNo=MaterialNo;
 
+
+    }
     @Override
     public int describeContents() {
         return 0;

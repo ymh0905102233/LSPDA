@@ -332,6 +332,7 @@
     <string name="Error_generic_error">通讯错误！</string>
     <string name="Error_Setting_IPAdressError">IP地址格式错误！</string>
     <string name="Error_isnotnum">请输入数字！</string>
+   <string name="Error_is_greater_than_or_equal_to_0">请输入数字必须大于等于0！</string>
     <string name="Error_isnotzero">调整数量不能为0！</string>
     <string name="Error_areanoHasScan">该库位已扫描！</string>
     <string name="Error_SelectQcStatus">请选择质检状态！</string>

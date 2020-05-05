@@ -248,6 +248,12 @@ public class IntentoryScan extends BaseActivity {
                 CommonUtil.setEditFocus(edtInvNum);
                 return true;
             }
+
+            if (Integer.valueOf(qty)<0){
+                MessageBox.Show(context,getString(R.string.Error_is_greater_than_or_equal_to_0));
+                CommonUtil.setEditFocus(edtInvNum);
+                return true;
+            }
             if(StatusType!=-1) {
                 barcodeModels.get(0).setSTATUS(QCStatusType[StatusType]);
                 barcodeModels.get(0).setQty(Float.parseFloat(qty));

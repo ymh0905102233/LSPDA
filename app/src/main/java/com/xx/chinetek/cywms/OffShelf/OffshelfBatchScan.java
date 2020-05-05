@@ -20,6 +20,7 @@ import android.widget.ToggleButton;
 
 import com.android.volley.Request;
 import com.google.gson.reflect.TypeToken;
+import com.xx.chinetek.DeviceListActivity;
 import com.xx.chinetek.adapter.wms.OffShelf.OffShelfScanDetailAdapter;
 import com.xx.chinetek.base.BaseActivity;
 import com.xx.chinetek.base.BaseApplication;
@@ -582,7 +583,7 @@ public class OffshelfBatchScan extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
+        getMenuInflater().inflate(R.menu.menu_outstock, menu);
         return true;
     }
 
@@ -617,6 +618,9 @@ public class OffshelfBatchScan extends BaseActivity {
                 RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockTaskDetailADF, getString(R.string.Msg_SaveT_OutStockTaskDetailADF), context, mHandler, RESULT_Msg_SaveT_OutStockTaskDetailADF, null, URLModel.GetURL().SaveT_OutStockTaskDetailADF, params, null);
             }
 
+        }else if (item.getItemId() == R.id.action_bluetooth){
+            Intent serverIntent = new Intent(this, DeviceListActivity.class);
+            startActivityForResult(serverIntent, 1);
         }
         return super.onOptionsItemSelected(item);
     }

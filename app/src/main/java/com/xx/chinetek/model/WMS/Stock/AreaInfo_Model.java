@@ -8,7 +8,7 @@ import android.os.Parcelable;
  */
 
 public class AreaInfo_Model implements Parcelable {
-
+    private  String WarehouseName;
     public String WarehouseNo ;
     public String HouseNo;
     private String AreaNo;
@@ -74,6 +74,14 @@ public class AreaInfo_Model implements Parcelable {
         WarehouseNo = warehouseNo;
     }
 
+    public String getWarehouseName() {
+        return WarehouseName;
+    }
+
+    public void setWarehouseName(String warehouseName) {
+        WarehouseName = warehouseName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -88,6 +96,7 @@ public class AreaInfo_Model implements Parcelable {
         dest.writeInt(this.HouseID);
         dest.writeInt(this.ID);
         dest.writeInt(this.IsQuality);
+        dest.writeString(this.WarehouseName);
     }
 
     public AreaInfo_Model() {
@@ -101,6 +110,7 @@ public class AreaInfo_Model implements Parcelable {
         this.HouseID = in.readInt();
         this.ID = in.readInt();
         this.IsQuality = in.readInt();
+        this.WarehouseName = in.readString();
     }
 
     public static final Parcelable.Creator<AreaInfo_Model> CREATOR = new Parcelable.Creator<AreaInfo_Model>() {

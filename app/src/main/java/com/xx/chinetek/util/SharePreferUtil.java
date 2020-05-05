@@ -29,7 +29,7 @@ public class SharePreferUtil {
             URLModel.PrintIP=sharedPreferences.getString("PrintIP", "");
             URLModel.ElecIP=sharedPreferences.getString("ElecIP", "");
             URLModel.isWMS=sharedPreferences.getBoolean("isWMS", true);
-            RequestHandler.SOCKET_TIMEOUT=sharedPreferences.getInt("TimeOut", 20000);
+            RequestHandler.SOCKET_TIMEOUT=sharedPreferences.getInt("TimeOut", 300000);
         }
     }
 

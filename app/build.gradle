@@ -8,7 +8,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 5
-        versionName "1.10"
+        versionName "1.1203"
         multiDexEnabled true
     }
 
@@ -48,7 +48,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.alibaba:fastjson:1.2.5'
     compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:appcompat-v7:27.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     testCompile 'junit:junit:4.12'
     //    compile 'com.android.support:support-v4:27.1.1'
@@ -56,8 +56,8 @@ dependencies {
     compile('com.afollestad.material-dialogs:core:0.9.6.0') {
         exclude group: 'com.android.support'
     }
-    compile files('libs/FUJITSU130AndroidSDKv1.4.0.jar')
-    compile files('libs/print-util-0.0.1-SNAPSHOT.jar')
     implementation project(path: ':LinkOS')
-//    implementation files('libs/print-util-0.0.1-SNAPSHOT.jar')
+    //    implementation files('libs/print-util-0.0.1-SNAPSHOT.jar')
+    implementation files('libs/FUJITSU130AndroidSDKv1.4.0.jar')
+    implementation files('libs/print-util-0.0.1-SNAPSHOT.jar')
 }
