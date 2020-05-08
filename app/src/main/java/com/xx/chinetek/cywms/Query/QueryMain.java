@@ -45,9 +45,13 @@ public class QueryMain extends BaseActivity {
     //,R.drawable.workno
     public List<Map<String, Object>> getData(){
         List<Map<String, Object>> data_list = new ArrayList<Map<String, Object>>();
-        int[] itemIcon = new int[]{ R.drawable.material,R.drawable.stock, R.drawable.batch,R.drawable.query,R.drawable.material,R.drawable.material
+//        int[] itemIcon = new int[]{ R.drawable.material,R.drawable.stock, R.drawable.batch,R.drawable.query,R.drawable.material,R.drawable.material
+//        };
+//        String[] itemNames = new String[]{"物料","库位","批次","EAN","条码","条码补打"
+//        };
+        int[] itemIcon = new int[]{ R.drawable.material,R.drawable.stock, R.drawable.batch,R.drawable.material,R.drawable.material
         };
-        String[] itemNames = new String[]{"物料","库位","批次","EAN","条码","条码补打"
+        String[] itemNames = new String[]{"物料","库位","批次","条码","条码补打"
         };
         //cion和iconName的长度是相同的，这里任选其一都可以
         for(int i=0;i<itemIcon.length;i++){
@@ -76,11 +80,11 @@ public class QueryMain extends BaseActivity {
                 BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.query_Bathtitle), true);
                 intent.putExtra("Type",3);
                 break;
+//            case 3:
+//                BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.query_EAN), true);
+//                intent.putExtra("Type",5);
+//                break;
             case 3:
-                BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.query_EAN), true);
-                intent.putExtra("Type",5);
-                break;
-            case 4:
                 BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.query_barcode), true);
                 intent.putExtra("Type",6);
                 break;
@@ -88,7 +92,7 @@ public class QueryMain extends BaseActivity {
 //                intent = new Intent();
 //                intent.setClass(context, AddProductActivity.class);
 //                break;
-            case 5:
+            case 4:
                 intent = new Intent();
                 BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.query_barcode_patch), true);
                 intent.setClass(context, PatchBarcode.class);

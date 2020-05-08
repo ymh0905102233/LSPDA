@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.xx.chinetek.adapter.product.BillsStockIn.BillAdapter;
 import com.xx.chinetek.cywms.R;
-import com.xx.chinetek.model.Production.Wo.WoModel;
 import com.xx.chinetek.model.WMS.OffShelf.OutStockTaskInfo_Model;
 
 import java.util.ArrayList;
@@ -110,6 +109,8 @@ public class OffSehlfBillChoiceItemAdapter extends BaseAdapter implements Filter
             listItemView.txtERPVoucherNo = (TextView) convertView.findViewById(R.id.txtERPVoucherNo);
             listItemView.txtStrVoucherType = (TextView) convertView.findViewById(R.id.txtStrVoucherType);
             listItemView.txtCompany = (TextView) convertView.findViewById(R.id.txtCompany);
+            LinearLayout linearLayout=(LinearLayout) convertView.findViewById(R.id.off_shelf_bill_choice_layout);
+            linearLayout.setVisibility(View.GONE);
 //            listItemView.txtdepartment = (TextView) convertView.findViewById(R.id.txtdepartment);
             listItemView.txtVouUser = (TextView) convertView.findViewById(R.id.txtVouUser);
             listItemView.txtPcikName = (TextView) convertView.findViewById(R.id.txtPcikName);
@@ -123,20 +124,9 @@ public class OffSehlfBillChoiceItemAdapter extends BaseAdapter implements Filter
         OutStockTaskInfo_Model outStockTaskInfoModel=outStockTaskInfoModels.get(selectID);
         listItemView.txtTaskNo.setText(outStockTaskInfoModel.getErpVoucherNo());
         listItemView.txtERPVoucherNo.setText(outStockTaskInfoModel.getTaskNo());
-        listItemView.txtStrVoucherType.setText(outStockTaskInfoModel.getStrVoucherType());
-        listItemView.txtCompany.setText(outStockTaskInfoModel.getTradingConditionsName()==null?"":outStockTaskInfoModel.getTradingConditionsName());
-//        listItemView.txtdepartment.setText("部门："+outStockTaskInfoModel.getDepartmentName());
-        listItemView.txtPcikName.setText("区域:"+outStockTaskInfoModel.getStrHouseProp());
-        listItemView.txtFloorName.setText("楼层："+outStockTaskInfoModel.getFloorName());
-        listItemView.txtStockLeave.setText("拣货人："+outStockTaskInfoModel.getPickUserName());
-        listItemView.txtVouUser.setText("状态："+outStockTaskInfoModel.getStrStatus() );
-        listItemView.txtIssueType.setText("任务数："+ outStockTaskInfoModel.getTaskCount());
-       // listItemView.txtCustoms.setText("客户名称1，客户名称2，客户名称3，客户名称4,客户名称5,客户名称6");
-//        if(outStockTaskInfoModel.getIsEdate().equals("1"))
-//            convertView.setBackgroundResource(R.color.antiquewhite);
-//        else if(outStockTaskInfoModel.getIsEdate().equals("2"))
-//            convertView.setBackgroundResource(R.color.khaki);
-//        else
+      listItemView.txtCompany.setText("状态："+outStockTaskInfoModel.getStrStatus());
+        listItemView.txtVouUser.setText("拣货人："+outStockTaskInfoModel.getPickUserName());
+
         if(outStockTaskInfoModel.getStrStatus().equals("新建")){
             convertView.setBackgroundColor(Color.TRANSPARENT);
         }else{

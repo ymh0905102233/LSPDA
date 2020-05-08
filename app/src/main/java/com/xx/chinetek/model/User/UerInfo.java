@@ -31,6 +31,15 @@ public class UerInfo extends User implements Parcelable ,Cloneable{
     private String PickHouseNo;
     private String PickWareHouseName ;
     private  int ISVWAREHOUSE; //0.不上架  1.上架
+    private String  StrongHoldCode ;
+
+    public String getStrongHoldCode() {
+        return StrongHoldCode;
+    }
+
+    public void setStrongHoldCode(String strongHoldCode) {
+        StrongHoldCode = strongHoldCode;
+    }
 
     public String getReceiveHouseNo() {
         return ReceiveHouseNo;
@@ -294,6 +303,7 @@ public class UerInfo extends User implements Parcelable ,Cloneable{
         dest.writeTypedList(this.lstQuanUser);
         dest.writeString(this.QuanUserNo);
         dest.writeInt(this.ISVWAREHOUSE);
+        dest.writeString(this.StrongHoldCode);
 
     }
 
@@ -325,6 +335,7 @@ public class UerInfo extends User implements Parcelable ,Cloneable{
         this.lstQuanUser = in.createTypedArrayList(QuanUserModel.CREATOR);
         this.QuanUserNo = in.readString();
         this.ISVWAREHOUSE= in.readInt();
+        this.StrongHoldCode=in.readString();
     }
     @Override
     public UerInfo clone() throws CloneNotSupportedException {

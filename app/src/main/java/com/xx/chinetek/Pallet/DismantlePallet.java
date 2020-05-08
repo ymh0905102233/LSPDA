@@ -165,7 +165,7 @@ public class DismantlePallet extends BaseActivity {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 ClearFrm();
-                MessageBox.Show(context, "托盘条码打印成功！");
+                MessageBox.Show(context, "托盘条码打印成功！",1);
             } else {
                 MessageBox.Show(context, returnMsgModel.getMessage());
             }

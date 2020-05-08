@@ -7,9 +7,11 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -220,6 +222,23 @@ public class UpdateVersionService {
 
     }
 
+//    /**
+//     * 安装apk文件
+//     */
+//    private void installAPK() {
+//        File apkfile = new File(fileSavePath, hashMap.get("fileName") + ".apk");
+//        if (!apkfile.exists()) {
+//            return;
+//        }
+//        // 通过Intent安装APK文件
+//        Intent i = new Intent(Intent.ACTION_VIEW);
+//        System.out.println("filepath=" + apkfile.toString() + "  " + apkfile.getPath());
+//        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
+//        context.startActivity(i);
+//        android.os.Process.killProcess(android.os.Process.myPid());// 如果不加上这句的话在apk安装完成之后点击单开会崩溃
+//
+//    }
     /**
      * 安装apk文件
      */
@@ -229,14 +248,28 @@ public class UpdateVersionService {
             return;
         }
         // 通过Intent安装APK文件
-        Intent i = new Intent(Intent.ACTION_VIEW);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
         System.out.println("filepath=" + apkfile.toString() + "  " + apkfile.getPath());
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
-        context.startActivity(i);
-        android.os.Process.killProcess(android.os.Process.myPid());// 如果不加上这句的话在apk安装完成之后点击单开会崩溃
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {// sdk >= 24
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);// 给目标应用一个临时授权.注意8.0手机，setflag new task在前，addflag在后
+            Uri contentUri = FileProvider.getUriForFile(context,
+                    context.getApplicationContext().getPackageName() + ".provider",
+                    apkfile);
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+        } else {
+            Uri uri = Uri.fromFile(apkfile);//或者 Uri.isPaise("file://"+file.toString()
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        }
 
+//        intent.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
+        context.startActivity(intent);
+        android.os.Process.killProcess(android.os.Process.myPid());// 如果不加上这句的话在apk安装完成之后点击单开会崩溃
     }
+
+
+
+
 
     /**
      * 卸载应用程序(没有用到)
@@ -317,4 +350,6 @@ public class UpdateVersionService {
         }
 
     }
+
+
 }  

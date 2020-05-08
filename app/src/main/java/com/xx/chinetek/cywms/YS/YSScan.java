@@ -1,4 +1,4 @@
-package com.xx.chinetek.cywms.Receiption;
+package com.xx.chinetek.cywms.YS;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,6 +23,7 @@ import com.xx.chinetek.base.BaseActivity;
 import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.base.ToolBarTitle;
 import com.xx.chinetek.cywms.R;
+import com.xx.chinetek.cywms.Receiption.ReceiptionBillDetail;
 import com.xx.chinetek.cywms.UpShelf.UpShelfScanActivity;
 import com.xx.chinetek.model.Base_Model;
 import com.xx.chinetek.model.Material.BarCodeInfo;
@@ -61,22 +62,22 @@ import static com.xx.chinetek.util.function.GsonUtil.parseModelToJson;
 
 
 @ContentView(R.layout.activity_receiption_scan)
-public class ReceiptionScan extends BaseActivity {
+public class YSScan extends BaseActivity {
 
-    String TAG_GetT_InStockDetailListByHeaderIDADF = "ReceiptionScan_GetT_InStockDetailListByHeaderIDADF";
-    String TAG_GetT_PalletDetailByBarCodeADF       = "ReceiptionScan_GetT_PalletDetailByBarCodeADF";
-    String TAG_SaveT_InStockDetailADF              = "ReceiptionScan_SaveT_InStockDetailADF";
-    String TAG_GetAreaModelADF                     = "ReceiptionScan_GetAreaModelADF";
-    private final int RESULT_Msg_GetT_InStockDetailListByHeaderIDADF = 101;
-    private final int RESULT_Msg_GetT_PalletDetailByBarCode          = 102;
-    private final int RESULT_Msg_SaveT_InStockDetailADF              = 103;
-    private final int RESULT_Msg_GetAreaModelADF                     = 104;
+    String TAG_GetTYSDetailListByHeaderIDADF = "ReceiptionScan_GetT_GetTYSDetailListByHeaderIDADF";
+    String TAG_GetT_PalletDetailByBarCodeADF = "ReceiptionScan_GetT_PalletDetailByBarCodeADF";
+    String TAG_SaveT_InStockDetailADF        = "ReceiptionScan_SaveT_InStockDetailADF";
+    String TAG_GetAreaModelADF               = "ReceiptionScan_GetAreaModelADF";
+    private final int RESULT_Msg_GetTYSDetailListByHeaderIDADF = 101;
+    private final int RESULT_Msg_GetT_PalletDetailByBarCode    = 102;
+    private final int RESULT_Msg_SaveT_InStockDetailADF        = 103;
+    private final int RESULT_Msg_GetAreaModelADF               = 104;
 
     @Override
     public void onHandleMessage(Message msg) {
         switch (msg.what) {
-            case RESULT_Msg_GetT_InStockDetailListByHeaderIDADF:
-                AnalysisGetT_InStockDetailListJson((String) msg.obj);
+            case RESULT_Msg_GetTYSDetailListByHeaderIDADF:
+                AnalysisGetT_YSDetailListJson((String) msg.obj);
                 break;
             case RESULT_Msg_GetT_PalletDetailByBarCode:
                 AnalysisGetT_PalletDetailByNoADF((String) msg.obj);
@@ -95,7 +96,7 @@ public class ReceiptionScan extends BaseActivity {
     }
 
 
-    Context context = ReceiptionScan.this;
+    Context context = YSScan.this;
     @ViewInject(R.id.lsv_ReceiptScan)
     ListView lsvReceiptScan;
     @ViewInject(R.id.edt_RecScanBarcode)
@@ -142,7 +143,11 @@ public class ReceiptionScan extends BaseActivity {
         BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.receiptscan_subtitle) + "-" + BaseApplication.userInfo.getWarehouseName(), true);
         x.view().inject(this);
         BaseApplication.isCloseActivity = false;
-
+        if (BaseApplication.userInfo.getISVWAREHOUSE() == 0) {
+            setAreaBar(true);
+        } else {
+            setAreaBar(false);
+        }
 
     }
 
@@ -151,12 +156,7 @@ public class ReceiptionScan extends BaseActivity {
         super.initData();
         receiptModel = getIntent().getParcelableExtra("receiptModel");
         this.barCodeInfos = getIntent().getParcelableArrayListExtra("barCodeInfo");
-        GetReceiptDetail(receiptModel);
-        if (BaseApplication.userInfo.getISVWAREHOUSE() == 0 && receiptModel.getVoucherType()!=39) { //不上架的条码并且不是到货单的
-            setAreaBar(true);
-        } else {
-            setAreaBar(false);
-        }
+        GetYSDetail(receiptModel);
 
     }
 
@@ -197,7 +197,7 @@ public class ReceiptionScan extends BaseActivity {
             params.put("BarCode", code);
 //            params.put("BarCode", "1@SHJC@13109100019@20200411@2@2004111149541989665601");
             params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
-            LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_PalletDetailByBarCodeADF, code);
+            LogUtil.WriteLog(YSScan.class, TAG_GetT_PalletDetailByBarCodeADF, code);
             RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_PalletDetailByBarCodeADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetT_PalletDetailByBarCode, null, URLModel.GetURL().GetT_PalletDetailByBarCodeADF, params, null);
         }
         return false;
@@ -372,7 +372,7 @@ public class ReceiptionScan extends BaseActivity {
                     }
 
                     UerInfo userInfo = null;
-                    if (BaseApplication.userInfo.getISVWAREHOUSE() == 0 && receiptModel.getVoucherType()!=39) { //不上架的条码并且不是到货单的
+                    if (BaseApplication.userInfo.getISVWAREHOUSE() == 0) {
                         if (mAreaInfoModel == null) {
                             MessageBox.Show(context, "库位信息不能为空!请扫描库位");
                             return false;
@@ -397,7 +397,7 @@ public class ReceiptionScan extends BaseActivity {
                     String UserJson = GsonUtil.parseModelToJson(userInfo);
                     params.put("UserJson", UserJson);
                     params.put("ModelJson", ModelJson);
-                    LogUtil.WriteLog(ReceiptionScan.class, TAG_SaveT_InStockDetailADF, ModelJson);
+                    LogUtil.WriteLog(YSScan.class, TAG_SaveT_InStockDetailADF, ModelJson);
                     RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_InStockDetailADF, getString(R.string.Msg_SaveT_InStockDetailADF), context, mHandler, RESULT_Msg_SaveT_InStockDetailADF, null, URLModel.GetURL().SaveT_InStockDetailADF, params, null);
                 }
             } catch (Exception ex) {
@@ -411,7 +411,7 @@ public class ReceiptionScan extends BaseActivity {
     /*
     获取收货明细
      */
-    void GetReceiptDetail(final Receipt_Model receiptModel) {
+    void GetYSDetail(final Receipt_Model receiptModel) {
 
         txtVoucherNo.setText(receiptModel.getErpVoucherNo());
         final ReceiptDetail_Model receiptDetailModel = new ReceiptDetail_Model();
@@ -421,8 +421,8 @@ public class ReceiptionScan extends BaseActivity {
         final Map<String, String> params = new HashMap<String, String>();
         params.put("ModelDetailJson", parseModelToJson(receiptDetailModel));
         String para = (new JSONObject(params)).toString();
-        LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_InStockDetailListByHeaderIDADF, para);
-        RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_InStockDetailListByHeaderIDADF, getString(R.string.Msg_GetT_InStockDetailListByHeaderIDADF), context, mHandler, RESULT_Msg_GetT_InStockDetailListByHeaderIDADF, null, URLModel.GetURL().GetT_InStockDetailListByHeaderIDADF, params, null);
+        LogUtil.WriteLog(YSScan.class, TAG_GetTYSDetailListByHeaderIDADF, para);
+        RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetTYSDetailListByHeaderIDADF, getString(R.string.Msg_GetT_YSDetailListByHeaderIDADF), context, mHandler, RESULT_Msg_GetTYSDetailListByHeaderIDADF, null, URLModel.GetURL().GetTYSDetailListByHeaderIDADF, params, null);
 
 
     }
@@ -430,11 +430,15 @@ public class ReceiptionScan extends BaseActivity {
 
     ArrayList<ReceiptDetail_Model> FirstreceiptDetailModels = new ArrayList<>();
 
-    /*
-    处理收货明细
-     */
-    void AnalysisGetT_InStockDetailListJson(String result) {
-        LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_InStockDetailListByHeaderIDADF, result);
+ /**
+  * @desc:  处理预留释放明细
+  * @param:
+  * @return:
+  * @author: Nietzsche
+  * @time 2020/5/7 10:22
+  */
+    void AnalysisGetT_YSDetailListJson(String result) {
+        LogUtil.WriteLog(YSScan.class, TAG_GetTYSDetailListByHeaderIDADF, result);
         try {
             ReturnMsgModelList<ReceiptDetail_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<ReceiptDetail_Model>>() {
             }.getType());
@@ -477,6 +481,8 @@ public class ReceiptionScan extends BaseActivity {
                 } else {
                     MessageBox.Show(context, returnMsgModel.getMessage());
                 }
+            }else {
+                MessageBox.Show(context, returnMsgModel.getMessage());
             }
         } catch (Exception ex) {
             MessageBox.Show(context, ex.getMessage());
@@ -488,7 +494,7 @@ public class ReceiptionScan extends BaseActivity {
     扫描条码
      */
     void AnalysisGetT_PalletDetailByNoADF(String result) {
-        LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_PalletDetailByBarCodeADF, result);
+        LogUtil.WriteLog(YSScan.class, TAG_GetT_PalletDetailByBarCodeADF, result);
         try {
             ReturnMsgModelList<BarCodeInfo> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<BarCodeInfo>>() {
             }.getType());
@@ -533,7 +539,7 @@ public class ReceiptionScan extends BaseActivity {
      */
     void AnalysisSaveT_InStockDetailADFJson(String result) {
         try {
-            LogUtil.WriteLog(ReceiptionScan.class, TAG_SaveT_InStockDetailADF, result);
+            LogUtil.WriteLog(YSScan.class, TAG_SaveT_InStockDetailADF, result);
             final ReturnMsgModel<Base_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
@@ -553,7 +559,6 @@ public class ReceiptionScan extends BaseActivity {
                             }
                         }).show();
             } else {
-                mUuid = null;
                 MessageBox.Show(context, returnMsgModel.getMessage());
             }
         } catch (Exception ex) {

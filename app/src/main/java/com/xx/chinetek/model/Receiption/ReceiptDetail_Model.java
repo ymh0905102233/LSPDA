@@ -63,6 +63,8 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
     private Float ADVRECEIVEQTY;
     private String InvoiceNo;
     private String iarrsid;
+    private String ProjectNo;
+    private String TracNo;
     public String getInvoiceNo() {
         return InvoiceNo;
     }
@@ -462,6 +464,22 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         this.iarrsid = iarrsid;
     }
 
+    public String getProjectNo() {
+        return ProjectNo;
+    }
+
+    public void setProjectNo(String projectNo) {
+        ProjectNo = projectNo;
+    }
+
+    public String getTracNo() {
+        return TracNo;
+    }
+
+    public void setTracNo(String tracNo) {
+        TracNo = tracNo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -473,8 +491,10 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
        if (getVoucherType()==30){
            return MaterialNo.equals(that.MaterialNo)  ;
 
-       }else {
-           return MaterialNo.equals(that.MaterialNo)  && RowNo.equals(that.RowNo);
+       } else if (getVoucherType() == 45) { //预留
+           return MaterialNo.equals(that.MaterialNo)  && TracNo.equals(that.TracNo);
+       } else {
+           return MaterialNo.equals(that.MaterialNo) && RowNo.equals(that.RowNo);
        }
 //        return MaterialNo.equals(that.MaterialNo) && ToBatchNo.equals(that.ToBatchNo)&& InvoiceNo.equals(that.InvoiceNo);
 
@@ -576,6 +596,8 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         dest.writeValue(this.ADVRECEIVEQTY);
         dest.writeString(this.InvoiceNo);
         dest.writeString(this.iarrsid);
+        dest.writeString(this.ProjectNo);
+        dest.writeString(this.TracNo);
     }
 
     protected ReceiptDetail_Model(Parcel in) {
@@ -631,6 +653,8 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         this.ADVRECEIVEQTY = (Float) in.readValue(Float.class.getClassLoader());
         this.InvoiceNo = in.readString();
         this.iarrsid=in.readString();
+        this.ProjectNo=in.readString();
+        this.TracNo=in.readString();
     }
 
     public static final Creator<ReceiptDetail_Model> CREATOR = new Creator<ReceiptDetail_Model>() {

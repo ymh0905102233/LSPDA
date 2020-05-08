@@ -36,6 +36,7 @@ import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
 import com.xx.chinetek.model.WMS.OffShelf.OutStockTaskDetailsInfo_Model;
 import com.xx.chinetek.model.WMS.OffShelf.OutStockTaskInfo_Model;
+import com.xx.chinetek.model.WMS.Print.PrintBean;
 import com.xx.chinetek.model.WMS.Review.OutStockDetailInfo_Model;
 import com.xx.chinetek.model.WMS.Review.OutStock_Model;
 import com.xx.chinetek.model.WMS.Stock.StockInfo_Model;
@@ -104,6 +105,7 @@ public class OffshelfBatchScan extends BaseActivity {
     private final int RESULT_Msg_PrintListADF1 = 112;
     ArrayList<StockInfo_Model> stockin = new ArrayList<StockInfo_Model>();//扫描内盒的条码
     UUID                       mUuid   = null;
+    OffshelfBatchScanModel     mModel;
 
     @Override
     public void onHandleMessage(Message msg) {
@@ -230,6 +232,7 @@ public class OffshelfBatchScan extends BaseActivity {
     protected void initData() {
         super.initData();
         outStockTaskInfoModels = getIntent().getParcelableArrayListExtra("outStockTaskInfoModel");
+        outStockTaskInfoModels.get(0).setWareHouseNo(BaseApplication.userInfo.getWarehouseCode());
         Erpvoucherno = outStockTaskInfoModels.get(0).getErpVoucherNo();
         Headerid = outStockTaskInfoModels.get(0).getHeaderID();
         TaskNo = outStockTaskInfoModels.get(0).getTaskNo();
@@ -238,15 +241,13 @@ public class OffshelfBatchScan extends BaseActivity {
         txtcustomername.setText(outStockTaskInfoModels.get(0).getSupcusName() == null ? "" : outStockTaskInfoModels.get(0).getSupcusName());
         edtcar.setText(outStockTaskInfoModels.get(0).getCarNo() == null ? "" : outStockTaskInfoModels.get(0).getCarNo());
 
-//        if(!CheckBluetooth()){
-//            MessageBox.Show(context, "蓝牙打印机连接失败");
-//        }
-
         tbUnboxType.setChecked(false);
         tbBoxType.setChecked(true);
         ShowUnboxing(false);
+        mModel = new OffshelfBatchScanModel(context);
 
     }
+
 
     /**
      * @desc: 下架操作条码类型
@@ -258,7 +259,7 @@ public class OffshelfBatchScan extends BaseActivity {
     @Event(value = {R.id.tb_UnboxType, R.id.tb_PalletType, R.id.tb_BoxType}, type = CompoundButton.OnClickListener.class)
     private void TBonCheckedChanged(View view) {
         if (view.getId() == R.id.tb_UnboxType) {
-//            if(!CheckBluetooth()){
+//            if (!CheckBluetooth()) {
 //                MessageBox.Show(context, "蓝牙打印机连接失败");
 //                return;
 //            }
@@ -280,7 +281,7 @@ public class OffshelfBatchScan extends BaseActivity {
     @Event(value = {R.id.btn_inner_barcode_button, R.id.btn_input_qty_button}, type = CompoundButton.OnClickListener.class)
     private void SplitCheckedChanged(View view) {
         if (view.getId() == R.id.tb_UnboxType) {
-//            if(!CheckBluetooth()){
+//            if (!CheckBluetooth()) {
 //                MessageBox.Show(context, "蓝牙打印机连接失败");
 //                return;
 //            }
@@ -329,7 +330,7 @@ public class OffshelfBatchScan extends BaseActivity {
                         stockInfoModels = new ArrayList<>();
                         stockInfoModels.add(newmodel);
 //                        currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getBatchNo(), stockInfoModels.get(0).getWarehouseNo());
-                        currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getBatchNo(), stockInfoModels.get(0).getWarehouseNo());
+                        currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getBatchNo(), stockInfoModels.get(0).getWarehouseNo(), stockInfoModels.get(0).getTracNo());
                         if (currentPickMaterialIndex >= 0) {
                             if (SumReaminQty < qty) {//qty > remainqty ||
                                 MessageBox.Show(context, getString(R.string.Error_offshelfQtyBiger)
@@ -431,6 +432,10 @@ public class OffshelfBatchScan extends BaseActivity {
                 if (!mBarcode.getText().toString().contains("@")) {
                     newmodel.setBarcode(mBarcode.getText().toString());
                 }
+                if (!CheckBluetooth()) {
+                    MessageBox.Show(context, "蓝牙打印机连接失败");
+                    return;
+                }
                 final Map<String, String> params = new HashMap<String, String>();
                 params.put("UserJson", userJson);
                 params.put("strOldBarCode", strOldBarCode);
@@ -450,12 +455,13 @@ public class OffshelfBatchScan extends BaseActivity {
     }
 
     private boolean CheckBluetooth() {
-        try {
-            boolean flag = CheckBluetoothBase();
-            return flag;
-        } catch (Exception ex) {
-            return false;
-        }
+//        try {
+//            boolean flag = CheckBluetoothBase();
+//            return flag;
+//        } catch (Exception ex) {
+//            return false;
+//        }
+        return  true;
 
     }
 
@@ -618,7 +624,7 @@ public class OffshelfBatchScan extends BaseActivity {
                 RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockTaskDetailADF, getString(R.string.Msg_SaveT_OutStockTaskDetailADF), context, mHandler, RESULT_Msg_SaveT_OutStockTaskDetailADF, null, URLModel.GetURL().SaveT_OutStockTaskDetailADF, params, null);
             }
 
-        }else if (item.getItemId() == R.id.action_bluetooth){
+        } else if (item.getItemId() == R.id.action_bluetooth) {
             Intent serverIntent = new Intent(this, DeviceListActivity.class);
             startActivityForResult(serverIntent, 1);
         }
@@ -645,7 +651,7 @@ public class OffshelfBatchScan extends BaseActivity {
                     stockInfoModels = StockInfos;
                     float qty = stockInfoModels.get(0).getQty();
                     //ymh整箱发货
-                    currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getBatchNo(), stockInfoModels.get(0).getWarehouseNo());
+                    currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getBatchNo(), stockInfoModels.get(0).getWarehouseNo(), stockInfoModels.get(0).getTracNo());
                     if (currentPickMaterialIndex >= 0) {
                         if (CheckStockInfo()) {  //判断是否拣货完毕
                             ShowPickMaterialInfo();
@@ -667,6 +673,11 @@ public class OffshelfBatchScan extends BaseActivity {
                     } else {
                         if (currentPickMaterialIndex == -2) {
                             MessageBox.Show(context, getString(R.string.Error_NotPickWarehouse));
+                            CommonUtil.setEditFocus(mBarcode);
+                            return;
+                        }
+                        if (currentPickMaterialIndex == -3) {
+                            MessageBox.Show(context, getString(R.string.Error_NotTrace));
                             CommonUtil.setEditFocus(mBarcode);
                             return;
                         }
@@ -930,6 +941,7 @@ public class OffshelfBatchScan extends BaseActivity {
                 GetT_OutTaskDetailListByHeaderIDADF(outStockTaskInfoModels);
                 MessageBox.Show(context, returnMsgModel.getMessage());
             } else {
+                mUuid = null;
                 MessageBox.Show(context, returnMsgModel.getMessage());
             }
 //            clearFrm();
@@ -1084,13 +1096,15 @@ public class OffshelfBatchScan extends BaseActivity {
                 //打印拆零标签
 //                if (edtOffShelfScanbarcode.getText().toString().contains("@")){
                 stockInfoModel.setSN(txterpvoucherno.getText().toString());
+//                onPrint(stockInfoModel);
 //                    LPK130DEMO(stockInfoModel,"Jian");
 //                }
                 stockInfoModels = new ArrayList<>();
                 stockInfoModels.add(stockInfoModel);
-                currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getBatchNo(), stockInfoModels.get(0).getWarehouseNo());
+                currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getBatchNo(), stockInfoModels.get(0).getWarehouseNo(), stockInfoModels.get(0).getTracNo());
 //                if (currentPickMaterialIndex != -1) {
                 if (currentPickMaterialIndex >= 0) {
+                    onPrint(stockInfoModel);
                     if (CheckStockInfo()) {  //判断是否拣货完毕、是否指定批次
                         ShowPickMaterialInfo();
                         txtEDate.setText(CommonUtil.DateToString(stockInfoModels.get(0).getEDate()));
@@ -1100,11 +1114,13 @@ public class OffshelfBatchScan extends BaseActivity {
                             SetOutStockTaskDetailsInfoModels(stockInfoModel.getQty(), 3);
                         }
                         isChai = true;
+
                     }
                 } else {
                     MessageBox.Show(context, getString(R.string.Error_NotPickMaterial));
                     CommonUtil.setEditFocus(mBarcode);
                 }
+
             } else {
                 MessageBox.Show(context, returnMsgModel.getMessage());
             }
@@ -1170,7 +1186,7 @@ public class OffshelfBatchScan extends BaseActivity {
      */
     void insertStockInfo() {
         try {
-            currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getBatchNo(), stockInfoModels.get(0).getWarehouseNo());
+            currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getBatchNo(), stockInfoModels.get(0).getWarehouseNo(), stockInfoModels.get(0).getTracNo());
             if (currentPickMaterialIndex >= 0) {
                 if (CheckStockInfo()) {  //判断是否拣货完毕
                     ShowPickMaterialInfo();
@@ -1706,7 +1722,7 @@ public class OffshelfBatchScan extends BaseActivity {
      * @author: Nietzsche
      * @time 2020/4/20 20:35
      */
-    int FindFirstCanPickMaterialByMaterialNo(String MaterialNo, String BatchNo, String warehouseNo) {
+    int FindFirstCanPickMaterialByMaterialNo(String MaterialNo, String BatchNo, String warehouseNo, String traceNo) {
         int size = outStockTaskDetailsInfoModels.size();
         int index = -1;
         for (int i = 0; i < size; i++) {
@@ -1723,17 +1739,38 @@ public class OffshelfBatchScan extends BaseActivity {
 //                    && outStockTaskDetailsInfoModels.get(i).getStrongHoldCode().equals(StrongHoldCode)
             {
                 String fromErpWareHouse = outStockTaskDetailsInfoModels.get(i).getFromErpWarehouse();
+                String sTraceNo = outStockTaskDetailsInfoModels.get(i).getTracNo();
                 if (fromErpWareHouse != null && !fromErpWareHouse.isEmpty()) { //物料明细有仓库的就校验仓库 没有就不校验
                     if (outStockTaskDetailsInfoModels.get(i).getFromErpWarehouse().equals(warehouseNo)) {
-                        ErpVoucherno = outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
-                        index = i;
+                        if (sTraceNo != null && !sTraceNo.isEmpty()) {
+                            if (sTraceNo.equals(traceNo)) {
+                                ErpVoucherno = outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
+                                index = i;
+                            } else {
+                                index = -3;
+                            }
+                        } else {
+                            ErpVoucherno = outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
+                            index = i;
+                        }
+
                         break;
                     } else {
                         index = -2;
                     }
                 } else {
-                    index = i;
-                    ErpVoucherno = outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
+                    if (sTraceNo != null && !sTraceNo.isEmpty()) {
+                        if (sTraceNo.equals(traceNo)) {
+                            ErpVoucherno = outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
+                            index = i;
+                        } else {
+                            index = -3;
+                        }
+                    } else {
+                        ErpVoucherno = outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
+                        index = i;
+                    }
+
                     break;
                 }
             }
@@ -1823,6 +1860,34 @@ public class OffshelfBatchScan extends BaseActivity {
         params.put("TaskOutStockModelJson", TaskOutStockModelJson);
         LogUtil.WriteLog(OffShelfBillChoice.class, TAG_UnLockTaskOperUserADF, UserModel);
         RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_UnLockTaskOperUserADF, "查看权限中", context, mHandler, RESULT_UnLockTaskOperUserADF, null, URLModel.GetURL().UnLockTaskOperUser, params, null);
+    }
+
+    /**
+     * @desc: 打印外箱条码
+     * @param:
+     * @return:
+     * @author: Nietzsche
+     * @time 2020/5/7 11:05
+     */
+    private void onPrint(StockInfo_Model info) {
+        if (info != null) {
+            PrintBean bean = new PrintBean();
+            bean.setMaterialNo(info.getMaterialNo());
+            bean.setMaterialDesc(info.getMaterialDesc());
+            bean.setBarcode(info.getBarcode());
+            bean.setSerialNo(info.getSerialNo());
+            bean.setQty(info.getQty().intValue());
+            bean.setProjectNo(info.getProjectNo());
+            bean.setTraceNo(info.getTracNo());
+            if (mModel != null) {
+                List<PrintBean> list = new ArrayList<>();
+                list.add(bean);
+                mModel.ptintLPK130OutBarcode(list);
+            }
+
+        } else {
+            MessageBox.Show(context, "拆零生成的外箱条码数据不能为空");
+        }
     }
 
 

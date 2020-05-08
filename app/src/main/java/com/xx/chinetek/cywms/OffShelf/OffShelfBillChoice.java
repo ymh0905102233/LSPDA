@@ -199,16 +199,26 @@ public class OffShelfBillChoice extends BaseActivity  implements SwipeRefreshLay
         {
             if(outStockTaskInfoModels!=null && outStockTaskInfoModels.size()>0) {
                 String code = edtfilterContent.getText().toString().trim();
+                OutStockTaskInfo_Model outStockTaskInfoModel=new OutStockTaskInfo_Model();
+                outStockTaskInfoModel.setStatus(1);
+                outStockTaskInfoModel.setTaskType((float)2);
+                outStockTaskInfoModel.setErpVoucherNo(code);
+                if(isPickingAdmin)
+                    outStockTaskInfoModel.setPickLeaderUserNo(BaseApplication.userInfo.getUserNo());
+                else
+                    outStockTaskInfoModel.setPickUserNo(BaseApplication.userInfo.getUserNo());
+                GetT_OutStockTaskInfoList(outStockTaskInfoModel);
                 //扫描单据号、检查单据列表
-                OutStockTaskInfo_Model outStockTaskInfoModel = new OutStockTaskInfo_Model(code,code);
-                int index=outStockTaskInfoModels.indexOf(outStockTaskInfoModel);
-                if (index!=-1) {
-                    offSehlfBillChoiceItemAdapter.modifyStates(index);
-                    offSehlfBillChoiceItemAdapter.notifyDataSetInvalidated();
-                }else{
-                    //没有匹配，找小车
-                    InitListViewForcar(code);
-                }
+//                OutStockTaskInfo_Model outStockTaskInfoModel = new OutStockTaskInfo_Model(code,code);
+//                int index=outStockTaskInfoModels.indexOf(outStockTaskInfoModel);
+//                if (index!=-1) {
+//                    offSehlfBillChoiceItemAdapter.modifyStates(index);
+//                    offSehlfBillChoiceItemAdapter.notifyDataSetInvalidated();
+//                }else{
+//                    //没有匹配，找小车
+//
+////                    InitListViewForcar(code);
+//                }
             }
             CommonUtil.setEditFocus(edtfilterContent);
         }
@@ -473,6 +483,7 @@ public class OffShelfBillChoice extends BaseActivity  implements SwipeRefreshLay
         Bundle  bundle=new Bundle();
         for(int i=0;i<outStockTaskInfoModels.size();i++){
             outStockTaskInfoModels.get(i).setWareHouseID(BaseApplication.userInfo.getWarehouseID());
+            outStockTaskInfoModels.get(i).setWareHouseNo(BaseApplication.userInfo.getWarehouseCode());
         }
         bundle.putParcelableArrayList("outStockTaskInfoModel",outStockTaskInfoModels);
         intent.putExtras(bundle);

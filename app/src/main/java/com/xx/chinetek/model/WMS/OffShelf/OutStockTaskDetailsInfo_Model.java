@@ -230,7 +230,7 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         OutStockTaskDetailsInfo_Model that = (OutStockTaskDetailsInfo_Model) o;
 
 //        return MaterialNo.equals(that.MaterialNo)  && ProjectNo.equals(ProjectNo) && TracNo.equals(TracNo);
-        return MaterialNo.equals(that.MaterialNo)  ;
+        return MaterialNo.equals(that.MaterialNo) ;
 //        return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
         // return MaterialNo.equals(that.MaterialNo) && RowNo.equals(that.RowNo);
 

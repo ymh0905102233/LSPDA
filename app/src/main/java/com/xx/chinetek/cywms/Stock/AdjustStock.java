@@ -387,7 +387,8 @@ public class AdjustStock extends BaseActivity {
             ReturnMsgModel<Base_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
             }.getType());
             if(returnMsgModel.getHeaderStatus().equals("S")){
-                MessageBox.Show(context, returnMsgModel.getMessage());
+                MessageBox.Show(context, returnMsgModel.getMessage(),1);
+//                MessageBox.Show(context, returnMsgModel.getMessage());
                 barcodeModel=null;
                 edtAdjustScanBarcode.setText("");
                 edtAdjustStock.setText("");

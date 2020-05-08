@@ -32,6 +32,7 @@ import com.xx.chinetek.model.Pallet.PalletDetail_Model;
 import com.xx.chinetek.model.ReturnMsgModel;
 import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
+import com.xx.chinetek.model.WMS.Print.PrintBean;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
 import com.xx.chinetek.util.dialog.MessageBox;
@@ -125,7 +126,7 @@ public class CombinPallet extends BaseActivity {
 
     PalletItemAdapter palletItemAdapter;
     List<PalletDetail_Model> palletDetailModels;
-
+    CombinModel mModel=null;
     @Override
     protected void initViews() {
         super.initViews();
@@ -139,6 +140,7 @@ public class CombinPallet extends BaseActivity {
     protected void initData() {
         super.initData();
         ShowPalletScan(SWPallet.isChecked());
+        mModel=new CombinModel(context);
     }
 
     /*
@@ -225,11 +227,11 @@ public class CombinPallet extends BaseActivity {
         if (DoubleClickCheck.isFastDoubleClick(context)) {
             return;
         }
-//        if(!CheckBluetooth()){
-//            MessageBox.Show(context, "蓝牙打印机连接失败");
-//            return;
-//        }
 
+        if(!CheckBluetooth()){
+            MessageBox.Show(context, "蓝牙打印机连接失败");
+            return;
+        }
         if (palletDetailModels != null && palletDetailModels.size() != 0 && palletDetailModels.get(0).getLstBarCode()!=null
                 && palletDetailModels.get(0).getLstBarCode().size()!=0) {
             palletDetailModels.get(0).setVoucherType(999);
@@ -359,13 +361,17 @@ public class CombinPallet extends BaseActivity {
             LogUtil.WriteLog(CombinPallet.class, TAG_SaveT_PalletDetailADF, result);
             ReturnMsgModel<Base_Model> returnMsgModel =  GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
             }.getType());
-            MessageBox.Show(context, returnMsgModel.getMessage());
+//            MessageBox.Show(context, returnMsgModel.getMessage());
             if(returnMsgModel.getHeaderStatus().equals("S")) {
-                InitFrm();
-                String palletNo=returnMsgModel.getTaskNo();
-//                MessageBox.Show(context,"组托成功！组托号:"+palletNo);
-//                LPK130DEMO1Pallet(palletNo);
 
+                String palletNo=returnMsgModel.getTaskNo();
+                MessageBox.Show(context,"组托成功！组托号:"+palletNo,1);
+//                LPK130DEMO1Pallet(palletNo);
+                PrintBean bean=new PrintBean();
+                bean.setPalletNo(palletNo);
+                 if (mModel!=null){
+                     mModel.ptintLPK130PalletNo(bean);
+                 }
 
 //                Barcode_Model barcodeModel=new Barcode_Model();
 //                barcodeModel.setSerialNo(palletNo);
@@ -377,6 +383,9 @@ public class CombinPallet extends BaseActivity {
 //                params.put("json", modelJson);
 //                LogUtil.WriteLog(CombinPallet.class, TAG_PrintLpkPalletAndroid, modelJson);
 //                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_PrintLpkPalletAndroid, getString(R.string.Msg_PrintLpkPalletAndroid), context, mHandler, RESULT_PrintLpkPalletAndroid, null,  URLModel.GetURL().PrintLpkPalletAndroid, params, null);
+                InitFrm();
+            }else {
+                MessageBox.Show(context, returnMsgModel.getMessage());
             }
         } catch (Exception ex) {
             MessageBox.Show(context, ex.getMessage());
@@ -516,4 +525,6 @@ public class CombinPallet extends BaseActivity {
 //            return getString(R.string.Error_CompanynotMatch);
         return "";
     }
+
+
 }

@@ -71,7 +71,8 @@ public class ReceiptScanDetailAdapter extends BaseAdapter {
             listItemView = (ListItemView) convertView.getTag();
         }
         ReceiptDetail_Model receiptDetailModel=receiptDetailModels.get(selectID);
-        listItemView.txtbarcode.setText(receiptDetailModel.getInvoiceNo()+"-"+receiptDetailModel.getMaterialNo()+"-"+receiptDetailModel.getToBatchNo());
+//        listItemView.txtbarcode.setText(receiptDetailModel.getInvoiceNo()+"-"+receiptDetailModel.getMaterialNo()+"-"+receiptDetailModel.getToBatchNo());
+        listItemView.txtbarcode.setText(receiptDetailModel.getProjectNo()+"-"+receiptDetailModel.getMaterialNo()+"-"+receiptDetailModel.getTracNo());
         listItemView.txtScanNum.setText("已扫："+receiptDetailModel.getScanQty());
         if(receiptDetailModel.getVoucherType()==22&&receiptType.equals("采购收货")){
             listItemView.txtRemainQty.setText("待收："+(receiptDetailModel.getADVRECEIVEQTY()- receiptDetailModel.getReceiveQty()));

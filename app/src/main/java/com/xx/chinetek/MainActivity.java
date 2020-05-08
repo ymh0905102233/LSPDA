@@ -38,6 +38,7 @@ import com.xx.chinetek.cywms.Receiption.ReceiptBillChoice;
 import com.xx.chinetek.cywms.Review.ReviewBillChoice;
 import com.xx.chinetek.cywms.Stock.AdjustStock;
 import com.xx.chinetek.cywms.UpShelf.UpShelfBillChoice;
+import com.xx.chinetek.cywms.YS.YSBillChoice;
 import com.xx.chinetek.model.User.MenuInfo;
 import com.xx.chinetek.util.function.CommonUtil;
 
@@ -114,6 +115,8 @@ public class MainActivity extends BaseActivity {
             intent.setClass(context, FillPrint.class);
         else if(textView.getText().toString().equals("库存调整"))
             intent.setClass(context, AdjustStock.class);
+        else if(textView.getText().toString().equals("预留释放"))
+            intent.setClass(context, YSBillChoice.class);
 //        else if(textView.getText().toString().equals("调拨出库"))
 //            intent.setClass(context, AdjustCP.class);
 //        else if(textView.getText().toString().equals("交接入库"))
@@ -317,6 +320,10 @@ public class MainActivity extends BaseActivity {
                     case 39:
                         itemIconList.add(R.drawable.dismounting);
                         itemNamesList.add("代理发货");
+                        break;
+                    case 40:
+                        itemIconList.add(R.drawable.innermove);
+                        itemNamesList.add("预留释放");
                         break;
                 }
             }

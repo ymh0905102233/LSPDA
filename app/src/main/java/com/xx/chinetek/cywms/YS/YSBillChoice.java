@@ -1,4 +1,4 @@
-package com.xx.chinetek.cywms.Receiption;
+package com.xx.chinetek.cywms.YS;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +22,8 @@ import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.base.ToolBarTitle;
 import com.xx.chinetek.cywms.Qc.QCMaterialChoice;
 import com.xx.chinetek.cywms.R;
+import com.xx.chinetek.cywms.Receiption.AdvInChoiceActivity;
+import com.xx.chinetek.cywms.Receiption.SupplierFilterActivity;
 import com.xx.chinetek.model.Material.BarCodeInfo;
 import com.xx.chinetek.model.Receiption.Receipt_Model;
 import com.xx.chinetek.model.ReturnMsgModel;
@@ -49,20 +51,20 @@ import static com.xx.chinetek.cywms.R.id.edt_filterContent;
 
 
 @ContentView(R.layout.activity_receipt_bill_choice)
-public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class YSBillChoice extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     /*业务类型 */
     String businesType = "";
 
-    String TAG_GetT_InStockList           = "ReceiptBillChoice_GetT_InStockList";
+    String TAG_GetT_YSListADF         = "ReceiptBillChoice_GetT_YSListADF";
     String TAG_GetT_PalletDetailByBarCode = "ReceiptBillChoice_GetT_PalletDetailByBarCode";
     String TAG_GetErpVoucherNo            = "ReceiptBillChoice_GetErpVoucherNo";
-    private final int RESULT_GetT_InStockList           = 101;
+    private final int RESULT_GetT_YSListADF          = 101;
     private final int RESULT_GetT_PalletDetailByBarCode = 102;
     private final int RESULT_GetErpVoucherNo            = 103;
     private final int supplierRequestCode               = 1001;
 
-    Context context              = ReceiptBillChoice.this;
+    Context context              = YSBillChoice.this;
     boolean isCancelFilterButton = false; //供应商筛选标志
 
 
@@ -70,7 +72,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     public void onHandleMessage(Message msg) {
         mSwipeLayout.setRefreshing(false);
         switch (msg.what) {
-            case RESULT_GetT_InStockList:
+            case RESULT_GetT_YSListADF:
                 AnalysisGetT_InStockListJson((String) msg.obj);
                 break;
             case RESULT_GetT_PalletDetailByBarCode:
@@ -116,10 +118,6 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
         x.view().inject(this);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     protected void onResume() {
@@ -132,7 +130,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     protected void initData() {
         super.initData();
         mSwipeLayout.setOnRefreshListener(this); //下拉刷新
-        businesType = getIntent().getStringExtra("BusinesType").toString();
+        businesType ="";
     }
 
     @Override
@@ -160,7 +158,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
 //            receiptModel.setVoucherType(22);//筛选显示采购订单
 //            receiptModel.setStrVoucherType("预到货");//过滤预到货单据状态
 //        }
-        GetT_InStockList(receiptModel);
+        GetT_YSList(receiptModel);
     }
 
 
@@ -275,7 +273,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
                 Receipt_Model receiptModel = new Receipt_Model();
                 receiptModel.setStatus(1);
                 receiptModel.setErpVoucherNo(code);
-                GetT_InStockList(receiptModel);
+                GetT_YSList(receiptModel);
             } else {
                 GetT_ErpVoucherNo(code);
             }
@@ -287,7 +285,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
 
     void AnalysisGetT_InStockListJson(String result) {
         try {
-            LogUtil.WriteLog(ReceiptBillChoice.class, TAG_GetT_InStockList, result);
+            LogUtil.WriteLog(YSBillChoice.class, TAG_GetT_YSListADF, result);
             ReturnMsgModelList<Receipt_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<Receipt_Model>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
@@ -313,7 +311,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     }
 
     void AnalysisGetT_PalletDetailByBarCodeJson(String result) {
-        LogUtil.WriteLog(ReceiptBillChoice.class, TAG_GetT_PalletDetailByBarCode, result);
+        LogUtil.WriteLog(YSBillChoice.class, TAG_GetT_PalletDetailByBarCode, result);
         try {
             ReturnMsgModelList<BarCodeInfo> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<BarCodeInfo>>() {
             }.getType());
@@ -327,7 +325,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
                     Receipt_Model receiptModel = new Receipt_Model();
                     receiptModel.setStatus(1);
                     receiptModel.setErpVoucherNo(barCodeInfos.get(0).getErpVoucherNo());
-                    GetT_InStockList(receiptModel);
+                    GetT_YSList(receiptModel);
                     //   } else {
                     //     MessageBox.Show(context, R.string.Error_BarcodeNotInList);
                     // }
@@ -350,7 +348,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
      */
     private void AnalysisGetErpVoucherNoJson(String result) {
         try {
-            LogUtil.WriteLog(ReceiptBillChoice.class, TAG_GetErpVoucherNo, result);
+            LogUtil.WriteLog(YSBillChoice.class, TAG_GetErpVoucherNo, result);
             ReturnMsgModel<String> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<String>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
@@ -359,7 +357,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
                     Receipt_Model receiptModel = new Receipt_Model();
                     receiptModel.setStatus(1);
                     receiptModel.setErpVoucherNo(erpVoucherNo);
-                    GetT_InStockList(receiptModel);
+                    GetT_YSList(receiptModel);
                 } else {
                     ToastUtil.show("通过条码获取ERP单据号失败,返回的erp单号为空");
                 }
@@ -373,15 +371,15 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
         CommonUtil.setEditFocus(edtfilterContent);
     }
 
-    void GetT_InStockList(Receipt_Model receiptModel) {
+    void GetT_YSList(Receipt_Model receiptModel) {
         try {
             receiptModel.setPcOrPda("0");
             String ModelJson = GsonUtil.parseModelToJson(receiptModel);
             Map<String, String> params = new HashMap<>();
             params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
             params.put("ModelJson", ModelJson);
-            LogUtil.WriteLog(ReceiptBillChoice.class, TAG_GetT_InStockList, ModelJson);
-            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_InStockList, getString(R.string.Msg_GetT_InStockListADF), context, mHandler, RESULT_GetT_InStockList, null, URLModel.GetURL().GetT_InStockListADF, params, null);
+            LogUtil.WriteLog(YSBillChoice.class, TAG_GetT_YSListADF, ModelJson);
+            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_YSListADF, getString(R.string.Msg_GetT_YSListADF), context, mHandler, RESULT_GetT_YSListADF, null, URLModel.GetURL().GetT_YSListADF, params, null);
         } catch (Exception ex) {
             mSwipeLayout.setRefreshing(false);
             MessageBox.Show(context, ex.getMessage());
@@ -392,7 +390,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
         try {
             Map<String, String> params = new HashMap<>();
             params.put("BarCode", barcode);
-            LogUtil.WriteLog(ReceiptBillChoice.class, TAG_GetErpVoucherNo, params.toString());
+            LogUtil.WriteLog(YSBillChoice.class, TAG_GetErpVoucherNo, params.toString());
             RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetErpVoucherNo, getString(R.string.Msg_GetT_InStockListADF), context, mHandler, RESULT_GetErpVoucherNo, null, URLModel.GetURL().GetErpVoucherNo, params, null);
         } catch (Exception ex) {
             mSwipeLayout.setRefreshing(false);
@@ -401,7 +399,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     }
 
     void StartScanIntent(Receipt_Model receiptModel, ArrayList<BarCodeInfo> barCodeInfo) {
-        Intent intent = new Intent(context, ReceiptionScan.class);
+        Intent intent = new Intent(context, YSScan.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("receiptModel", receiptModel);
         bundle.putParcelableArrayList("barCodeInfo", barCodeInfo);

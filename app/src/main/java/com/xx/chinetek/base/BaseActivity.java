@@ -848,6 +848,70 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
                     Toast.LENGTH_SHORT).show();
         }
     }
+//    public void LPK130OutBarcode(OutStockTaskInfo_Model model, ArrayList<Boxing> modellist,StockInfo_Model stockmodel,String flag) {
+//        LPK130 lpk130 = new LPK130();
+//        lpk130.closeDevice();
+//        if (lpk130.openDevice(URLModel.MacAdress) >= 0) {
+//            try {
+//                if (flag=="LList") {
+//                    int pageHeight = 600;
+//                    int fontHeight = 24;
+//                    int currentY = 20;
+//                    if (lpk130 == null) return;
+//                    lpk130.NFCP_createPage(576, pageHeight);//起始设置
+////        lpk130.NFCP_setLeftMargin((byte) 12);
+////        lpk130.NFCP_setSnapMode((byte) 1);
+////        lpk130.NFCP_setLineSpace(31);
+////        lpk130.NFCP_setFontBold((byte) 1);
+//                    lpk130.NFCP_Page_setText(240,0,"装箱单",2, 0, 1, false, false);
+//                    String packingNo="2020-5-5-15";
+//                    if (packingNo!=null){
+//                        lpk130.NFCP_Page_printQrCode(430,0,0,3, 2,packingNo );
+//                    }
+//
+//                    currentY += fontHeight + 6;
+//                    lpk130.NFCP_Page_setText(80,currentY,"装箱编码:"+packingNo,2, 0, 1, false, false);
+//                    currentY += fontHeight + 6;
+//                    currentY += fontHeight + 20;
+////        lpk130.NFCP_setFontBold((byte) 0);
+////        lpk130.NFCP_fontSize((byte) 1, (byte) 1);
+////        lpk130.NFCP_setSnapMode((byte) 0);
+////        lpk130.NFCP_setLeftMargin((byte) 60);
+////        lpk130.NFCP_printStrLine("装箱编码:" + bean.getPackingNo());
+////
+////        lpk130.NFCP_printStrLine("---------------------------------");
+//                    lpk130.NFCP_Page_setText(150, currentY, "物料描述", 2, 0, 1, false, false);
+//                    lpk130.NFCP_Page_setText(480, currentY, "数量", 2, 0, 1, false, false);
+//                    lpk130.NFCP_feed(10);
+//                    for (PackingMaterialBean item : bean.getList()) {
+//                        currentY += fontHeight + 6;
+//                        for (int i = 0; i < item.getMaterialDescPartList().size(); i++) {
+//                            if (i == 0) {
+//                                lpk130.NFCP_Page_setText(60, currentY, item.getMaterialDescPartList().get(i), 2, 0, 1, false, false);
+//                                lpk130.NFCP_Page_setText(500, currentY, item.getMaterialInfo().getQTY() + "", 2, 0, 1, false, false);
+//
+//                            } else {
+//                                lpk130.NFCP_Page_setText(60, currentY, item.getMaterialDescPartList().get(i), 2, 0, 1, false, false);
+//
+//                            }
+//                            currentY += fontHeight + 6;
+//                        }
+//
+//                    }
+//
+//                    lpk130.NFCP_printPage(0, 1);
+//
+//
+//                }
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            Toast.makeText(this, "设备连接失败，请重新连接！",
+//                    Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
 
 }

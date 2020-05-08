@@ -12,7 +12,7 @@
                 <TextView
                     android:id="@+id/txtTaskNo"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="35dp"
                     android:layout_weight="0.7"
                     android:maxLines="1"
                     android:textColor="@color/blueviolet"
@@ -40,20 +40,19 @@
                 <TextView
                     android:id="@+id/txtERPVoucherNo"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.4"
+                    android:layout_height="43dp"
+                    android:layout_weight="0.6"
                     android:maxLines="1"
                     android:textColor="@color/saddlebrown"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
 
                 <TextView
                     android:id="@+id/txtIssueType"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.4"
                     android:maxLines="1"
-                    android:text="2"
                     android:textColor="@color/darkorchid"
                     android:textSize="15sp" />
 
@@ -67,9 +66,9 @@
 
                 <TextView
                     android:id="@+id/txtCompany"
-                    android:layout_width="137dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.5"
                     android:maxLines="1"
                     android:text="2"
                     android:textAlignment="textStart"
@@ -81,10 +80,8 @@
                     android:id="@+id/txtVouUser"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.5"
                     android:maxLines="1"
-                    android:textAlignment="textStart"
                     android:textColor="@color/mediumvioletred"
                     android:textSize="14sp" />
 
@@ -109,6 +106,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/off_shelf_bill_choice_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5">

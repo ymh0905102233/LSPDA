@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xx.chinetek.cywms.R;
@@ -68,6 +69,8 @@ public class QueryItemAdapter extends BaseAdapter {
             // 获取list_item布局文件的视图
             convertView = listContainer.inflate(R.layout.item_query_listview,null);
             listItemView.txtEAN = (TextView) convertView.findViewById(R.id.txtEAN);
+            LinearLayout  root= (LinearLayout) convertView.findViewById(R.id.txt_EAN_layout);
+            root.setVisibility(View.GONE);
             listItemView.txtMaterialNo = (TextView) convertView.findViewById(R.id.txtMaterialNo);
             listItemView.txtAreaNo = (TextView) convertView.findViewById(R.id.txtAreaNo);
             listItemView.txtMaterialDec = (TextView) convertView.findViewById(R.id.txtMaterialDec);
@@ -75,20 +78,21 @@ public class QueryItemAdapter extends BaseAdapter {
             listItemView.txtBatchNo = (TextView) convertView.findViewById(R.id.txtBatchNo);
             listItemView.txtCompany = (TextView) convertView.findViewById(R.id.txtCompany);
             listItemView.txtQCStatus = (TextView) convertView.findViewById(R.id.txtQCStatus);
+            listItemView.txtEAN.setVisibility(View.GONE);
            // listItemView.txtStockStatus = (TextView) convertView.findViewById(R.id.txtStockStatus);
             convertView.setTag(listItemView);
         } else {
             listItemView = (ListItemView) convertView.getTag();
         }
         StockInfo_Model stockInfoModel=stockInfoModels.get(selectID);
-        listItemView.txtMaterialNo.setText("批："+stockInfoModel.getBatchNo());
+        listItemView.txtMaterialNo.setText("批次："+stockInfoModel.getBatchNo());
         listItemView.txtAreaNo.setText("库位："+stockInfoModel.getAreaNo());
-        listItemView.txtEAN.setText("EAN："+stockInfoModel.getEAN());
+//        listItemView.txtEAN.setText("EAN："+stockInfoModel.getEAN());
         listItemView.txtMaterialDec.setText(stockInfoModel.getMaterialDesc());
-        listItemView.txtQty.setText("数量："+stockInfoModel.getQty()+"");
+        listItemView.txtQty.setText("数量："+stockInfoModel.getQty().intValue()+"");
         listItemView.txtBatchNo.setText(stockInfoModel.getMaterialNo());
-        listItemView.txtCompany.setText("据："+stockInfoModel.getStrongHoldName());
-        listItemView.txtQCStatus.setText(stockInfoModel.getStrStatus());
+        listItemView.txtCompany.setText("据点："+stockInfoModel.getStrongHoldName());
+//        listItemView.txtQCStatus.setText(stockInfoModel.getStrStatus());
        // listItemView.txtStockStatus.setText("库存状态");
         return convertView;
     }

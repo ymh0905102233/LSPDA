@@ -26,7 +26,21 @@ public class MessageBox {
 
         new AlertDialog.Builder(context).setTitle("提示").setCancelable(false).setMessage(message).setPositiveButton("确定", null).show();
     }
+    /**
+     * @desc:  type 0 失败  1 成功
+     * @param:
+     * @return:
+     * @author: Nietzsche
+     * @time 2020/5/7 12:04
+     */
+    public static void Show(Context context, String message,int type) {
+        if (type==0){
+            music = MediaPlayer.create(context,R.raw.error3);
+            music.start();
+        }
 
+        new AlertDialog.Builder(context).setTitle("提示").setCancelable(false).setMessage(message).setPositiveButton("确定", null).show();
+    }
     public static void Show(Context context, int resourceID) {
         String msg = context.getResources().getString(resourceID);
         new AlertDialog.Builder(context).setTitle("提示").setCancelable(false).setMessage(msg).setPositiveButton("确定", null).show();

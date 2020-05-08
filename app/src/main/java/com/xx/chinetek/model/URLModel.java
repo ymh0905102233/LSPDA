@@ -28,6 +28,7 @@ public class URLModel {
     public String UserLoginADF = GetWCFAdress()+"UserLoginADF"; //用户登录
     public String GetWareHouseByUserADF = GetWCFAdress()+"GetWareHouseByUserADF"; //获取仓库列表
     public String GetT_InStockListADF = GetWCFAdress()+"GetT_InStockListADF"; //收货表头
+    public String  GetErpVoucherNo = GetWCFAdress()+"GetErpVoucherNo"; //获取ERP单号
     public String GetT_InTaskListADF = GetWCFAdress()+"GetT_InTaskListADF"; //上架表头
     public String GetCheckADF = GetWCFAdress()+"GetCheck"; //盘点表头
     public String GetCheckMing = GetWCFAdress()+"GetCheckMing"; //盘点表头
@@ -225,4 +226,7 @@ public class URLModel {
     public String CombinBoxListADF =GetWCFAdress()+"" +"SaveCobBoxListADF";//拼箱装箱清单
     public String GetMessageForPrint =GetWCFAdress()+"GetMessageForPrint";
 
+    //预留模块
+    public String GetT_YSListADF =GetWCFAdress()+"GetT_YSListADF";  //预留列表
+    public String GetTYSDetailListByHeaderIDADF =GetWCFAdress()+"GetTYSDetailListByHeaderIDADF";  //预留
 }

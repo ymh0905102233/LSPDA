@@ -232,9 +232,11 @@
     <string name="Msg_Login">用户验证...</string>
     <string name="Msg_Inventory_Load">盘点任务信息加载中...</string>
     <string name="Msg_GetT_InStockListADF">获取收货列表...</string>
+    <string name="Msg_GetT_YSListADF">获取预留列表...</string>
     <string name="Msg_GetT_OutStockListADF">获取发货列表...</string>
     <string name="Msg_GetT_ReturnStockListADF">获取退料列表...</string>
     <string name="Msg_GetT_InStockDetailListByHeaderIDADF">获取收货明细列表...</string>
+    <string name="Msg_GetT_YSDetailListByHeaderIDADF">获取预留释放明细列表...</string>
     <string name="Msg_GetT_LineInStockDetail">获取退料明细列表...</string>
     <string name="Msg_GetT_InTaskDetailListByHeaderIDADF">获取上架明细列表...</string>
     <string name="Msg_GetAreanobyCheckno">获取盘点库位信息...</string>
@@ -350,7 +352,8 @@
     <string name="Error_BarcodeNotInList">此物料不在列表中！</string>
     <string name="Error_batchNONotMatch">此物料为指定批次，批次号不匹配！</string>
     <string name="Error_NotPickMaterial">此物料不在当前需要拣货单据中！</string>
-    <string name="Error_NotPickWarehouse">条码的仓库和拣货单据不符！</string>
+    <string name="Error_NotPickWarehouse">条码的仓库和拣货单据的仓库不符！</string>
+    <string name="Error_NotTrace">条码的需求跟踪号和拣货单据的需求跟踪号不符！</string>
     <string name="Error_BarcodeScaned">该条码已扫描！</string>
     <string name="Error_PalletNoMatch">扫描条码所属托盘与拆托托盘不一致！</string>
     <string name="Error_MaterialPickFinish">该物料已拣货完毕！</string>
