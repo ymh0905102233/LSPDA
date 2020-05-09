@@ -806,7 +806,6 @@ public class OffshelfBatchScan extends BaseActivity {
             ReturnMsgModelList<OutStockTaskDetailsInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<OutStockTaskDetailsInfo_Model>>() {
             }.getType());
             outStockTaskDetailsInfoModels = new ArrayList<>();
-
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 outStockTaskDetailsInfoModels = returnMsgModel.getModelJson();
                 if (outStockTaskDetailsInfoModels != null && outStockTaskDetailsInfoModels.size() > 0) {

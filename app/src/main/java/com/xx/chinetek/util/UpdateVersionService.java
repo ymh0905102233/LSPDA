@@ -45,7 +45,7 @@ public class UpdateVersionService {
     private String fileSavePath;// 下载新apk的厨房地点
    // private static final String UPDATEVERSIONXMLPATH = UserConfigModel.UPDATEURL+"version.xml";
     public final static String LastContent="downfiles.aspx?filename=version.xml";
-    static String UPDATEVERSIONXMLPATH(){
+   public static String UPDATEVERSIONXMLPATH(){
         return  "http://"+ URLModel.IPAdress+":"+URLModel.Port+"/"+LastContent;
     }
     private boolean cancelUpdate = false;// 是否取消下载
@@ -251,20 +251,35 @@ public class UpdateVersionService {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         System.out.println("filepath=" + apkfile.toString() + "  " + apkfile.getPath());
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {// sdk >= 24
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);// 给目标应用一个临时授权.注意8.0手机，setflag new task在前，addflag在后
-            Uri contentUri = FileProvider.getUriForFile(context,
-                    context.getApplicationContext().getPackageName() + ".provider",
-                    apkfile);
-            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-        } else {
-            Uri uri = Uri.fromFile(apkfile);//或者 Uri.isPaise("file://"+file.toString()
-            intent.setDataAndType(uri, "application/vnd.android.package-archive");
-        }
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {// sdk >= 24
+//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);// 给目标应用一个临时授权.注意8.0手机，setflag new task在前，addflag在后
+//            Uri contentUri = FileProvider.getUriForFile(context,
+//                    context.getApplicationContext().getPackageName() + ".provider",
+//                    apkfile);
+//            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+//        } else {
+//            Uri uri = Uri.fromFile(apkfile);//或者 Uri.isPaise("file://"+file.toString()
+//            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+//        }
 
 //        intent.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
-        context.startActivity(intent);
-        android.os.Process.killProcess(android.os.Process.myPid());// 如果不加上这句的话在apk安装完成之后点击单开会崩溃
+
+        Intent _Intent = new Intent();
+        _Intent.setAction(Intent.ACTION_VIEW);
+        Uri _uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            _Intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            _uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileProvider", apkfile);
+        }else {
+            _uri = Uri.fromFile(apkfile);
+            _Intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        _Intent.setDataAndType(_uri, "application/vnd.android.package-archive");
+        context.startActivity(_Intent);
+
+//        context.startActivity(intent);
+//        android.os.Process.killProcess(android.os.Process.myPid());// 如果不加上这句的话在apk安装完成之后点击单开会崩溃
     }
 
 

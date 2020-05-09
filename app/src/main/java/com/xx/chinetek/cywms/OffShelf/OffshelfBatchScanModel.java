@@ -35,9 +35,10 @@ public class OffshelfBatchScanModel {
                     int pageWeight = 576;  //页面宽度
                     int fontHeight = 16;  //字体高度
                     int growthWeight = 40;  //增加宽度
-                    int growthHeight = 20;  //增加高度
+                    int growthHeight = 15;  //增加高度
                     int currentY = 0;   //当前Y轴高度
                     int maxSingleLength = 16; //一行最大字数
+                    int maxSingleLength2 = 20; //一行最大字数
                     if (lpk130 == null) return;
                     if (bean == null) {
                         Toast.makeText(mContext, "打印的外箱条码数据不能为空",
@@ -48,16 +49,26 @@ public class OffshelfBatchScanModel {
                     String materialDesc = bean.getMaterialDesc() != null ? bean.getMaterialDesc() : "";
                     String materialDesc1 = "";
                     String materialDesc2 = "";
+                    String spec=bean.getSpec()!=null? bean.getSpec():"";
+                    String spec1="";
+                    String spec2="";
                     if (materialDesc.length() < maxSingleLength) {
                         materialDesc1 = materialDesc.substring(0, materialDesc.length()-1);
                     } else {
                         materialDesc1 = materialDesc.substring(0, maxSingleLength);
                         materialDesc2 = materialDesc.substring(maxSingleLength, materialDesc.length() - 1);
                     }
+                    if (spec.length() < maxSingleLength2) {
+                        spec1 = spec.substring(0, spec.length()-1);
+                    } else {
+                        spec1 = spec.substring(0, maxSingleLength2);
+                        spec2 = spec.substring(maxSingleLength2, spec.length() - 1);
+                    }
                     String traceNo = bean.getTraceNo() != null ? bean.getTraceNo() : "";
                     String projectNo = bean.getProjectNo() != null ? bean.getProjectNo() : "";
                     String serialNo = bean.getSerialNo() != null ? bean.getSerialNo() : "";
                     String barcode = bean.getBarcode() != null ? bean.getBarcode() : "";
+                    String standardBox=bean.getStandardBox()!=null?bean.getStandardBox():"";
                     String qty = bean.getQty() + "";
                     lpk130.NFCP_createPage(pageWeight, pageHeight);//起始设置
                     lpk130.NFCP_Page_setText(growthWeight, currentY, "物料编号:" + materialNo, 2, 0, 1, false, false);
@@ -69,16 +80,27 @@ public class OffshelfBatchScanModel {
 
                     }
                     currentY += fontHeight + growthHeight;
-                    lpk130.NFCP_Page_setText(growthWeight, currentY, "需求跟踪号:" + traceNo, 2, 0, 1, false, false);
+                    lpk130.NFCP_Page_setText(growthWeight, currentY, "规格:" + spec1, 2, 0, 1, false, false);
+                    if (!spec2.isEmpty()) {
+                        currentY += fontHeight + growthHeight;
+                        lpk130.NFCP_Page_setText(growthWeight, currentY, spec2, 2, 0, 1, false, false);
+
+                    }
+
                     currentY += fontHeight + growthHeight;
                     lpk130.NFCP_Page_printQrCode(growthWeight, currentY, 0, 5, 2, barcode);
-                    currentY += fontHeight + growthHeight * 2;
-                    lpk130.NFCP_Page_setText(growthWeight * 5, currentY, projectNo, 2, 0, 1, false, false);
+                    lpk130.NFCP_Page_setText(growthWeight * 5, currentY,  projectNo, 2, 0, 1, false, false);
+                    currentY += fontHeight + growthHeight;
+                    lpk130.NFCP_Page_setText(growthWeight * 5, currentY, "需求跟踪号:" + traceNo, 2, 0, 1, false, false);
+                    currentY += fontHeight + growthHeight;
+                    lpk130.NFCP_Page_setText(growthWeight * 5, currentY, "存货代码:" + standardBox, 2, 0, 1, false, false);
                     currentY += fontHeight + growthHeight;
                     lpk130.NFCP_Page_setText(growthWeight * 5, currentY, "数量:" + qty, 2, 0, 1, false, false);
-//                    currentY += fontHeight + growthHeight * (4.5);
-                    currentY += fontHeight + growthHeight * (2.6);
-                    lpk130.NFCP_Page_setText(growthWeight, currentY, "序列号:" + serialNo, 2, 0, 1, false, false);
+
+                    //                    currentY += fontHeight + growthHeight * (4.5);
+//                    currentY += fontHeight + growthHeight * (2.6);
+                    currentY += fontHeight + growthHeight;
+                    lpk130.NFCP_Page_setText(growthWeight * 5, currentY, "序列号:" + serialNo, 2, 0, 1, false, false);
                     lpk130.NFCP_printPage(0, 1);
                 } catch (Exception e) {
                     e.printStackTrace();

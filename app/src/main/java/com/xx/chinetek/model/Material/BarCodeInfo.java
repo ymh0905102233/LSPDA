@@ -32,6 +32,7 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
     private String fserialno;
     ArrayList<BarCodeInfo> lstBarCode;
 
+
     public String getFserialno() {
         return fserialno;
     }
@@ -103,7 +104,9 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
     private  String Address;
     private  String Address1;
     private  String Phone;
-
+    private String ProjectNo;
+    private String TracNo;
+    private String   originalCode ; //1 是入   ;空是出
     public String getContact() {
         return Contact;
     }
@@ -504,11 +507,35 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
         ProductBatch = productBatch;
     }
 
+    public String getProjectNo() {
+        return ProjectNo;
+    }
+
+    public void setProjectNo(String projectNo) {
+        ProjectNo = projectNo;
+    }
+
+    public String getTracNo() {
+        return TracNo;
+    }
+
+    public void setTracNo(String tracNo) {
+        TracNo = tracNo;
+    }
+
     public BarCodeInfo() {
     }
 
     public BarCodeInfo(String barcode) {
         this.BarCode=barcode;
+    }
+
+    public String getOriginalCode() {
+        return originalCode;
+    }
+
+    public void setOriginalCode(String originalCode) {
+        this.originalCode = originalCode;
     }
 
     @Override
@@ -592,6 +619,9 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
         dest.writeString(this.Address);
         dest.writeString(this.Address1);
         dest.writeString(this.Phone);
+        dest.writeString(this.ProjectNo);
+        dest.writeString(this.TracNo);
+        dest.writeString(this.originalCode);
     }
 
     protected BarCodeInfo(Parcel in) {
@@ -652,6 +682,9 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
         this.Address = in.readString();
         this.Address1 = in.readString();
         this.Phone = in.readString();
+        this.ProjectNo = in.readString();
+        this.TracNo = in.readString();
+        this.originalCode=in.readString();
     }
 
     public static final Creator<BarCodeInfo> CREATOR = new Creator<BarCodeInfo>() {

@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.mylibrary.LPK130;
+import com.vector.update_app.UpdateAppManager;
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.model.Box.Boxing;
 import com.xx.chinetek.model.CheckNumRefMaterial;
@@ -72,8 +73,21 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
      * 初始化数据
      */
     protected void initData() {
-        if(BaseApplication.isCloseActivity)
+        if(BaseApplication.isCloseActivity){
             checkUpdate();
+//            new UpdateAppManager
+//                    .Builder()
+//                    //当前Activity
+//                    .setActivity(this)
+//                    //更新地址
+//                    .setUpdateUrl(UpdateVersionService.UPDATEVERSIONXMLPATH())
+//                    //实现httpManager接口的对象
+////                    .setHttpManager(new UpdateAppHttpUtil())
+//                    .build()
+//                    .update();
+        }
+//
+
     }
 
 

@@ -23,6 +23,7 @@
     <string name="receipt_subtitle">单据选择</string>
     <string name="supplier_subtitle">供应商选择</string>
     <string name="receiptscan_subtitle">收货扫描</string>
+    <string name="ys_title">预留释放扫描</string>
     <string name="receiptscan_billdetail">收货单据条码明细</string>
     <string name="innerMove_billdetail">移库条码明细</string>
     <string name="UpShelf_title">上架</string>

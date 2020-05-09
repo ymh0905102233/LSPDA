@@ -229,4 +229,6 @@ public class URLModel {
     //预留模块
     public String GetT_YSListADF =GetWCFAdress()+"GetT_YSListADF";  //预留列表
     public String GetTYSDetailListByHeaderIDADF =GetWCFAdress()+"GetTYSDetailListByHeaderIDADF";  //预留
+    public String GetOutBarCodeForYS =GetWCFAdress()+"GetOutBarCodeForYS";  //预留扫描
+    public String YSPost =GetWCFAdress()+"YSPost";  //预留提交
 }

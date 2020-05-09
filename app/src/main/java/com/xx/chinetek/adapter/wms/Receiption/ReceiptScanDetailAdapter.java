@@ -38,6 +38,13 @@ public class ReceiptScanDetailAdapter extends BaseAdapter {
         receiptType =ReceiptType;
     }
 
+    public ReceiptScanDetailAdapter(Context context, List<ReceiptDetail_Model> receiptDetailModels) {
+        this.context = context;
+        listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
+        this.receiptDetailModels = receiptDetailModels;
+        receiptType ="";
+    }
+
     @Override
     public int getCount() {
         return  receiptDetailModels==null?0:receiptDetailModels.size();
@@ -82,10 +89,10 @@ public class ReceiptScanDetailAdapter extends BaseAdapter {
 
         listItemView.txtMaterialDesc.setText(receiptDetailModel.getMaterialDesc());
         if (receiptDetailModel.getScanQty()!=0 &&
-                receiptDetailModel.getScanQty().compareTo(receiptDetailModel.getRemainQty())<0) {
+                receiptDetailModel.getScanQty().compareTo( Math.abs(receiptDetailModel.getRemainQty()))<0) {
             convertView.setBackgroundResource(R.color.khaki);
         }
-        else if (receiptDetailModel.getScanQty().compareTo(receiptDetailModel.getRemainQty())==0) {
+        else if (receiptDetailModel.getScanQty().compareTo(Math.abs(receiptDetailModel.getRemainQty()))==0) {
             convertView.setBackgroundResource(R.color.springgreen);
         }else{
             convertView.setBackgroundResource(R.color.trans);

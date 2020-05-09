@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+
     <application
         android:name="com.xx.chinetek.base.BaseApplication"
         android:allowBackup="true"
@@ -22,7 +23,7 @@
         <activity android:name=".Receiption.ReceiptionBillDetail" />
         <activity android:name=".Receiption.AdvInChoiceActivity" />
         <activity android:name=".YS.YSBillChoice" />
-        <activity android:name=".YS.YSScan" />
+        <activity android:name=".YS.YSScan2" />
         <!-- <activity android:name=".BillChoice" /> -->
         <activity android:name=".UpShelf.UpShelfScanActivity" />
         <activity android:name=".UpShelf.UpShelfScanCYActivity" />
@@ -120,6 +121,16 @@
         <activity android:name=".Query.AddProductQHActivity"></activity>
         <activity android:name=".OffShelf.OffshelfBatchScan"></activity>
         <activity android:name=".Query.PatchBarcode.PatchBarcode"></activity>
+        <activity android:name=".YS.YSScan"></activity>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.xx.chinetek.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 
 </manifest>
