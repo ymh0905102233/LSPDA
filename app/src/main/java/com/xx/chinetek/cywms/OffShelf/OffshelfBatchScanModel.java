@@ -37,7 +37,7 @@ public class OffshelfBatchScanModel {
                     int growthWeight = 40;  //增加宽度
                     int growthHeight = 15;  //增加高度
                     int currentY = 0;   //当前Y轴高度
-                    int maxSingleLength = 16; //一行最大字数
+                    int maxSingleLength = 25; //一行最大字数
                     int maxSingleLength2 = 20; //一行最大字数
                     if (lpk130 == null) return;
                     if (bean == null) {
@@ -53,16 +53,22 @@ public class OffshelfBatchScanModel {
                     String spec1="";
                     String spec2="";
                     if (materialDesc.length() < maxSingleLength) {
-                        materialDesc1 = materialDesc.substring(0, materialDesc.length()-1);
+                        if (!materialDesc.equals("")) {
+                            materialDesc1 = materialDesc.substring(0, materialDesc.length());
+                        }
+
                     } else {
                         materialDesc1 = materialDesc.substring(0, maxSingleLength);
-                        materialDesc2 = materialDesc.substring(maxSingleLength, materialDesc.length() - 1);
+                        materialDesc2 = materialDesc.substring(maxSingleLength, materialDesc.length());
                     }
                     if (spec.length() < maxSingleLength2) {
-                        spec1 = spec.substring(0, spec.length()-1);
+                        if (!spec.equals("")) {
+                            spec1 = spec.substring(0, spec.length());
+                        }
+
                     } else {
                         spec1 = spec.substring(0, maxSingleLength2);
-                        spec2 = spec.substring(maxSingleLength2, spec.length() - 1);
+                        spec2 = spec.substring(maxSingleLength2, spec.length());
                     }
                     String traceNo = bean.getTraceNo() != null ? bean.getTraceNo() : "";
                     String projectNo = bean.getProjectNo() != null ? bean.getProjectNo() : "";

@@ -17,7 +17,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.mylibrary.LPK130;
-import com.vector.update_app.UpdateAppManager;
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.model.Box.Boxing;
 import com.xx.chinetek.model.CheckNumRefMaterial;

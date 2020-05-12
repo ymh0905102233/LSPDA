@@ -100,7 +100,7 @@ public class StockInfo_Model extends Base_Model implements Parcelable, Cloneable
     private String TracNo;
     private String RowNo;
     private  String standardbox;
-
+    private  String Spec;
     public int getIsPalletOrBox() {
         return IsPalletOrBox;
     }
@@ -714,6 +714,14 @@ public class StockInfo_Model extends Base_Model implements Parcelable, Cloneable
         this.standardbox = standardbox;
     }
 
+    public String getSpec() {
+        return Spec;
+    }
+
+    public void setSpec(String spec) {
+        Spec = spec;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -816,6 +824,7 @@ public class StockInfo_Model extends Base_Model implements Parcelable, Cloneable
         dest.writeString(this.TracNo);
         dest.writeString(this.RowNo);
         dest.writeString(this.standardbox);
+        dest.writeString(this.Spec);
     }
 
     protected StockInfo_Model(Parcel in) {
@@ -897,6 +906,7 @@ public class StockInfo_Model extends Base_Model implements Parcelable, Cloneable
         this.TracNo =in.readString();
         this.RowNo = in.readString();
         this.standardbox=in.readString();
+        this.Spec=in.readString();
     }
 
     public static final Creator<StockInfo_Model> CREATOR = new Creator<StockInfo_Model>() {

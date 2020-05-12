@@ -124,7 +124,7 @@
         <activity android:name=".YS.YSScan"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.xx.chinetek.fileProvider"
+            android:authorities="com.xx.chinetek.lspda.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

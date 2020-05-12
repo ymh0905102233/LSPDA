@@ -224,8 +224,6 @@ public class OffshelfBatchScan extends BaseActivity {
         BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.OffShelf_subtitle) + "-" + BaseApplication.userInfo.getWarehouseName(), true);
         x.view().inject(this);
         BaseApplication.isCloseActivity = false;
-
-
     }
 
     @Override
@@ -362,6 +360,16 @@ public class OffshelfBatchScan extends BaseActivity {
 
                             }
                         } else {
+                            if (currentPickMaterialIndex == -2) {
+                                MessageBox.Show(context, getString(R.string.Error_NotPickWarehouse));
+                                CommonUtil.setEditFocus(mBarcode);
+                                return false;
+                            }
+                            if (currentPickMaterialIndex == -3) {
+                                MessageBox.Show(context, getString(R.string.Error_NotTrace));
+                                CommonUtil.setEditFocus(mBarcode);
+                                return false;
+                            }
                             MessageBox.Show(context, getString(R.string.Error_NotPickMaterial));
                             CommonUtil.setEditFocus(mBarcode);
                         }
@@ -607,6 +615,22 @@ public class OffshelfBatchScan extends BaseActivity {
                 if (!checkdetail(outStockTaskDetailsInfoModels)) {
                     MessageBox.Show(context, "提交的数据异常，退出重新扫描！");
                     return false;
+                }
+                if (outStockTaskDetailsInfoModels.get(0).getVoucherType()!=40 && outStockTaskDetailsInfoModels.get(0).getVoucherType()!=41 && outStockTaskDetailsInfoModels.get(0).getVoucherType()!=32){ //生产领料申请单，委外领料申请单，采购退货单 可以部分下架
+                    boolean isMaterialRowScanFinish=true;
+                    if (outStockTaskDetailsInfoModels!=null && outStockTaskDetailsInfoModels.size()>0){
+                        for (OutStockTaskDetailsInfo_Model model:outStockTaskDetailsInfoModels){
+                            Float remainQty = ArithUtil.sub(model.getRemainQty(), model.getScanQty());
+                            if (remainQty!=0){
+                                isMaterialRowScanFinish=false;
+                                break;
+                            }
+                        }
+                    }
+                    if (isMaterialRowScanFinish==false ){
+                        MessageBox.Show(context, "物料行没有全部扫描完成,请全部扫描后再提交");
+                        return false;
+                    }
                 }
 
                 if (mUuid == null) {
@@ -1116,6 +1140,16 @@ public class OffshelfBatchScan extends BaseActivity {
 
                     }
                 } else {
+                    if (currentPickMaterialIndex == -2) {
+                        MessageBox.Show(context, getString(R.string.Error_NotPickWarehouse));
+                        CommonUtil.setEditFocus(mBarcode);
+                        return;
+                    }
+                    if (currentPickMaterialIndex == -3) {
+                        MessageBox.Show(context, getString(R.string.Error_NotTrace));
+                        CommonUtil.setEditFocus(mBarcode);
+                        return;
+                    }
                     MessageBox.Show(context, getString(R.string.Error_NotPickMaterial));
                     CommonUtil.setEditFocus(mBarcode);
                 }
@@ -1197,6 +1231,11 @@ public class OffshelfBatchScan extends BaseActivity {
             } else {
                 if (currentPickMaterialIndex == -2) {
                     MessageBox.Show(context, getString(R.string.Error_NotPickWarehouse));
+                    CommonUtil.setEditFocus(mBarcode);
+                    return;
+                }
+                if (currentPickMaterialIndex == -3) {
+                    MessageBox.Show(context, getString(R.string.Error_NotTrace));
                     CommonUtil.setEditFocus(mBarcode);
                     return;
                 }
@@ -1724,6 +1763,7 @@ public class OffshelfBatchScan extends BaseActivity {
     int FindFirstCanPickMaterialByMaterialNo(String MaterialNo, String BatchNo, String warehouseNo, String traceNo) {
         int size = outStockTaskDetailsInfoModels.size();
         int index = -1;
+        if (traceNo==null) traceNo="";
         for (int i = 0; i < size; i++) {
 //            if(outStockTaskDetailsInfoModels.get(i).getScanQty()!=null
 //                    && (outStockTaskDetailsInfoModels.get(i).getScanQty()!=outStockTaskDetailsInfoModels.get(i).getTaskQty()
@@ -1738,38 +1778,39 @@ public class OffshelfBatchScan extends BaseActivity {
 //                    && outStockTaskDetailsInfoModels.get(i).getStrongHoldCode().equals(StrongHoldCode)
             {
                 String fromErpWareHouse = outStockTaskDetailsInfoModels.get(i).getFromErpWarehouse();
-                String sTraceNo = outStockTaskDetailsInfoModels.get(i).getTracNo();
+                String sTraceNo = outStockTaskDetailsInfoModels.get(i).getTracNo()!=null?outStockTaskDetailsInfoModels.get(i).getTracNo():"";
+                String sStrongHoldNo=outStockTaskDetailsInfoModels.get(i).getStrongHoldCode()!=null?outStockTaskDetailsInfoModels.get(i).getStrongHoldCode():"";
                 if (fromErpWareHouse != null && !fromErpWareHouse.isEmpty()) { //物料明细有仓库的就校验仓库 没有就不校验
                     if (outStockTaskDetailsInfoModels.get(i).getFromErpWarehouse().equals(warehouseNo)) {
-                        if (sTraceNo != null && !sTraceNo.isEmpty()) {
+                        if (sStrongHoldNo.contains("SHJC")){
                             if (sTraceNo.equals(traceNo)) {
                                 ErpVoucherno = outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
                                 index = i;
                             } else {
                                 index = -3;
                             }
-                        } else {
+                        }else {
                             ErpVoucherno = outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
                             index = i;
                         }
+
 
                         break;
                     } else {
                         index = -2;
                     }
                 } else {
-                    if (sTraceNo != null && !sTraceNo.isEmpty()) {
+                    if (sStrongHoldNo.contains("SHJC")){
                         if (sTraceNo.equals(traceNo)) {
                             ErpVoucherno = outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
                             index = i;
                         } else {
                             index = -3;
                         }
-                    } else {
+                    }else {
                         ErpVoucherno = outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
                         index = i;
                     }
-
                     break;
                 }
             }
@@ -1878,6 +1919,7 @@ public class OffshelfBatchScan extends BaseActivity {
             bean.setQty(info.getQty().intValue());
             bean.setProjectNo(info.getProjectNo());
             bean.setTraceNo(info.getTracNo());
+            bean.setSpec(info.getSpec());
             if (mModel != null) {
                 List<PrintBean> list = new ArrayList<>();
                 list.add(bean);

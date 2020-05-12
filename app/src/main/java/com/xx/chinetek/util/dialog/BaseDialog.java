@@ -28,7 +28,7 @@ public abstract class BaseDialog {
 
     private static Dialog createDialog(Context context, View v) {
         Dialog dialog = new Dialog(context, R.style.default_dialog);
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.setContentView(v);
         return dialog;
     }

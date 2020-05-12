@@ -241,29 +241,35 @@ public class IntentoryScan extends BaseActivity {
     private  boolean edtInvNumClick(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
-            keyBoardCancle();
-            String qty = edtInvNum.getText().toString().trim();
-            if(!CommonUtil.isFloat(qty)){
-                MessageBox.Show(context,getString(R.string.Error_isnotnum));
-                CommonUtil.setEditFocus(edtInvNum);
+            try {
+                keyBoardCancle();
+                String qty = edtInvNum.getText().toString().trim();
+                if(!CommonUtil.isFloat(qty)){
+                    MessageBox.Show(context,getString(R.string.Error_isnotnum));
+                    CommonUtil.setEditFocus(edtInvNum);
+                    return true;
+                }
+
+                if (Integer.valueOf(qty)<0){
+                    MessageBox.Show(context,getString(R.string.Error_is_greater_than_or_equal_to_0));
+                    CommonUtil.setEditFocus(edtInvNum);
+                    return true;
+                }
+                if(StatusType!=-1) {
+                    barcodeModels.get(0).setSTATUS(QCStatusType[StatusType]);
+                    barcodeModels.get(0).setQty(Float.parseFloat(qty));
+                    barcodeModels.get(0).setCreater(BaseApplication.userInfo.getUserName());
+                    SumbitStockInfo();
+                }
+                else{
+                    MessageBox.Show(context,getString(R.string.Error_SelectQcStatus));
+                    CommonUtil.setEditFocus(edtInvNum);
+                }
+            }catch (Exception e){
+                MessageBox.Show(context,e.getMessage());
                 return true;
             }
 
-            if (Integer.valueOf(qty)<0){
-                MessageBox.Show(context,getString(R.string.Error_is_greater_than_or_equal_to_0));
-                CommonUtil.setEditFocus(edtInvNum);
-                return true;
-            }
-            if(StatusType!=-1) {
-                barcodeModels.get(0).setSTATUS(QCStatusType[StatusType]);
-                barcodeModels.get(0).setQty(Float.parseFloat(qty));
-                barcodeModels.get(0).setCreater(BaseApplication.userInfo.getUserName());
-                SumbitStockInfo();
-            }
-            else{
-                MessageBox.Show(context,getString(R.string.Error_SelectQcStatus));
-                CommonUtil.setEditFocus(edtInvNum);
-            }
 
         }
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
@@ -352,7 +358,7 @@ public class IntentoryScan extends BaseActivity {
                         barcodeModels.get(i).setAREAID(checkAreaModel.getID());//盘点库位
                         packageNum= ArithUtil.add(packageNum, barcodeModels.get(i).getQty());
                     }
-                    edtInvNum.setText(packageNum+"");
+                    edtInvNum.setText(packageNum.intValue()+"");
 
                     inventoryScanItemAdapter=new InventoryScanItemAdapter(context,model,barcodeModels);
                     lsvIntentoryScan.setAdapter(inventoryScanItemAdapter);
