@@ -7,6 +7,7 @@
     tools:context="com.xx.chinetek.cywms.OffShelf.OffshelfScan">
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/txt_currentPickNum"
         style="@style/TextViewComminStyle"
         android:layout_width="0dp"
@@ -68,6 +69,7 @@
         tools:text="本体条码：" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/textView59"
         style="@style/TextViewComminStyle"
         android:layout_width="0dp"
@@ -185,6 +187,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView59" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/textView132"
         style="@style/TextViewComminStyle"
         android:layout_width="0dp"
@@ -249,6 +252,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txterpvoucherno" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/txt_SugestStock"
         style="@style/TextViewComminStyle"
         android:layout_width="0dp"
@@ -332,6 +336,7 @@
         app:layout_constraintGuide_percent="0.51" />
 
     <ToggleButton
+        android:visibility="gone"
         android:id="@+id/tb_BoxType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -370,6 +375,7 @@
     <!--app:layout_constraintTop_toTopOf="parent" />-->
 
     <ToggleButton
+        android:visibility="gone"
         android:id="@+id/tb_UnboxType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -388,6 +394,7 @@
 
 
     <ListView
+        android:visibility="gone"
         android:id="@+id/lsv_PickList"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -489,13 +496,12 @@
         android:background="@drawable/bt_selector"
         android:text="本体提交"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/edt_OffShelfScanbarcode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Print" />
+        app:layout_constraintTop_toTopOf="@+id/edt_OffShelfScanbarcode" />
 
     <Button
 

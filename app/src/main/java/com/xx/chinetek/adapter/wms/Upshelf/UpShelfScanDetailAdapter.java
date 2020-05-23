@@ -20,9 +20,9 @@ import java.util.List;
  */
 
 public class UpShelfScanDetailAdapter extends BaseAdapter {
-    private Context context; // 运行上下文
+    private Context                            context; // 运行上下文
     private List<InStockTaskDetailsInfo_Model> inStockTaskDetailsInfoModels; // 信息集合
-    private LayoutInflater listContainer; // 视图容器
+    private LayoutInflater                     listContainer; // 视图容器
 
     public final class ListItemView { // 自定义控件集合
 
@@ -42,7 +42,7 @@ public class UpShelfScanDetailAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return  inStockTaskDetailsInfoModels==null?0:inStockTaskDetailsInfoModels.size();
+        return inStockTaskDetailsInfoModels == null ? 0 : inStockTaskDetailsInfoModels.size();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class UpShelfScanDetailAdapter extends BaseAdapter {
             listItemView = new ListItemView();
 
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.item_uploadscandetail_listview,null);
+            convertView = listContainer.inflate(R.layout.item_uploadscandetail_listview, null);
             listItemView.txtbarcode = (TextView) convertView.findViewById(R.id.txtbarcode);
             listItemView.txtScanNum = (TextView) convertView.findViewById(R.id.txtScanNum);
             listItemView.txtreferStock = (TextView) convertView.findViewById(R.id.txtreferStock);
@@ -74,44 +74,49 @@ public class UpShelfScanDetailAdapter extends BaseAdapter {
         } else {
             listItemView = (ListItemView) convertView.getTag();
         }
-       final InStockTaskDetailsInfo_Model inStockTaskDetailsInfoModel=inStockTaskDetailsInfoModels.get(selectID);
-        listItemView.txtbarcode.setText(inStockTaskDetailsInfoModel.getMaterialNo());
+        final InStockTaskDetailsInfo_Model inStockTaskDetailsInfoModel = inStockTaskDetailsInfoModels.get(selectID);
+        String traceNo = inStockTaskDetailsInfoModel.getTracNo();
+        if (traceNo == null || traceNo.equals("")) {
+            listItemView.txtbarcode.setText(inStockTaskDetailsInfoModel.getMaterialNo());
+        } else {
+            listItemView.txtbarcode.setText(inStockTaskDetailsInfoModel.getMaterialNo() + "   (需求跟踪号:" + inStockTaskDetailsInfoModel.getTracNo() + ")");
+        }
         listItemView.txtScanNum.setText("");//"扫描数："+inStockTaskDetailsInfoModel.getScanQty()
 //        listItemView.txtRemainQty.setText("待上架："+inStockTaskDetailsInfoModel.getRemainQty());
-        listItemView.txtRemainQty.setText("待上架："+inStockTaskDetailsInfoModel.getTaskQty1());
-        if (inStockTaskDetailsInfoModel.getLstArea()!=null){
-            listItemView.txtreferStock.setText("推荐库位："+GetReferStock(inStockTaskDetailsInfoModel.getLstArea()));
+        listItemView.txtRemainQty.setText("待上架：" + inStockTaskDetailsInfoModel.getTaskQty1());
+        if (inStockTaskDetailsInfoModel.getLstArea() != null) {
+            listItemView.txtreferStock.setText("推荐库位：" + GetReferStock(inStockTaskDetailsInfoModel.getLstArea()));
 
-        }else {
+        } else {
             listItemView.txtreferStock.setText("推荐库位：");
         }
         listItemView.txtMaterialDesc.setText(inStockTaskDetailsInfoModel.getMaterialDesc());
-        if (inStockTaskDetailsInfoModel.getScanQty()!=0 &&
+        if (inStockTaskDetailsInfoModel.getScanQty() != 0 &&
 //                inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getRemainQty())<0) {
-                inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getTaskQty1())<0) {
+                inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getTaskQty1()) < 0) {
             convertView.setBackgroundResource(R.color.khaki);
         }
 //        else if (inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getRemainQty())==0) {
-        else if (inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getTaskQty1())==0) {
+        else if (inStockTaskDetailsInfoModel.getScanQty().compareTo(inStockTaskDetailsInfoModel.getTaskQty1()) == 0) {
             convertView.setBackgroundResource(R.color.springgreen);
-        }else{
+        } else {
             convertView.setBackgroundResource(R.color.trans);
         }
         return convertView;
     }
 
 
-    String GetReferStock(ArrayList<AreaInfo_Model> areaInfoModels){
-        StringBuffer Area=new StringBuffer();
-        String[] referStocks=new String[areaInfoModels.size()];
-        if(areaInfoModels!=null) {
+    String GetReferStock(ArrayList<AreaInfo_Model> areaInfoModels) {
+        StringBuffer Area = new StringBuffer();
+        String[] referStocks = new String[areaInfoModels.size()];
+        if (areaInfoModels != null) {
             int i = 0;
             for (AreaInfo_Model areaInfoModel : areaInfoModels) {
                 Area.append(areaInfoModel.getAreaNo() + ",");
                 referStocks[i++] = areaInfoModel.getAreaNo();
             }
         }
-        return areaInfoModels==null || areaInfoModels.size()==0?"":Area.substring(0,Area.length()-1);
+        return areaInfoModels == null || areaInfoModels.size() == 0 ? "" : Area.substring(0, Area.length() - 1);
     }
 
 

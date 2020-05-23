@@ -19,6 +19,7 @@ import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.base.ToolBarTitle;
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.cywms.Receiption.ReceiptionBillDetail;
+import com.xx.chinetek.cywms.SplitZero.SplitZeroScan;
 import com.xx.chinetek.model.Material.BarCodeInfo;
 import com.xx.chinetek.model.Receiption.ReceiptDetail_Model;
 import com.xx.chinetek.model.Receiption.Receipt_Model;
@@ -174,7 +175,7 @@ public class YSScan extends BaseActivity implements IYSScanView {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
+        getMenuInflater().inflate(R.menu.menu_ys, menu);
         return true;
     }
 
@@ -191,8 +192,12 @@ public class YSScan extends BaseActivity implements IYSScanView {
                 MessageBox.Show(context, ex.toString());
             }
 
+        }else if (item.getItemId() == R.id.action_split){
+            Intent intent=new Intent();
+            intent.setClass(YSScan.this, SplitZeroScan.class);
+            startActivityLeft(intent);
         }
-        return super.onOptionsItemSelected(item);
+            return super.onOptionsItemSelected(item);
     }
 
     /**

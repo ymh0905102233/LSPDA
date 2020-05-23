@@ -36,6 +36,7 @@ import com.xx.chinetek.cywms.Query.QueryMain;
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.cywms.Receiption.ReceiptBillChoice;
 import com.xx.chinetek.cywms.Review.ReviewBillChoice;
+import com.xx.chinetek.cywms.SplitZero.SplitZeroScan;
 import com.xx.chinetek.cywms.Stock.AdjustStock;
 import com.xx.chinetek.cywms.UpShelf.UpShelfBillChoice;
 import com.xx.chinetek.cywms.YS.YSBillChoice;
@@ -117,6 +118,8 @@ public class MainActivity extends BaseActivity {
             intent.setClass(context, AdjustStock.class);
         else if(textView.getText().toString().equals("预留释放"))
             intent.setClass(context, YSBillChoice.class);
+        else if(textView.getText().toString().equals("拆零"))
+            intent.setClass(context, SplitZeroScan.class);
 //        else if(textView.getText().toString().equals("调拨出库"))
 //            intent.setClass(context, AdjustCP.class);
 //        else if(textView.getText().toString().equals("交接入库"))
@@ -325,8 +328,13 @@ public class MainActivity extends BaseActivity {
                         itemIconList.add(R.drawable.innermove);
                         itemNamesList.add("预留释放");
                         break;
+                    case 41:
+                        itemIconList.add(R.drawable.dismounting);
+                        itemNamesList.add("拆零");
+                        break;
                 }
             }
+
             //cion和iconName的长度是相同的，这里任选其一都可以
             for (int i = 0; i < itemIconList.size(); i++) {
                 Map<String, Object> map = new HashMap<String, Object>();

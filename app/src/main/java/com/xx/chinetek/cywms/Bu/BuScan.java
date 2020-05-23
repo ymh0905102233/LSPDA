@@ -20,8 +20,6 @@ import com.xx.chinetek.adapter.wms.OffShelf.OffShelfScanDetailAdapter;
 import com.xx.chinetek.base.BaseActivity;
 import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.base.ToolBarTitle;
-import com.xx.chinetek.cywms.OffShelf.OffShelfBillChoice;
-import com.xx.chinetek.cywms.Qc.QCBillChoice;
 import com.xx.chinetek.cywms.Query.Query;
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.cywms.Truck.TruckLoad;

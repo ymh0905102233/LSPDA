@@ -221,6 +221,7 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
     private Boolean isOutOfstock = false; //是否缺货
 
     private Boolean isPickFinish = false; //是否拣货完毕
+    private  String ErpId;
 
     @Override
     public boolean equals(Object o) {
@@ -228,11 +229,10 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         if (o == null || getClass() != o.getClass()) return false;
 
         OutStockTaskDetailsInfo_Model that = (OutStockTaskDetailsInfo_Model) o;
+        if (TracNo==null)  TracNo="";
+        if (that.TracNo==null)  that.TracNo="";
+        return MaterialNo.equals(that.MaterialNo) && TracNo.equals(that.TracNo);
 
-//        return MaterialNo.equals(that.MaterialNo)  && ProjectNo.equals(ProjectNo) && TracNo.equals(TracNo);
-        return MaterialNo.equals(that.MaterialNo) ;
-//        return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
-        // return MaterialNo.equals(that.MaterialNo) && RowNo.equals(that.RowNo);
 
     }
 
@@ -852,6 +852,14 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         TracNo = tracNo;
     }
 
+    public String getErpId() {
+        return ErpId;
+    }
+
+    public void setErpId(String erpId) {
+        ErpId = erpId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -944,6 +952,7 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         dest.writeValue(this.isPickFinish);
         dest.writeString(this.ProjectNo);
         dest.writeString(this.TracNo);
+        dest.writeString(this.ErpId);
 
     }
 
@@ -1035,6 +1044,7 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         this.isPickFinish = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.ProjectNo = in.readString();
         this.TracNo = in.readString();
+        this.ErpId=in.readString();
 
 
     }

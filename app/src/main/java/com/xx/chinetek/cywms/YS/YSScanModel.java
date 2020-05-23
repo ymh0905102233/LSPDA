@@ -12,6 +12,7 @@ import com.xx.chinetek.model.Material.BarCodeInfo;
 import com.xx.chinetek.model.Receiption.ReceiptDetail_Model;
 import com.xx.chinetek.model.Receiption.Receipt_Model;
 import com.xx.chinetek.model.URLModel;
+import com.xx.chinetek.model.User.UerInfo;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
 import com.xx.chinetek.util.dialog.ToastUtil;
@@ -52,7 +53,7 @@ public class YSScanModel {
     private       List<BarCodeInfo>                mCheckList                               = new ArrayList<>();  //校验条码重复
     private       ReceiptDetail_Model              mCurrentDetailInfo                       = null;
     private       UUID                             mUuid                                    = null;
-
+    private       BarCodeInfo      mBarCodeInfo=null;
     public YSScanModel(Context context, MyHandler<BaseActivity> handler) {
         mContext = context;
         mHandler = handler;
@@ -124,15 +125,28 @@ public class YSScanModel {
      * @author: Nietzsche
      * @time 2020/5/9 7:54
      */
-    public void requestSaveYSDetails(List<ReceiptDetail_Model> list, NetCallBackListener<String> callBackListener) {
+    public void requestSaveYSDetails(List<ReceiptDetail_Model> list, NetCallBackListener<String> callBackListener)  {
+        try {
         mNetMap.put("TAG_YSPost", callBackListener);
         final Map<String, String> params = new HashMap<String, String>();
         String ModelJson = GsonUtil.parseModelToJson(list);
-        String UserJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
+//        String UserJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
+        UerInfo userInfo=null;
+
+            userInfo = BaseApplication.userInfo.clone();
+
+        userInfo.setWarehouseID(mBarCodeInfo.getWareHouseID());
+        userInfo.setReceiveHouseID(mBarCodeInfo.getHouseID());
+        userInfo.setReceiveAreaID(mBarCodeInfo.getAreaID());
+        String UserJson = GsonUtil.parseModelToJson(userInfo);
         params.put("UserJson", UserJson);
         params.put("ModelJson", ModelJson);
         LogUtil.WriteLog(YSScan.class, TAG_YSPost, ModelJson);
         RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_YSPost, mContext.getString(R.string.Msg_SaveT_InStockDetailADF), mContext, mHandler, RESULT_Msg_YSPost, null, URLModel.GetURL().YSPost, params, null);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setList(List<ReceiptDetail_Model> list) {
@@ -146,6 +160,14 @@ public class YSScanModel {
 
     public void onClear() {
         mDetailsList.clear();
+    }
+
+    public BarCodeInfo getBarCodeInfo() {
+        return mBarCodeInfo;
+    }
+
+    public void setBarCodeInfo(BarCodeInfo mBarCodeInfo) {
+        this.mBarCodeInfo = mBarCodeInfo;
     }
 
     /**
@@ -309,6 +331,9 @@ public class YSScanModel {
                     float sumScanQty = ArithUtil.add(upQty, scanQty);
                     mCurrentDetailInfo.setScanQty(sumScanQty);
                     mCheckList.add(info);
+                    if (info.getOriginalCode()!=null && info.getOriginalCode().equals("")&& mBarCodeInfo==null){
+                        mBarCodeInfo=info;
+                    }
                     resultInfo.setHeaderStatus(true);
                 } else {
                     resultInfo.setHeaderStatus(false);

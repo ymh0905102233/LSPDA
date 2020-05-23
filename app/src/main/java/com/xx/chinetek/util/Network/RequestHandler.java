@@ -26,7 +26,7 @@ import static com.xx.chinetek.base.BaseApplication.getRequestQueue;
 
 public class RequestHandler {
 
-    public static int SOCKET_TIMEOUT = 20000;
+    public static int SOCKET_TIMEOUT = 180000;
 
     private static void addRequest(
             int method, String tag,

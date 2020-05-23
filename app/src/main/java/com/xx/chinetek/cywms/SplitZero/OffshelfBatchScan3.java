@@ -1,4 +1,4 @@
-package com.xx.chinetek.cywms.OffShelf;
+package com.xx.chinetek.cywms.SplitZero;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -25,6 +25,8 @@ import com.xx.chinetek.adapter.wms.OffShelf.OffShelfScanDetailAdapter;
 import com.xx.chinetek.base.BaseActivity;
 import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.base.ToolBarTitle;
+import com.xx.chinetek.cywms.OffShelf.OffShelfBillChoice;
+import com.xx.chinetek.cywms.OffShelf.OffshelfBatchScanModel;
 import com.xx.chinetek.cywms.Qc.QCBillChoice;
 import com.xx.chinetek.cywms.Query.Query;
 import com.xx.chinetek.cywms.R;
@@ -74,7 +76,7 @@ import static com.xx.chinetek.util.function.GsonUtil.parseModelToJson;
  * @time 2020/4/20 20:47
  */
 @ContentView(R.layout.activity_offshelf_scan)
-public class OffshelfBatchScan extends BaseActivity {
+public class OffshelfBatchScan3 extends BaseActivity {
 
     String TAG_GetT_OutTaskDetailListByHeaderIDADF = "OffshelfScan_Single_GetT_OutTaskDetailListByHeaderIDADF";
     String TAG_GetStockModelADF                    = "OffshelfScan_Single_GetStockModelADF";
@@ -85,15 +87,11 @@ public class OffshelfBatchScan extends BaseActivity {
     String TAG_GetBarcodeModelForJADF              = "OffshelfScan_TAG_GetBarcodeModelForJADF";
     private final int RESULT_UnLockTaskOperUserADF        = 109;
     private final int RESULT_SaveT_BarCodeToStockLanyaADF = 108;
-
-
     private final int RESULT_Msg_GetT_OutTaskDetailListByHeaderIDADF = 101;
     private final int RESULT_Msg_GetStockModelADF                    = 102;
     private final int RESULT_Msg_SaveT_OutStockTaskDetailADF         = 103;
     private final int RESULT_SaveT_BarCodeToStockADF                 = 104;
     private final int result_msg_GetBarcodeModelForJADF              = 105;
-
-
     String TAG_GetStockModelFrojianADF = "OffshelfScan_Single_GetStockModelFrojianADF";
     private final int RESULT_Msg_GetStockModelFrojianADF = 110;
 
@@ -238,7 +236,6 @@ public class OffshelfBatchScan extends BaseActivity {
         txterpvoucherno.setText(Erpvoucherno);
         txtcustomername.setText(outStockTaskInfoModels.get(0).getSupcusName() == null ? "" : outStockTaskInfoModels.get(0).getSupcusName());
         edtcar.setText(outStockTaskInfoModels.get(0).getCarNo() == null ? "" : outStockTaskInfoModels.get(0).getCarNo());
-
         tbUnboxType.setChecked(false);
         tbBoxType.setChecked(true);
         ShowUnboxing();
@@ -256,8 +253,6 @@ public class OffshelfBatchScan extends BaseActivity {
      */
     @Event(value = {R.id.tb_UnboxType, R.id.tb_PalletType, R.id.tb_BoxType}, type = CompoundButton.OnClickListener.class)
     private void TBonCheckedChanged(View view) {
-
-
         tbUnboxType.setChecked(view.getId() == R.id.tb_UnboxType);
         tbBoxType.setChecked(view.getId() == R.id.tb_BoxType);
         ShowUnboxing();
@@ -458,7 +453,7 @@ public class OffshelfBatchScan extends BaseActivity {
                 params.put("strOldBarCode", strOldBarCode);
                 params.put("strNewBarCode", "");
                 params.put("PrintFlag", "2"); //1：打印 2：不打印
-                LogUtil.WriteLog(OffshelfBatchScan.class, TAG_SaveT_BarCodeToStockADF, strOldBarCode);
+                LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_SaveT_BarCodeToStockADF, strOldBarCode);
                 SharePreferUtil.ReadSupplierShare(context);
                 RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_BarCodeToStockADF, getString(R.string.Msg_SaveT_BarCodeToStockADF), context, mHandler, RESULT_SaveT_BarCodeToStockADF, null, URLModel.GetURL().SaveT_BarCodeToStockADF, params, null);
 
@@ -504,7 +499,7 @@ public class OffshelfBatchScan extends BaseActivity {
                 model.setScanType(Scantype);
                 String Json = GsonUtil.parseModelToJson(model);
                 params.put("ModelStockJson", Json);
-                LogUtil.WriteLog(OffshelfBatchScan.class, TAG_GetStockModelADF, code);
+                LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_GetStockModelADF, code);
                 RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetStockModelADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetStockModelADF, null, URLModel.GetURL().GetStockModelADF, params, null);
                 return false;
             } catch (Exception ex) {
@@ -531,7 +526,7 @@ public class OffshelfBatchScan extends BaseActivity {
             String Json = GsonUtil.parseModelToJson(BoxingModels);
             params.put("ModelJson", Json);
             params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
-            LogUtil.WriteLog(OffshelfBatchScan.class, TAG_GetStockModelADF, Json);
+            LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_GetStockModelADF, Json);
             RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_PrintListADF, getString(R.string.Msg_Print), context, mHandler, RESULT_Msg_PrintListADF, null, URLModel.GetURL().PrintListADF, params, null);
 
         } else {
@@ -591,7 +586,7 @@ public class OffshelfBatchScan extends BaseActivity {
                 String code = edtjian.getText().toString().trim();
                 final Map<String, String> params = new HashMap<String, String>();
                 params.put("Serialno", code);
-                LogUtil.WriteLog(OffshelfBatchScan.class, TAG_GetStockModelADF, code);
+                LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_GetStockModelADF, code);
                 RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetBarcodeModelForJADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, result_msg_GetBarcodeModelForJADF, null, URLModel.GetURL().GetBarcodeModelForJADF, params, null);
 //                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetStockModelFrojianADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetStockModelFrojianADF, null, URLModel.GetURL().GetStockModelADF, params, null);
             } catch (Exception ex) {
@@ -651,7 +646,7 @@ public class OffshelfBatchScan extends BaseActivity {
                 params.put("UserJson", UserJson);
                 params.put("ModelJson", ModelJson);
                 params.put("Guid", mUuid.toString());
-                LogUtil.WriteLog(OffshelfBatchScan.class, TAG_SaveT_OutStockTaskDetailADF, ModelJson);
+                LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_SaveT_OutStockTaskDetailADF, ModelJson);
                 RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockTaskDetailADF, getString(R.string.Msg_SaveT_OutStockTaskDetailADF), context, mHandler, RESULT_Msg_SaveT_OutStockTaskDetailADF, null, URLModel.GetURL().SaveT_OutStockTaskDetailADF, params, null);
             }
 
@@ -670,7 +665,7 @@ public class OffshelfBatchScan extends BaseActivity {
      * @time 2020/4/20 17:25
      */
     void AnalysisGetStockModelADFJson(String result) {
-        LogUtil.WriteLog(OffshelfBatchScan.class, TAG_GetStockModelADF, result);
+        LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_GetStockModelADF, result);
         try {
             ReturnMsgModelList<StockInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<StockInfo_Model>>() {
             }.getType());
@@ -802,7 +797,7 @@ public class OffshelfBatchScan extends BaseActivity {
             final Map<String, String> params = new HashMap<String, String>();
             String modelJson = parseModelToJson(outStockTaskInfoModels);
             params.put("ModelDetailJson", modelJson);
-            LogUtil.WriteLog(OffshelfBatchScan.class, TAG_GetT_OutTaskDetailListByHeaderIDADF, modelJson);
+            LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_GetT_OutTaskDetailListByHeaderIDADF, modelJson);
             RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_OutTaskDetailListByHeaderIDADF, getString(R.string.Msg_QualityDetailListByHeaderIDADF), context, mHandler, RESULT_Msg_GetT_OutTaskDetailListByHeaderIDADF, null, URLModel.GetURL().GetT_OutTaskDetailListByHeaderIDADF, params, null);
         }
     }
@@ -823,7 +818,7 @@ public class OffshelfBatchScan extends BaseActivity {
                 String Json = GsonUtil.parseModelToJson(BoxingModels);
                 params.put("ModelJson", Json);
                 params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
-                LogUtil.WriteLog(OffshelfBatchScan.class, TAG_GetStockModelADF, Json);
+                LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_GetStockModelADF, Json);
                 RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_PrintListADF1, getString(R.string.Msg_Print), context, mHandler, RESULT_Msg_PrintListADF1, null, URLModel.GetURL().PrintListADF, params, null);
             } else {
                 closeActiviry();
@@ -845,12 +840,12 @@ public class OffshelfBatchScan extends BaseActivity {
      * @time 2020/4/21 9:35
      */
     void AnalysisGetT_OutTaskDetailListByHeaderIDADFJson(String result) {
-        LogUtil.WriteLog(OffshelfBatchScan.class, TAG_GetT_OutTaskDetailListByHeaderIDADF, result);
+        LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_GetT_OutTaskDetailListByHeaderIDADF, result);
         try {
             ReturnMsgModelList<OutStockTaskDetailsInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<OutStockTaskDetailsInfo_Model>>() {
             }.getType());
             outStockTaskDetailsInfoModels = new ArrayList<>();
-            if (returnMsgModel!=null && returnMsgModel.getHeaderStatus().equals("S")) {
+            if (returnMsgModel.getHeaderStatus().equals("S")) {
                 outStockTaskDetailsInfoModels = returnMsgModel.getModelJson();
                 if (outStockTaskDetailsInfoModels != null && outStockTaskDetailsInfoModels.size() > 0) {
                     outStockTaskDetailsInfoModelsForprint = (ArrayList<OutStockTaskDetailsInfo_Model>) outStockTaskDetailsInfoModels.clone();
@@ -892,7 +887,7 @@ public class OffshelfBatchScan extends BaseActivity {
 
 
     void AnalysisGetStockModelFrojianADFJson(String result) {
-        LogUtil.WriteLog(OffshelfBatchScan.class, TAG_GetStockModelADF, result);
+        LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_GetStockModelADF, result);
         try {
             ReturnMsgModelList<StockInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<StockInfo_Model>>() {
             }.getType());
@@ -930,7 +925,7 @@ public class OffshelfBatchScan extends BaseActivity {
      * @time 2020/4/20 19:33
      */
     void AnalysisGetBarcodeModelForJADFJson(String result) {
-        LogUtil.WriteLog(OffshelfBatchScan.class, TAG_GetStockModelADF, result);
+        LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_GetStockModelADF, result);
         try {
             ReturnMsgModelList<StockInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<StockInfo_Model>>() {
             }.getType());
@@ -938,7 +933,6 @@ public class OffshelfBatchScan extends BaseActivity {
                 List<StockInfo_Model> Models = returnMsgModel.getModelJson();
                 if (stockInfoModels == null || stockInfoModels.size() == 0) {
                     MessageBox.Show(context, "拆零操作--请先扫描父级条码");
-                    return;
                 }
                 String fSerialno = stockInfoModels.get(0).getSerialNo();
                 if (fSerialno != null && Models != null && Models.get(0) != null && Models.get(0).getFserialno() != null) {
@@ -977,7 +971,7 @@ public class OffshelfBatchScan extends BaseActivity {
 
     void AnalysisSaveT_OutStockTaskDetailADFJson(String result) {
         try {
-            LogUtil.WriteLog(OffshelfBatchScan.class, TAG_SaveT_OutStockTaskDetailADF, result);
+            LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_SaveT_OutStockTaskDetailADF, result);
             ReturnMsgModelList<Base_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<Base_Model>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
@@ -989,8 +983,8 @@ public class OffshelfBatchScan extends BaseActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     // TODO 自动生成的方法
-                                    closeActiviry();
-                            }
+                                   finish();
+                                }
                             }).setNegativeButton("取消", null).show();
                 }else {
                     GetT_OutTaskDetailListByHeaderIDADF(outStockTaskInfoModels);
@@ -1011,7 +1005,7 @@ public class OffshelfBatchScan extends BaseActivity {
 //            GetT_OutTaskDetailListByHeaderIDADF(outStockTaskInfoModels);
         } catch (Exception ex) {
             MessageBox.Show(context, ex.getMessage());
-            LogUtil.WriteLog(OffshelfBatchScan.class, "error", ex.getMessage());
+            LogUtil.WriteLog(OffshelfBatchScan3.class, "error", ex.getMessage());
         }
     }
 
@@ -1070,7 +1064,7 @@ public class OffshelfBatchScan extends BaseActivity {
     /*提交装箱清单*/
     void AnalysisPrintListADF(String result) {
         try {
-            LogUtil.WriteLog(OffshelfBatchScan.class, TAG_PrintListADF, result);
+            LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_PrintListADF, result);
             ReturnMsgModelList<Boxing> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<Boxing>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
@@ -1101,7 +1095,7 @@ public class OffshelfBatchScan extends BaseActivity {
     /*提交装箱清单*/
     void AnalysisPrintListADF1(String result) {
         try {
-            LogUtil.WriteLog(OffshelfBatchScan.class, TAG_PrintListADF, result);
+            LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_PrintListADF, result);
             ReturnMsgModelList<Boxing> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<Boxing>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
@@ -1149,7 +1143,7 @@ public class OffshelfBatchScan extends BaseActivity {
         float qty = stockInfoModels.get(0).getQty();
         //ymh整箱发货
         try {
-            LogUtil.WriteLog(OffshelfBatchScan.class, TAG_SaveT_BarCodeToStockADF, result);
+            LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_SaveT_BarCodeToStockADF, result);
             ReturnMsgModel<StockInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<StockInfo_Model>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
@@ -1227,7 +1221,7 @@ public class OffshelfBatchScan extends BaseActivity {
 
 
     void AnalysisSaveT_SingleErpvoucherADF(String result) {
-        LogUtil.WriteLog(OffshelfBatchScan.class, TAG_SaveT_SingleErpvoucherADF, result);
+        LogUtil.WriteLog(OffshelfBatchScan3.class, TAG_SaveT_SingleErpvoucherADF, result);
         ReturnMsgModelList<OutStock_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<OutStock_Model>>() {
         }.getType());
         if (returnMsgModel.getHeaderStatus().equals("S")) {

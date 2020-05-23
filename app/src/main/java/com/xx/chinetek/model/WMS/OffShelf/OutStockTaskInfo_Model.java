@@ -69,6 +69,7 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
     private String  TracNo;
     private String  RowNo;
     private String WareHouseNo;
+    private  String ErpId;
 
     public String getCustomerName() {
         return CustomerName;
@@ -460,6 +461,14 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
         RowNo = rowNo;
     }
 
+    public String getErpId() {
+        return ErpId;
+    }
+
+    public void setErpId(String erpId) {
+        ErpId = erpId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -536,6 +545,7 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
         dest.writeString(this.ProjectNo);
         dest.writeString(this.TracNo);
         dest.writeString(this.WareHouseNo);
+        dest.writeString(this.ErpId);
     }
 
     protected OutStockTaskInfo_Model(Parcel in) {
@@ -590,6 +600,7 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
         this.TracNo =in.readString();
         this.RowNo = in.readString();
         this.WareHouseNo=in.readString();
+        this.ErpId=in.readString();
     }
 
     public static final Creator<OutStockTaskInfo_Model> CREATOR = new Creator<OutStockTaskInfo_Model>() {

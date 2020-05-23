@@ -106,6 +106,10 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
     private String ToErpWarehouse;
     private String WareHouseName;
     private float TaskQty1; // 上架数量（质检合格的数量）
+    private String                 ProjectNo;
+    private String                 TracNo;
+    private String   iarrsid;
+    private  String ErpId;
     public String getWareHouseName() {
         return WareHouseName;
     }
@@ -689,6 +693,37 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
         this.lstStockInfo = lstStockInfo;
     }
 
+    public String getProjectNo() {
+        return ProjectNo;
+    }
+
+    public void setProjectNo(String projectNo) {
+        ProjectNo = projectNo;
+    }
+
+    public String getTracNo() {
+        return TracNo;
+    }
+
+    public void setTracNo(String tracNo) {
+        TracNo = tracNo;
+    }
+
+    public String getIarrsid() {
+        return iarrsid;
+    }
+
+    public void setIarrsid(String iarrsid) {
+        this.iarrsid = iarrsid;
+    }
+
+    public String getErpId() {
+        return ErpId;
+    }
+
+    public void setErpId(String erpId) {
+        ErpId = erpId;
+    }
 
     @Override
     public int compare(InStockTaskDetailsInfo_Model inStockTaskDetailsInfo_model, InStockTaskDetailsInfo_Model t1) {
@@ -801,6 +836,10 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
         dest.writeString(this.ToErpWarehouse);
         dest.writeString(this.WareHouseName);
         dest.writeValue(this.TaskQty1);
+        dest.writeString(this.ProjectNo);
+        dest.writeString(this.TracNo);
+        dest.writeString(this.iarrsid);
+        dest.writeString(this.ErpId);
     }
 
     protected InStockTaskDetailsInfo_Model(Parcel in) {
@@ -879,6 +918,10 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
         this.ToErpWarehouse = in.readString();
         this.WareHouseName = in.readString();
         this.TaskQty1=(Float) in.readValue(Float.class.getClassLoader());
+        this.ProjectNo = in.readString();
+        this.TracNo = in.readString();
+        this.iarrsid=in.readString();
+        this.ErpId=in.readString();
     }
 
     public static final Creator<InStockTaskDetailsInfo_Model> CREATOR = new Creator<InStockTaskDetailsInfo_Model>() {

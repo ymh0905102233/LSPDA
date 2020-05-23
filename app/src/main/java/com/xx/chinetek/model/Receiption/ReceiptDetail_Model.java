@@ -14,57 +14,58 @@ import java.util.Date;
  * Created by GHOST on 2016/12/13.
  */
 
-public class ReceiptDetail_Model extends Base_Model implements Parcelable,Cloneable {
+public class ReceiptDetail_Model extends Base_Model implements Parcelable, Cloneable {
 
-    private int InStockID;
-    private String RowNo;
-    private String RowNoDel;
-    private String MaterialNo;
-    private String MaterialDesc;
-    private Float InStockQty;
-    private Float ReceiveQty;
-    private String Unit;
-    private String StorageLoc;
-    private String Plant;
-    private String PlantName;
-    private Float QualityQty;
-    private Float UnQualityQty;
-    private String QualityType;
-    private String QualityUserNo;
-    private String UnitName;
-    private Float RemainQty;
-    private Float ScanQty;
-    private String IsSpcBatch;
-    private String QcCode;
-    private String QcDesc;
-    private ArrayList<BarCodeInfo> lstBarCode=new ArrayList<BarCodeInfo>();
-    private String SaleName ;
-    private String VoucherNo;
-    private int IsSerial;
-    private String SaleCode;
-    private String SupplierNo;
-    private String SupplierName;
-    private Date SupPrdDate ;
-    private String SupPrdBatch ;
-    private String BatchNo;
-    private String PartNo;
-    private String MoveType;
-    private String Company;
-    private String Department;
-    private Date ArrivalDate;
-    private Date ShipmentDate;
-    private Date ArrStockDate;
-    private String FromBatchNo;
-    private String FromErpAreaNo;
-    private String FromErpWarehouse;
-    private String ToBatchNo;
-    private String ToErpAreaNo;
-    private String ToErpWarehouse;
-    private Float ADVRECEIVEQTY;
-    private String InvoiceNo;
-    private String iarrsid;
-    private String ProjectNo;
-    private String TracNo;
+    private int                    InStockID;
+    private String                 RowNo;
+    private String                 RowNoDel;
+    private String                 MaterialNo;
+    private String                 MaterialDesc;
+    private Float                  InStockQty;
+    private Float                  ReceiveQty;
+    private String                 Unit;
+    private String                 StorageLoc;
+    private String                 Plant;
+    private String                 PlantName;
+    private Float                  QualityQty;
+    private Float                  UnQualityQty;
+    private String                 QualityType;
+    private String                 QualityUserNo;
+    private String                 UnitName;
+    private Float                  RemainQty;
+    private Float                  ScanQty;
+    private String                 IsSpcBatch;
+    private String                 QcCode;
+    private String                 QcDesc;
+    private ArrayList<BarCodeInfo> lstBarCode = new ArrayList<BarCodeInfo>();
+    private String                 SaleName;
+    private String                 VoucherNo;
+    private int                    IsSerial;
+    private String                 SaleCode;
+    private String                 SupplierNo;
+    private String                 SupplierName;
+    private Date                   SupPrdDate;
+    private String                 SupPrdBatch;
+    private String                 BatchNo;
+    private String                 PartNo;
+    private String                 MoveType;
+    private String                 Company;
+    private String                 Department;
+    private Date                   ArrivalDate;
+    private Date                   ShipmentDate;
+    private Date                   ArrStockDate;
+    private String                 FromBatchNo;
+    private String                 FromErpAreaNo;
+    private String                 FromErpWarehouse;
+    private String                 ToBatchNo;
+    private String                 ToErpAreaNo;
+    private String                 ToErpWarehouse;
+    private Float                  ADVRECEIVEQTY;
+    private String                 InvoiceNo;
+    private String                 iarrsid;
+    private String                 ProjectNo;
+    private String                 TracNo;
+    private  String ErpId;
     public String getInvoiceNo() {
         return InvoiceNo;
     }
@@ -288,13 +289,13 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         InStockQty = inStockQty;
     }
 
-  //  public List<SerialNo_Model> getLstSerialNo() {
-     //   return lstSerialNo;
-  //  }
+    //  public List<SerialNo_Model> getLstSerialNo() {
+    //   return lstSerialNo;
+    //  }
 
-   // public void setLstSerialNo(List<SerialNo_Model> lstSerialNo) {
-   //     this.lstSerialNo = lstSerialNo;
-  //  }
+    // public void setLstSerialNo(List<SerialNo_Model> lstSerialNo) {
+    //     this.lstSerialNo = lstSerialNo;
+    //  }
 
     public String getMaterialDesc() {
         return MaterialDesc;
@@ -480,6 +481,14 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         TracNo = tracNo;
     }
 
+    public String getErpId() {
+        return ErpId;
+    }
+
+    public void setErpId(String erpId) {
+        ErpId = erpId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -487,23 +496,15 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
 
         ReceiptDetail_Model that = (ReceiptDetail_Model) o;
 
-        //return MaterialNo.equals(that.MaterialNo) && ToBatchNo.equals(that.ToBatchNo);
-       if (getVoucherType()==30){
-           return MaterialNo.equals(that.MaterialNo)  ;
-
-       } else if (getVoucherType() == 45) { //预留
-           return MaterialNo.equals(that.MaterialNo)  && TracNo.equals(that.TracNo);
-       } else {
-           return MaterialNo.equals(that.MaterialNo) && RowNo.equals(that.RowNo);
-       }
+        return MaterialNo.equals(that.MaterialNo) && TracNo.equals(that.TracNo);
 //        return MaterialNo.equals(that.MaterialNo) && ToBatchNo.equals(that.ToBatchNo)&& InvoiceNo.equals(that.InvoiceNo);
 
     }
 
     @Override
     public ReceiptDetail_Model clone() throws CloneNotSupportedException {
-        ReceiptDetail_Model inStockDetail_model=null;
-        inStockDetail_model=(ReceiptDetail_Model)super.clone();
+        ReceiptDetail_Model inStockDetail_model = null;
+        inStockDetail_model = (ReceiptDetail_Model) super.clone();
         return inStockDetail_model;
     }
 
@@ -516,31 +517,33 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
     public ReceiptDetail_Model() {
     }
 
-    public ReceiptDetail_Model(String MaterialNo,String ToBatchNo,String InvoiceNo) {
+    public ReceiptDetail_Model(String MaterialNo, String ToBatchNo, String InvoiceNo) {
 //public ReceiptDetail_Model(String MaterialNo,String ToBatchNo) {
-        this.MaterialNo=MaterialNo;
-        this.ToBatchNo=ToBatchNo;
-        this.InvoiceNo=InvoiceNo;
+        this.MaterialNo = MaterialNo;
+        this.ToBatchNo = ToBatchNo;
+        this.InvoiceNo = InvoiceNo;
     }
 
-//    public ReceiptDetail_Model(String MaterialNo,String ToBatchNo) {
+    //    public ReceiptDetail_Model(String MaterialNo,String ToBatchNo) {
 ////public ReceiptDetail_Model(String MaterialNo,String ToBatchNo) {
 //        this.MaterialNo=MaterialNo;
 //        this.ToBatchNo=ToBatchNo;
 //
 //    }
-    public ReceiptDetail_Model(String MaterialNo,String rowNo) {
+    public ReceiptDetail_Model(String MaterialNo, String rowNo) {
 //public ReceiptDetail_Model(String MaterialNo,String ToBatchNo) {
-        this.MaterialNo=MaterialNo;
-        this.RowNo=rowNo;
+        this.MaterialNo = MaterialNo;
+        this.RowNo = rowNo;
 
     }
+
     public ReceiptDetail_Model(String MaterialNo) {
 //public ReceiptDetail_Model(String MaterialNo,String ToBatchNo) {
-        this.MaterialNo=MaterialNo;
+        this.MaterialNo = MaterialNo;
 
 
     }
+
     @Override
     public int describeContents() {
         return 0;
@@ -598,6 +601,7 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         dest.writeString(this.iarrsid);
         dest.writeString(this.ProjectNo);
         dest.writeString(this.TracNo);
+        dest.writeString(this.ErpId);
     }
 
     protected ReceiptDetail_Model(Parcel in) {
@@ -652,9 +656,10 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         this.ToErpWarehouse = in.readString();
         this.ADVRECEIVEQTY = (Float) in.readValue(Float.class.getClassLoader());
         this.InvoiceNo = in.readString();
-        this.iarrsid=in.readString();
-        this.ProjectNo=in.readString();
-        this.TracNo=in.readString();
+        this.iarrsid = in.readString();
+        this.ProjectNo = in.readString();
+        this.TracNo = in.readString();
+        this.ErpId=in.readString();
     }
 
     public static final Creator<ReceiptDetail_Model> CREATOR = new Creator<ReceiptDetail_Model>() {

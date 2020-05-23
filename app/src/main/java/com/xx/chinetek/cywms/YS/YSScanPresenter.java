@@ -70,6 +70,12 @@ public class YSScanPresenter {
                             if (resultInfo.getHeaderStatus()) {
                                 BaseResultInfo<Boolean, Void> resultBindInfo = mModel.bindBarcode(info);
                                 if (resultBindInfo.getHeaderStatus()) {
+                                    if(info.getOriginalCode()==null||info.getOriginalCode()!=null && !info.getOriginalCode().equals("1")  ){
+                                        if (mModel.getBarCodeInfo()==null){
+                                            mModel.setBarCodeInfo(info);
+                                        }
+
+                                    }
                                     mView.setBarcodeInfo(info);
                                     mView.bindListView(mModel.getList());
                                     mView.requestScanBarcodeFocus();
@@ -156,6 +162,10 @@ public class YSScanPresenter {
      * @time 2020/1/2 13:33
      */
     public void onRefer() {
+        if (mModel.getBarCodeInfo()==null){
+            MessageBox.Show(mContext,"校验提交参数失败,mBarCodeInfo没有数据");
+            return;
+        }
         BaseResultInfo<Boolean, Void> resultInfo = mModel.isMaterialRowScanedFinish();
           if (resultInfo.getHeaderStatus()){
 

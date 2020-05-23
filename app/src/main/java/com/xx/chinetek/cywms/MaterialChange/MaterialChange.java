@@ -136,6 +136,7 @@ public class MaterialChange extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
+
         return true;
     }
 

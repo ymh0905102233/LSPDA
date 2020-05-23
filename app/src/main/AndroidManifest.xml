@@ -122,6 +122,7 @@
         <activity android:name=".OffShelf.OffshelfBatchScan"></activity>
         <activity android:name=".Query.PatchBarcode.PatchBarcode"></activity>
         <activity android:name=".YS.YSScan"></activity>
+        <activity android:name=".SplitZero.SplitZeroScan"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.xx.chinetek.lspda.fileProvider"
