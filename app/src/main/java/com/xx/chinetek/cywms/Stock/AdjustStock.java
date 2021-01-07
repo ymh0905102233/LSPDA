@@ -102,6 +102,8 @@ public class AdjustStock extends BaseActivity {
     TextView btnDelete;
     @ViewInject(R.id.btn_Submit)
     TextView btnSubmit;
+    @ViewInject(R.id.edt_AdjustTraceNo)
+    EditText  mTraceNo;
 
     Barcode_Model barcodeModel;
     String[] QCStatus={"待检","检验合格","检验不合格"};
@@ -157,6 +159,17 @@ public class AdjustStock extends BaseActivity {
 
     }
 
+    @Event(value =R.id.edt_AdjustTraceNo,type = View.OnKeyListener.class)
+    private  boolean edtAdjustTraceNoClick(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
+        {
+            keyBoardCancle();
+            String barcode = mTraceNo.getText().toString().trim();
+
+        }
+        return false;
+    }
+
     @Event(value =R.id.edt_AdjustScanBarcode,type = View.OnKeyListener.class)
     private  boolean edtAdjustScanBarcodeClick(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
@@ -173,8 +186,6 @@ public class AdjustStock extends BaseActivity {
         }
         return false;
     }
-
-
     @Event(value = R.id.txt_QCStatus,type =View.OnClickListener.class )
     private void txtQCStatusClick(View view){
         if(barcodeModel!=null) {
@@ -257,6 +268,7 @@ public class AdjustStock extends BaseActivity {
             String adjustBatchNo = edtAdjustBatchNo.getText().toString();
             String adjustNum = edtAdjustNum.getText().toString();
             String adjustStock = edtAdjustStock.getText().toString();
+            String adjustTraceNo=mTraceNo.getText().toString();
             if (!isBtnDelete) {
                 if (TextUtils.isEmpty(adjustBatchNo)) {
                     MessageBox.Show(context, getString(R.string.Error_BatchNoIsEmpty));
@@ -266,6 +278,11 @@ public class AdjustStock extends BaseActivity {
                 if (TextUtils.isEmpty(adjustStock)) {
                     MessageBox.Show(context, getString(R.string.Error_StockIsEmpty));
                     CommonUtil.setEditFocus(edtAdjustStock);
+                    return;
+                }
+                if (TextUtils.isEmpty(adjustTraceNo)) {
+                    MessageBox.Show(context, getString(R.string.Error_TraceNoIsEmpty));
+                    CommonUtil.setEditFocus(mTraceNo);
                     return;
                 }
                 if (!CommonUtil.isFloat(adjustNum)) {
@@ -284,6 +301,7 @@ public class AdjustStock extends BaseActivity {
             barcodeModel.setQty(Float.parseFloat(adjustNum));
             barcodeModel.setEDate(CommonUtil.dateStrConvertDate( txtchangeEData.getText().toString()));
             barcodeModel.setSTATUS(3);
+            barcodeModel.setTracNo(adjustTraceNo);
 //            barcodeModel.setStrongHoldCode("ABH");
 
             ArrayList<Barcode_Model> barcodeModels=new ArrayList<>();
@@ -291,7 +309,8 @@ public class AdjustStock extends BaseActivity {
             final Map<String, String> params = new HashMap<String, String>();
             String ModelJson= GsonUtil.parseModelToJson(barcodeModels);
             params.put("json", ModelJson);
-            params.put("man", BaseApplication.userInfo.getUserNo());
+//            params.put("man", BaseApplication.userInfo.getUserNo());
+            params.put("man",BaseApplication.mCurrentUserNo);
             String para = (new JSONObject(params)).toString();
             LogUtil.WriteLog(AdjustStock.class, TAG_SaveInfo, para);
             if(isBtnDelete){
@@ -368,6 +387,7 @@ public class AdjustStock extends BaseActivity {
                     txtQCStatus.setText(getQCStrStatus(barcodeModel.getSTATUS()));
                     txtWarehouse.setText(barcodeModel.getWarehousename());
                     edtAdjustStock.setText(barcodeModel.getAreano());
+                    mTraceNo.setText(barcodeModel.getTracNo());
                     boolean isInsert = barcodeModel.getAllIn().equals("0");
                     txtStrongHold.setEnabled(!isInsert);
                     edtAdjustBatchNo.setEnabled(!isInsert);
@@ -406,6 +426,7 @@ public class AdjustStock extends BaseActivity {
                 txtStrongHold.setEnabled(true);
                 edtAdjustBatchNo.setEnabled(true);
                 edtAdjustNum.setEnabled(true);
+                mTraceNo.setText("");
 
             }else
                 MessageBox.Show(context, returnMsgModel.getMessage());

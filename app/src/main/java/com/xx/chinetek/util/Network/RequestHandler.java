@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -14,7 +16,9 @@ import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.util.dialog.LoadingDialog;
 import com.xx.chinetek.util.log.LogUtil;
 
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 import static com.android.volley.DefaultRetryPolicy.DEFAULT_MAX_RETRIES;
 import static com.xx.chinetek.base.BaseApplication.context;
@@ -37,18 +41,21 @@ public class RequestHandler {
             url = NetworkHelper.getUrlWithParams(url, params);
         }
         listener.onPreRequest();
+        final String uuid= UUID.randomUUID().toString()+tag;
         String para = (new org.json.JSONObject(params)).toString();
+        LogUtil.WriteLog(RequestHandler.class, uuid, new Date().toString()+"-请求数据-:"+url+"\n\r"+params);
         try {
             JsonStringRequest JsonRequest = new JsonStringRequest(method, url, para, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    LogUtil.WriteLog(RequestHandler.class, uuid, new Date().toString()+"-返回数据-:"+response);
                     onVolleyResponse(response, handler, what, bundle);
                     listener.onResponse();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    onVolleyErrorResponse(volleyError, listener, handler, bundle);
+                    onVolleyErrorResponse(volleyError, listener, handler, bundle,uuid);
                 }
             });
 
@@ -77,7 +84,25 @@ public class RequestHandler {
         handler.sendMessage(msg);
         listener.onFailed();
     }
-
+    private static void onVolleyErrorResponse(@NonNull VolleyError volleyError, NetWorkRequestListener listener, Handler handler, Bundle bundle, String uuid) {
+        String error=VolleyErrorHelper.getMessage(volleyError,context);
+        LogUtil.WriteLog(RequestHandler.class, uuid, new Date().toString()+"-返回数据报错信息1:-"+error+"--"+volleyError.getMessage());
+        Log.d("返回数据",new Date().toString()+"--返回数据报错信息1--"+error+"--"+volleyError.getMessage());
+        try {
+            byte[] htmlBodyBytes = volleyError.networkResponse.data;
+            LogUtil.WriteLog(RequestHandler.class, uuid, new Date().toString()+"-返回数据报错信息2:-"+ new String(htmlBodyBytes));
+            Log.d("返回数据",new Date().toString()+"--返回数据报错信息2--"+new String(htmlBodyBytes));
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Message msg = handler.obtainMessage(NetworkError.NET_ERROR_CUSTOM,error);
+//        Message msg = handler.obtainMessage(NetworkError.NET_ERROR_CUSTOM,VolleyErrorHelper.getMessage(volleyError,context));
+        msg.setData(bundle);
+        handler.sendMessage(msg);
+        listener.onFailed();
+    }
     private static void onVolleyResponse(String response, Handler handler, int what, Bundle bundle) {
         Message msg = handler.obtainMessage(what, response);
         msg.setData(bundle);

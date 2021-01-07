@@ -1,6 +1,5 @@
 package com.xx.chinetek.base;
 
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
@@ -27,6 +26,7 @@ public class BaseApplication extends MultiDexApplication {
     public static ToolBarTitle toolBarTitle;
 
     public static UerInfo userInfo;
+    public static String mCurrentUserNo;
 
     private RequestQueue mRequestQueue;
 

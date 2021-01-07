@@ -1,10 +1,6 @@
 package com.xx.chinetek;
 
 
-import java.util.Properties;
-import java.util.Set;
-
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,17 +11,20 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.model.URLModel;
+
+import java.util.Properties;
+import java.util.Set;
 
 public class DeviceListActivity extends Activity {
     // Debugging
@@ -146,24 +145,26 @@ public class DeviceListActivity extends Activity {
 
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
-            String address = info.substring(info.length() - 17);
+            if (!info.equals("none_paired")){
+                String address = info.substring(info.length() - 17);
+                // Create the result Intent and include the MAC address
+                Intent intent = new Intent();
+                intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
+                URLModel.MacAdress=address;
+                //by zhougf
+                Properties properties = new Properties();
+                properties.setProperty("deviceid", address);
+                try {
+                    properties.store(openFileOutput("config.properties", MODE_WORLD_WRITEABLE), null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-            // Create the result Intent and include the MAC address
-            Intent intent = new Intent();
-            intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
-            URLModel.MacAdress=address;
-            //by zhougf
-            Properties properties = new Properties();
-            properties.setProperty("deviceid", address);
-            try {
-                properties.store(openFileOutput("config.properties", MODE_WORLD_WRITEABLE), null);
-            } catch (Exception e) {
-                e.printStackTrace();
+                // Set result and finish this Activity
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
 
-            // Set result and finish this Activity
-            setResult(Activity.RESULT_OK, intent);
-            finish();
         }
     };
 

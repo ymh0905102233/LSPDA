@@ -60,65 +60,76 @@ public class MainActivity extends BaseActivity {
     @ViewInject(R.id.gv_Function)
     GridView gridView;
     GridViewItemAdapter adapter;
-    Context context =MainActivity.this;
+    Context             context = MainActivity.this;
 
     @Override
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.app_name)+"-"+BaseApplication.userInfo.getWarehouseName(),false);
+        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.app_name) + "-" + BaseApplication.userInfo.getWarehouseName(), false);
         x.view().inject(this);
         List<Map<String, Object>> data_list = getData();
-        adapter = new GridViewItemAdapter(context,data_list);
+        adapter = new GridViewItemAdapter(context, data_list);
         gridView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (BaseApplication.userInfo != null) {
+            String userNo = BaseApplication.userInfo.getUserNo();
+            BaseApplication.mCurrentUserNo = userNo;
+            if (userNo != null) {
+                if (userNo.contains("SHJC") || userNo.contains("SHSY") || userNo.contains("JSJC")) {
+                    final String newUserNo = userNo.replace("SHJC", "").replace("SHSY", "").replace("JSJC", "").trim();
+                    BaseApplication.userInfo.setUserNo(newUserNo);
+                }
 
-    @Event(value = R.id.gv_Function,type = AdapterView.OnItemClickListener.class)
+            }
+        }
+    }
+
+    @Event(value = R.id.gv_Function, type = AdapterView.OnItemClickListener.class)
     private void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        LinearLayout linearLayout=(LinearLayout) gridView.getAdapter().getView(position,view,null);
-        TextView textView=(TextView)linearLayout.getChildAt(1);
+        LinearLayout linearLayout = (LinearLayout) gridView.getAdapter().getView(position, view, null);
+        TextView textView = (TextView) linearLayout.getChildAt(1);
         Intent intent = new Intent();
-        if(textView.getText().toString().equals("质检"))
+        if (textView.getText().toString().equals("质检"))
             intent.setClass(context, QCBillChoice.class);
-        else if(textView.getText().toString().equals("收货")){
+        else if (textView.getText().toString().equals("收货")) {
             intent.setClass(context, ReceiptBillChoice.class);
-            intent.putExtra("BusinesType","收货");
-        }
-
-        else if(textView.getText().toString().equals("上架"))
+            intent.putExtra("BusinesType", "收货");
+        } else if (textView.getText().toString().equals("上架"))
             intent.setClass(context, UpShelfBillChoice.class);
-        else if(textView.getText().toString().equals("下架"))
+        else if (textView.getText().toString().equals("下架"))
             intent.setClass(context, OffShelfBillChoice.class);
-        else if(textView.getText().toString().equals("发货复核"))
+        else if (textView.getText().toString().equals("发货复核"))
             intent.setClass(context, ReviewBillChoice.class);
-        else if(textView.getText().toString().equals("移库"))
+        else if (textView.getText().toString().equals("移库"))
             intent.setClass(context, InnerMoveScanCY.class);
-        else if(textView.getText().toString().equals("盘点")) {
+        else if (textView.getText().toString().equals("盘点")) {
             intent.setClass(context, InventoryBillChoice.class);
-            intent.putExtra("model",1);
-        }
-        else if(textView.getText().toString().equals("财务盘点")) {
+            intent.putExtra("model", 1);
+        } else if (textView.getText().toString().equals("财务盘点")) {
             intent.setClass(context, InventoryBillChoice.class);
-            intent.putExtra("model",2);
-        }
-        else if(textView.getText().toString().equals("查询"))
+            intent.putExtra("model", 2);
+        } else if (textView.getText().toString().equals("查询"))
             intent.setClass(context, QueryMain.class);
-        else if(textView.getText().toString().equals("组托"))
+        else if (textView.getText().toString().equals("组托"))
             intent.setClass(context, CombinPallet.class);
-        else if(textView.getText().toString().equals("拆托"))
+        else if (textView.getText().toString().equals("拆托"))
             intent.setClass(context, DismantlePallet.class);
-        else if(textView.getText().toString().equals("装箱拆箱"))
+        else if (textView.getText().toString().equals("装箱拆箱"))
             intent.setClass(context, Boxing.class);
-        else if(textView.getText().toString().equals("物料转换"))
+        else if (textView.getText().toString().equals("物料转换"))
             intent.setClass(context, MaterialChangeReceiptBillChoice.class);
-        else if(textView.getText().toString().equals("标签补打"))
+        else if (textView.getText().toString().equals("标签补打"))
             intent.setClass(context, FillPrint.class);
-        else if(textView.getText().toString().equals("库存调整"))
+        else if (textView.getText().toString().equals("库存调整"))
             intent.setClass(context, AdjustStock.class);
-        else if(textView.getText().toString().equals("预留释放"))
+        else if (textView.getText().toString().equals("预留释放"))
             intent.setClass(context, YSBillChoice.class);
-        else if(textView.getText().toString().equals("拆零"))
+        else if (textView.getText().toString().equals("拆零"))
             intent.setClass(context, SplitZeroScan.class);
 //        else if(textView.getText().toString().equals("调拨出库"))
 //            intent.setClass(context, AdjustCP.class);
@@ -136,38 +147,36 @@ public class MainActivity extends BaseActivity {
 //            intent.setClass(context, CarOut.class);
 //        else if(textView.getText().toString().equals("物流扫描"))
 //            intent.setClass(context, CarIn.class);
-        else if(textView.getText().toString().equals("领料出库")) {
-            BaseApplication.toolBarTitle=new ToolBarTitle(getString(R.string.LineStockOutMaterial),true);
+        else if (textView.getText().toString().equals("领料出库")) {
+            BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.LineStockOutMaterial), true);
             intent.setClass(context, WoBillChoice.class);
-        }
-        else if(textView.getText().toString().equals("产线生产"))
+        } else if (textView.getText().toString().equals("产线生产"))
             intent.setClass(context, BillsIn.class);
-        else if(textView.getText().toString().equals("生产记录"))
+        else if (textView.getText().toString().equals("生产记录"))
             intent.setClass(context, LineManage.class);
-        else if(textView.getText().toString().equals("制成检"))
+        else if (textView.getText().toString().equals("制成检"))
             intent.setClass(context, Zcj.class);
-        else if(textView.getText().toString().equals("供应商组托"))
+        else if (textView.getText().toString().equals("供应商组托"))
             intent.setClass(context, CombinPalletSupplier.class);
-        else if(textView.getText().toString().equals("第三方移库")) {
+        else if (textView.getText().toString().equals("第三方移库")) {
             intent.setClass(context, InnerMoveScan.class);
-            intent.putExtra("FunctionType",1);
-        }else if(textView.getText().toString().equals("预收货")){
+            intent.putExtra("FunctionType", 1);
+        } else if (textView.getText().toString().equals("预收货")) {
             intent.setClass(context, ReceiptBillChoice.class);
-            intent.putExtra("BusinesType","预收货");
-        }else if(textView.getText().toString().equals("补货扫描")){
+            intent.putExtra("BusinesType", "预收货");
+        } else if (textView.getText().toString().equals("补货扫描")) {
             intent.setClass(context, BuBillChoice.class);
-        }else if(textView.getText().toString().equals("地标扫描")){
+        } else if (textView.getText().toString().equals("地标扫描")) {
             intent.setClass(context, Landmark.class);
-        }else if(textView.getText().toString().equals("物流拼箱")){
+        } else if (textView.getText().toString().equals("物流拼箱")) {
             intent.setClass(context, BoxingForWuliu.class);
-        }else if(textView.getText().toString().equals("代理收货")){
+        } else if (textView.getText().toString().equals("代理收货")) {
             intent.setClass(context, DLInScan.class);
-        }else if(textView.getText().toString().equals("代理发货")){
+        } else if (textView.getText().toString().equals("代理发货")) {
             intent.setClass(context, DLOutScan.class);
         }
 
-
-        if(intent!=null)
+        if (intent != null)
             startActivityLeft(intent);
     }
 
@@ -178,15 +187,15 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    public List<Map<String, Object>> getData(){
+    public List<Map<String, Object>> getData() {
         List<Map<String, Object>> data_list = new ArrayList<Map<String, Object>>();
-        ArrayList<Integer>  itemIconList=new ArrayList<>();
-        ArrayList<String>  itemNamesList=new ArrayList<>();
-        List<MenuInfo> menuInfos=BaseApplication.userInfo.getLstMenu();
-        if(menuInfos!=null) {
+        ArrayList<Integer> itemIconList = new ArrayList<>();
+        ArrayList<String> itemNamesList = new ArrayList<>();
+        List<MenuInfo> menuInfos = BaseApplication.userInfo.getLstMenu();
+        if (menuInfos != null) {
             for (int i = 0; i < menuInfos.size(); i++) {
                 String nodUrl = menuInfos.get(i).getNodeUrl();
-                if(!CommonUtil.isNumeric(nodUrl)) continue;
+                if (!CommonUtil.isNumeric(nodUrl)) continue;
                 int Node = Integer.parseInt(nodUrl);
                 switch (Node) {
                     case 0:

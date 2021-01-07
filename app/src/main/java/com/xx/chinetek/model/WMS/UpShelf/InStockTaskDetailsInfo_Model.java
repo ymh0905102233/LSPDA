@@ -729,8 +729,10 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
     public int compare(InStockTaskDetailsInfo_Model inStockTaskDetailsInfo_model, InStockTaskDetailsInfo_Model t1) {
         if(inStockTaskDetailsInfo_model.getAreaNo().compareTo(t1.getAreaNo())>0){
             return 1;
-        }else{
+        }else if (inStockTaskDetailsInfo_model.getAreaNo().compareTo(t1.getAreaNo())<0){
             return -1;
+        }else {
+            return 0;
         }
     }
 

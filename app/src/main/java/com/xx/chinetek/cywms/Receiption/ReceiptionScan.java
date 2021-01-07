@@ -414,6 +414,7 @@ public class ReceiptionScan extends BaseActivity {
                         String UserJson = GsonUtil.parseModelToJson(userInfo);
                         params.put("UserJson", UserJson);
                         params.put("ModelJson", ModelJson);
+                        params.put("Guid", mUuid.toString());
                         LogUtil.WriteLog(ReceiptionScan.class, TAG_SaveT_InStockDetailADF, ModelJson);
                         RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_InStockDetailADF, getString(R.string.Msg_SaveT_InStockDetailADF), context, mHandler, RESULT_Msg_SaveT_InStockDetailADF, null, URLModel.GetURL().SaveT_InStockDetailADF, params, null);
                     }

@@ -220,6 +220,7 @@
     <string name="activity_boxing_unbarcode">拆箱箱码：</string>
     <string name="activity_adjust_Number">调整数量：</string>
     <string name="activity_adjust_stock">调整库位：</string>
+    <string name="activity_adjust_trace_no">需求跟踪号：</string>
     <string name="activity_pallet_barcode">托盘条码：</string>
     <string name="activity_pallet_PalletNum">累计箱数/件数：</string>
     <string name="activity_pallet_PalletPrint">托盘标签打印</string>
@@ -321,6 +322,7 @@
     <string name="Error_BatchNoIsEmpty">厂内批次不能为空！</string>
     <string name="Error_IntRequire">需要输入整数！</string>
     <string name="Error_StockIsEmpty">库位不能为空！</string>
+    <string name="Error_TraceNoIsEmpty">需求跟踪号不能为空！</string>
     <string name="Error_PrintIPNotSet">请设置打印机IP地址！</string>
     <string name="Error_EricIPNotSet">请设置电子称IP地址！</string>
     <string name="Error_materialChangenotMatch">扫描物料与单据物料不匹配！</string>

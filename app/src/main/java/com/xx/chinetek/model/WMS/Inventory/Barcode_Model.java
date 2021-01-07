@@ -71,7 +71,7 @@ public class Barcode_Model implements Parcelable{
     private String RelaWeight;//ymh相对比重
     private String StoreCondition;//
     private String SupName;//ymh 生产日期周六区分
-
+    private String TracNo; //需求跟踪号
     public String getSupName() {
         return SupName;
     }
@@ -411,6 +411,14 @@ public class Barcode_Model implements Parcelable{
         this.AREAID = AREAID;
     }
 
+    public String getTracNo() {
+        return TracNo;
+    }
+
+    public void setTracNo(String tracNo) {
+        TracNo = tracNo;
+    }
+
     public Barcode_Model() {
     }
 
@@ -488,6 +496,7 @@ public class Barcode_Model implements Parcelable{
         dest.writeString(this.CompanyCode);
         dest.writeString(this.RowNoDel);
         dest.writeInt(this.BoxCount);
+        dest.writeString(this.TracNo);
     }
 
     protected Barcode_Model(Parcel in) {
@@ -536,6 +545,7 @@ public class Barcode_Model implements Parcelable{
         this.CompanyCode = in.readString();
         this.RowNoDel = in.readString();
         this.BoxCount = in.readInt();
+        this.TracNo=in.readString();
     }
 
     public static final Creator<Barcode_Model> CREATOR = new Creator<Barcode_Model>() {

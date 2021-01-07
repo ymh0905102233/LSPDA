@@ -136,16 +136,26 @@ public class UpShelfBillChoice extends BaseActivity implements SwipeRefreshLayou
                 StartScanIntent(inStockTaskInfoModels.get(index), null);
                 return false;
             } else {
+
+                if (code.contains("SHJC") || code.contains("JSJC") || code.contains("SHSY") || code.length()<10) {
+                    InStockTaskInfo_Model inStockTaskInfoModel = new InStockTaskInfo_Model();
+                    inStockTaskInfoModel.setStatus(1);
+                    inStockTaskInfoModel.setWareHouseID(BaseApplication.userInfo.getWarehouseID());
+                    inStockTaskInfoModel.setErpVoucherNo(code);
+                    GetT_InStockTaskInfoList(inStockTaskInfoModel);
+                }else {
+                    final Map<String, String> params = new HashMap<String, String>();
+                    params.put("SerialNo", code);
+                    params.put("ERPVoucherNo", "");
+                    params.put("TaskNo", "");
+                    params.put("AreaNo", "");
+                    params.put("WareHouseID", BaseApplication.userInfo.getWarehouseID() + "");
+                    isScanOrder = true;
+                    LogUtil.WriteLog(UpShelfBillChoice.class, TAG_GetT_ScanInStockModelADF, code);
+                    RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_ScanInStockModelADF, getString(R.string.Msg_GetT_InStockListADF), context, mHandler, RESULT_GetT_ScanInStockModelADF, null, URLModel.GetURL().GetT_ScanInStockModelADF, params, null);
+
+                }
                 //扫描箱条码
-                final Map<String, String> params = new HashMap<String, String>();
-                params.put("SerialNo", code);
-                params.put("ERPVoucherNo", "");
-                params.put("TaskNo", "");
-                params.put("AreaNo", "");
-                params.put("WareHouseID", BaseApplication.userInfo.getWarehouseID() + "");
-                isScanOrder = true;
-                LogUtil.WriteLog(UpShelfBillChoice.class, TAG_GetT_ScanInStockModelADF, code);
-                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_ScanInStockModelADF, getString(R.string.Msg_GetT_InStockListADF), context, mHandler, RESULT_GetT_ScanInStockModelADF, null, URLModel.GetURL().GetT_ScanInStockModelADF, params, null);
 
             }
 
@@ -202,7 +212,13 @@ public class UpShelfBillChoice extends BaseActivity implements SwipeRefreshLayou
             }
 
         } else {
-            MessageBox.Show(context, returnMsgModel.getMessage());
+            String error=returnMsgModel.getMessage()!=null?returnMsgModel.getMessage():"";
+            if(error.contains("入库任务总览数据列表为空")){
+                MessageBox.Show(context, "暂时没有待收货任务数据");
+            }else {
+                MessageBox.Show(context, returnMsgModel.getMessage());
+            }
+
             CommonUtil.setEditFocus(edtfilterContent);
         }
     }
@@ -227,7 +243,12 @@ public class UpShelfBillChoice extends BaseActivity implements SwipeRefreshLayou
                 // }
             }
         } else {
-            MessageBox.Show(context, returnMsgModel.getMessage());
+            String error=returnMsgModel.getMessage()!=null?returnMsgModel.getMessage():"";
+            if(error.contains("未能获取库存数据")){
+                MessageBox.Show(context, "该物料条码无效或者未收货,请确认!");
+            }else {
+                MessageBox.Show(context, returnMsgModel.getMessage());
+            }
             CommonUtil.setEditFocus(edtfilterContent);
         }
     }
