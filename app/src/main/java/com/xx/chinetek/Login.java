@@ -24,6 +24,7 @@ import com.xx.chinetek.model.User.WareHouseInfo;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
 import com.xx.chinetek.util.SharePreferUtil;
+import com.xx.chinetek.util.deviceInfo.DeviceUtils;
 import com.xx.chinetek.util.dialog.MessageBox;
 import com.xx.chinetek.util.dialog.ToastUtil;
 import com.xx.chinetek.util.function.CommonUtil;
@@ -100,7 +101,6 @@ public class Login extends BaseActivity{
             lstWarehouse = BaseApplication.userInfo.getLstWarehouse();
         }
         txtVersion.setText(getString(R.string.login_Version) + (updateVersionService.getVersionCode(context)));
-
         super.initViews();
     }
 
@@ -210,6 +210,8 @@ public class Login extends BaseActivity{
                 MessageBox.Show(context, getResources().getString(R.string.Message_No_MenuList));
             } else {
                 SharePreferUtil.SetUserShare(context, BaseApplication.userInfo);
+                DeviceUtils.getInstance().collectDeviceInfo(Login.this);
+                BaseApplication.mDeviceInfo=  DeviceUtils.getInstance().getDeviceInfo(BaseApplication.userInfo.getUserNo());
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
             }

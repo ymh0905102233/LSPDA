@@ -6,6 +6,7 @@ import android.support.multidex.MultiDexApplication;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.xx.chinetek.model.User.UerInfo;
+import com.xx.chinetek.util.deviceInfo.DeviceUtils;
 
 import org.xutils.x;
 
@@ -27,7 +28,7 @@ public class BaseApplication extends MultiDexApplication {
 
     public static UerInfo userInfo;
     public static String mCurrentUserNo;
-
+    public  static DeviceUtils.DeviceInfo mDeviceInfo;
     private RequestQueue mRequestQueue;
 
     @Override
